@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import "tailwindcss";
+
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+}
+
+body {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 5, 48, 0.6);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c4c4c4;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6e6e6e;
+}
+
+img {
+  pointer-events: none; /* Chặn kéo thả */
+  -webkit-user-drag: none; /* Chặn kéo trên Safari */
+  user-select: none; /* Chặn bôi đen */
+}
+
+.circle-stroke {
+  stroke-dasharray: 70;
+  stroke-dashoffset: 70;
+  transition: stroke-dashoffset 0.6s ease-out;
+}
+
+.hover-group:hover .circle-stroke {
+  stroke-dashoffset: 0;
+}
+
+@layer utilities {
+  @keyframes circleDash {
+    0% {
+      stroke-dasharray: 70;
+      stroke-dashoffset: 70;
+    }
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  .animate-circle {
+    stroke-dasharray: 70;
+    stroke-dashoffset: 70;
+    animation: circleDash 4s linear forwards 1s;
+  }
+}
