@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 @import "tailwindcss";
 
 html {
@@ -12,6 +12,15 @@ body {
   -ms-user-select: none;
   user-select: none;
   overflow-x: hidden;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 9999s ease-in-out 0s !important;
+  -webkit-text-fill-color: #fff !important; /* Màu chữ khi autofill */
+  box-shadow: 0 0 0px 1000px #000000 inset !important; /* Màu nền bạn muốn */
 }
 
 ::-webkit-scrollbar {

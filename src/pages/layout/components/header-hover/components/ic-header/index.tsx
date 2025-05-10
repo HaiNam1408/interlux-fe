@@ -22,10 +22,9 @@ const IcHeader = ({ setSeletecedMenu, seletectedMenu }: IIcHeader) => {
         transition: seletectedMenu.title ? "all .6s ease" : "none",
         transform: seletectedMenu.title ? "translateX(0)" : "translateX(-100%)",
       }}
+      alignItems={"center"}
     >
-      <Box width={"4rem"} height={"fit-content"}>
-        <IcLogo />
-      </Box>
+      <IcLogo />
       <Center
         width={"4.2rem"}
         height={"4.2rem"}

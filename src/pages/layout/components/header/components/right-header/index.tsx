@@ -1,7 +1,10 @@
 import { Stack, Text } from "@chakra-ui/react";
 import { FaCartShopping } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 const RightHeader = () => {
+  const navigator = useNavigate()
+
   return (
     <Stack
       direction={"row"}
@@ -34,6 +37,7 @@ const RightHeader = () => {
         fontWeight={400}
         whiteSpace={"nowrap"}
         cursor={"pointer"}
+        onClick={() => navigator("/my-account")}
       >
         Login / Register
       </Text>
