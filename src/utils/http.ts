@@ -51,7 +51,7 @@ class Http {
           } catch (refreshError) {
             Cookies.remove("token");
             Cookies.remove("refreshToken");
-            window.location.href = "/login";
+            window.location.href = "/my-account";
             return Promise.reject(refreshError);
           }
         }
@@ -73,7 +73,7 @@ class Http {
     try {
       const refreshToken = Cookies.get("refreshToken");
       const response = await axios.post(
-        `${OptionDeployBe.DEPLOY_LOCAL}/api/auth/refreskToken`,
+        `${OptionDeployBe.DEPLOY_LOCAL}/api/v1/client/auth/reset-refresh-token`,
         {
           refreshToken,
         }

@@ -1,28 +1,24 @@
-import { IAuth } from "@interfaces/IAuth.interface";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import http from "@utils/http";
 
-export const login = (username: string, password: string) =>
-  http.post<IAuth>("/api/auth/login", {
-    username,
+export const login = (email: string, password: string) =>
+  http.post<any>("/api/v1/client/auth/login", {
+    email,
     password,
   });
 
 export const register = (
   username: string,
-  password: string,
   email: string,
-  first_name: string,
-  last_name: string,
-  company_name: string
+  phone: string,
+  password: string
 ) =>
-  http.post<IAuth>("/api/auth/register", {
-    username,
-    password,
+  http.post<any>("/api/v1/client/auth/register", {
     email,
-    first_name,
-    last_name,
-    company_name,
+    password,
+    username,
+    phone,
   });
 
-export const confirmEmail = (confirmationToken: string) =>
-  http.get<IAuth>(`/api/auth/confirm/${confirmationToken}`);
+export const resetRefreshToken = (refreshToken: string) =>
+  http.post<any>("/api/v1/client/auth/reset-refresh-token", refreshToken);

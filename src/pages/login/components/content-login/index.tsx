@@ -1,8 +1,13 @@
 import { Stack } from "@chakra-ui/react";
 import FormLogin from "../form-login";
 import FormRegister from "../form-register";
+import { Dispatch, SetStateAction } from "react";
 
-const ContentLogin = () => {
+interface IContentLogin {
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
+}
+
+const ContentLogin = ({ setIsLoading }: IContentLogin) => {
   return (
     <Stack
       width={"100%"}
@@ -14,8 +19,8 @@ const ContentLogin = () => {
       justifyContent={"center"}
       gap={0}
     >
-      <FormLogin />
-      <FormRegister />
+      <FormLogin setIsLoading={setIsLoading} />
+      <FormRegister setIsLoading={setIsLoading} />
     </Stack>
   );
 };

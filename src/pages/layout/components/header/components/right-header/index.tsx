@@ -1,9 +1,22 @@
 import { Stack, Text } from "@chakra-ui/react";
 import { FaCartShopping } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const RightHeader = () => {
-  const navigator = useNavigate()
+  const navigator = useNavigate();
+  const token = Cookies.get("token");
+
+  const handleLogout = () => {
+    Cookies.remove("token");
+    Cookies.remove("refreshToken");
+
+    localStorage.clear();
+
+    // window.location.href = "/";
+
+    navigator("/");
+  };
 
   return (
     <Stack
@@ -37,9 +50,15 @@ const RightHeader = () => {
         fontWeight={400}
         whiteSpace={"nowrap"}
         cursor={"pointer"}
-        onClick={() => navigator("/my-account")}
+        onClick={() => {
+          if (token) {
+            handleLogout();
+          } else {
+            navigator("/my-account");
+          }
+        }}
       >
-        Login / Register
+        {token ? "Logout" : "Login / Register"}
       </Text>
     </Stack>
   );

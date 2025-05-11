@@ -2,8 +2,11 @@ import { Route, Routes } from "react-router-dom";
 import { layoutRouters, routers } from "@configs/layoutRoutes";
 import Layout from "@pages/layout";
 import NotFound from "@components/404-custom";
+import useAutoLogin from "@hooks/useRemember";
 
 const RouterContainer = () => {
+  useAutoLogin();
+
   return (
     <Routes>
       {routers.map((route) => (
