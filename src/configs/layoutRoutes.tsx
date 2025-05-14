@@ -1,6 +1,7 @@
 import LanddingPage from "@pages/landding";
 import Login from "@pages/login";
 import ProductDetail from "@pages/product-detail";
+import Products from "@pages/products";
 import TestCharkra from "@pages/test-charkra";
 import { RouteProps } from "react-router-dom";
 export const routers: RouteProps[] = [
@@ -20,7 +21,12 @@ export const layoutRouters: RouteProps[] = [
     element: <Login />,
   },
   {
+
     path: "/shop/product-detail/:id-product",
-    element: <ProductDetail />,
+    element: <ProductDetail />},{
+
+    path: "/shop",
+    element: <Products />,
+
   },
 ];

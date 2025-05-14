@@ -14,7 +14,7 @@ const Header = ({ setSeletecedMenu }: IHeader) => {
 
   return (
     <Stack
-      position={"fixed"}
+      position={"sticky"}
       top={0}
       left={0}
       width={"100%"}
