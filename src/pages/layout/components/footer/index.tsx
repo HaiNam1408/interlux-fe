@@ -144,6 +144,9 @@ const Footer = () => {
       alignItems={"center"}
       position={"relative"}
       height={"fit-content"}
+      maxW={"140rem"}
+      margin={"0 auto"}
+      px={"2rem"}
     >
       <Grid templateColumns="repeat(5, 1fr)" width={"100%"}>
         {listFooter.map((item, index) => (

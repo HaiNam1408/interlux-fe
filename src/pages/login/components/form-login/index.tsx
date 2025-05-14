@@ -54,6 +54,7 @@ const FormLogin = ({ setIsLoading }: IFormLogin) => {
     }
   };
 
+
   return (
     <Stack
       width={"100%"}
@@ -98,7 +99,7 @@ const FormLogin = ({ setIsLoading }: IFormLogin) => {
       <CheckBox
         checked={isRemember}
         label="Remember me"
-        setIsRemember={setIsRemember}
+        onChange={setIsRemember}
       />
       <Box height={"4rem"} />
       <Button
