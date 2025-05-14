@@ -16,7 +16,6 @@ const Login = () => {
       height={"100%"}
       minH={"100dvh"}
       bgColor={"#000"}
-      pt={"9rem"}
       position={"relative"}
     >
       <LoadingScreen isLoading={isLoading} />

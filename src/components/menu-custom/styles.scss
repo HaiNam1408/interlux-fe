@@ -1,0 +1,51 @@
+.menuCustom {
+  width: 100%;
+  height: 4rem;
+  position: relative;
+}
+
+.menuCustom__input {
+  width: 100%;
+  height: 100%;
+  padding: 1.2rem 1.6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #000; /* Thay thế giá trị màu viền nếu cần */
+  border-radius: 0.8rem;
+  cursor: pointer;
+}
+
+.menuCustom__menu {
+  position: absolute;
+  bottom: -1rem;
+  left: 0;
+  width: 100%;
+  max-height: fit-content;
+  overflow-y: auto;
+  visibility: hidden;
+  opacity: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+  transform: translateY(100%);
+  border: 1px solid #e0e0e0; /* Tùy thuộc màu thực tế */
+  border-radius: 0.8rem;
+  transition: all 0.3s ease;
+}
+
+.menuCustom__menuItem {
+  padding: 1rem 0 1rem 1rem;
+  border-radius: 0.8rem;
+  cursor: pointer;
+}
+
+.menuCustom__menuItem:hover {
+  background-color: rgba(190, 194, 202, 0.226);
+}
+
+.menuCustom__menu-show {
+  visibility: visible;
+  opacity: 1;
+}
