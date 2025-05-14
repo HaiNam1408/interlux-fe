@@ -9,9 +9,7 @@ const useAutoLogin = () => {
   useEffect(() => {
     const token = Cookies.get("token");
 
-    if (token) {
-      navigate("/");
-    } else {
+    if (!token) {
       const refreshToken = Cookies.get("refreshToken");
       if (refreshToken) {
         resetRefreshToken(refreshToken)

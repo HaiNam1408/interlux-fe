@@ -1,3 +1,16 @@
 export { default as IcArrowRight } from "@assets/svgs/icArrowRight";
 export { default as IcArrowDown } from "@assets/svgs/icArrowDown";
 export { default as IcLogo } from "@assets/svgs/icLogo";
+export { default as IcReturns } from "@assets/svgs/icReturns";
+export { default as IcShipping } from "@assets/svgs/icShipping";
+export { default as IcSecure } from "@assets/svgs/icSecure";
+export { default as IcMadeOrder } from "@assets/svgs/icMadeOrder";
+export { default as IcPay1 } from "@assets/svgs/icPay-1";
+export { default as IcPay2 } from "@assets/svgs/icPay-2";
+export { default as IcPay3 } from "@assets/svgs/icPay-3";
+export { default as IcPay4 } from "@assets/svgs/icPay-4";
+export { default as IcPay5 } from "@assets/svgs/icPay-5";
+export { default as IcPay6 } from "@assets/svgs/icPay-6";
+export { default as IcPay7 } from "@assets/svgs/icPay-7";
+export { default as IcPay8 } from "@assets/svgs/icPay-8";
+export { default as IcChatBoxDou } from "@assets/svgs/icChatBoxDou";

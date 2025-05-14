@@ -13,6 +13,8 @@ const FooterLogin = () => {
       direction={"row"}
       gap={"2rem"}
       justifyContent={"space-between"}
+      maxW={"140rem"}
+      margin={"0 auto"}
     >
       {[
         {
