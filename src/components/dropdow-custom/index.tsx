@@ -106,6 +106,7 @@ const DropDownCustom = ({
                 height={"4rem"}
                 p={type === "color" ? "0" : "1rem"}
                 my={type === "color" ? ".4rem" : "0"}
+                key={index}
               >
                 {type === "color" && (
                   <Box
