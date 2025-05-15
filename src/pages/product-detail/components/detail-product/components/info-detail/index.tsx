@@ -8,7 +8,6 @@ import AddOns from "./components/add-ons";
 import HandleDetail from "./components/handle-detail";
 import ProductDetail from "./components/product-detail";
 import { listColor } from "@constants/listFakeData";
-import { IcReturns } from "@assets/svgs";
 
 const listConfiguration = ["3-seater", "2-seater", "Sectional", "L-shapeF"];
 const listCushionFirmness = ["Soft ", "Medium", "Firm"];
@@ -99,7 +98,7 @@ const InfoDetail = () => {
         />
       </Stack>
       <HandleDetail />
-      <IcReturns />
+
       <ProductDetail
         data={{
           color: itemSelected.colorTitle,
