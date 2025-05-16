@@ -1,7 +1,8 @@
-import { Box, Image, Stack, Text } from "@chakra-ui/react";
+import { Box, Icon, Image, Stack, Text } from "@chakra-ui/react";
 import { IProduct } from "@interfaces/IProduct.interface";
 import RatingComponent from "@pages/product-detail/components/detail-product/components/info-detail/components/rating-detail";
 import { useState } from "react";
+import { MdLocalOffer } from "react-icons/md";
 
 interface ICardProduct {
   data: IProduct;
@@ -26,6 +27,28 @@ const CardProduct = ({ data }: ICardProduct) => {
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
+        {data.percentOff && <Box
+          display="inline-flex"
+          alignItems="center"
+          bg="pink.400"
+          color="white"
+          px={3}
+          py={1.5}
+          borderRadius="md"
+          fontWeight="semibold"
+          fontSize="1rem"
+          cursor="default"
+          transition="background-color 0.3s ease"
+          _hover={{ bg: "pink.600" }}
+          userSelect="none"
+          position={"absolute"}
+          right={"0"}
+          top={"2rem"}
+          zIndex={10}
+        >
+          <Icon as={MdLocalOffer} mr={2} boxSize={5} />
+          Giảm ${data.percentOff}%
+        </Box>}
         <Image
           src={data.images[0].filePath}
           width={"100%"}
@@ -46,6 +69,7 @@ const CardProduct = ({ data }: ICardProduct) => {
           visibility={!hover ? "hidden" : "visible"}
         ></Image>
       </Box>
+
       <Text
         fontSize={"1.6rem"}
         textAlign={"center"}
@@ -64,7 +88,7 @@ const CardProduct = ({ data }: ICardProduct) => {
         w={"100%"}
         fontWeight={700}
       >
-        ${data.price}.00
+        ${data.finalPrice}
       </Text>
     </Stack>
   );

@@ -7,7 +7,7 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import "./styles.scss";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import {  useEffect, useRef, useState } from "react";
 import { IcArrowDown } from "@assets/svgs";
 import { Slider } from "@ark-ui/react";
 
@@ -18,7 +18,7 @@ interface ISlideCustom {
   label: string;
   min: number;
   max: number;
-  setValue: Dispatch<SetStateAction<[number, number]>>;
+  setValue: (e: [number, number]) => void;
   value: [number, number];
 }
 
@@ -57,12 +57,12 @@ const SlideCustom = ({
     <Box ref={slideRef} className="slideCustom" sx={sx}>
       {/* Button để toggle */}
       <Box
-        className={`slideCustom__input ${
-          isFocused ? "border-[#3182ce]" : "#fff"
-        }`}
+        className={`slideCustom__input ${isFocused ? "border-[#3182ce]" : "#fff"
+          }`}
         onClick={() => setIsFocused(!isFocused)}
         bg="#000000"
         border="1px solid #fff"
+        
       >
         <Text
           fontWeight={400}
@@ -78,9 +78,8 @@ const SlideCustom = ({
       {/* Slide dropdown */}
       {isSeleted && (
         <Stack
-          className={`slideCustom__slide ${
-            isFocused ? "slideCustom__slide-show" : ""
-          }`}
+          className={`slideCustom__slide ${isFocused ? "slideCustom__slide-show" : ""
+            }`}
           bg="#1a1a1a"
           minH={"8rem"}
           maxH={maxH}
@@ -88,6 +87,7 @@ const SlideCustom = ({
           px={4}
           py={3}
           justifyContent={"center"}
+          overflow={"hidden"}
         >
           {/* Min - Max values ở hai đầu */}
           <Flex justify="space-between" mb={3}>
@@ -103,7 +103,7 @@ const SlideCustom = ({
             width="100%"
             min={min}
             max={max}
-            step={1}
+            step={10}
             defaultValue={value}
             onValueChange={(val) => setValue(val.value as [number, number])}
           >

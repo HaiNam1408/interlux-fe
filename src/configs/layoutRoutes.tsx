@@ -23,8 +23,9 @@ export const layoutRouters: RouteProps[] = [
   {
 
     path: "/shop/product-detail/:id-product",
-    element: <ProductDetail />},{
-
+    element: <ProductDetail />
+  }, 
+  {
     path: "/shop",
     element: <Products />,
 

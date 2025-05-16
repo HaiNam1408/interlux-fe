@@ -1,19 +1,17 @@
 import { Box, Stack, SystemStyleObject, Text } from "@chakra-ui/react";
 import "./styles.scss";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IcArrowDown } from "@assets/svgs";
 import InputCustom from "@components/input-custom";
 
 interface IDropDownCustom {
   seletedItem?: string;
-  setSelectedItem: Dispatch<SetStateAction<string>>;
+  setSelectedItem: (e: string) => void;
   listDropdown: string[];
   isSeleted?: boolean;
   sx?: SystemStyleObject;
   onClick?: () => void;
   maxH?: string;
-
-  //
 
   label: string;
   labelSearch: string;
@@ -32,6 +30,7 @@ const DropDownCustom = ({
   type,
 }: IDropDownCustom) => {
   const [search, setSearch] = useState<string>("");
+  const [title, setTitle] = useState<string>(label)
 
   const [isFocused, setIsFocused] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -40,6 +39,11 @@ const DropDownCustom = ({
     setSelectedItem(item);
     setIsFocused(false);
     if (onClick) onClick();
+    if(!item) {
+      setTitle(label)
+    } else {
+      setTitle(item)
+    }
   };
 
   const handleDocumentClick = (e: MouseEvent) => {
@@ -51,6 +55,8 @@ const DropDownCustom = ({
     }
   };
 
+
+
   useEffect(() => {
     document.addEventListener("click", handleDocumentClick);
     return () => {
@@ -61,9 +67,8 @@ const DropDownCustom = ({
   return (
     <Box ref={dropdownRef} className="dropdownCustom" sx={sx}>
       <Box
-        className={`dropdownCustom__input ${
-          isFocused ? "border-[#3182ce]" : "#fff"
-        }`}
+        className={`dropdownCustom__input ${isFocused ? "border-[#3182ce]" : "#fff"
+          }`}
         onClick={() => setIsFocused(!isFocused)}
         bg="#000000"
         border="1px solid #fff"
@@ -74,16 +79,15 @@ const DropDownCustom = ({
           fontSize="1.6rem"
           color={"gray.100"}
         >
-          {label}
+          {title}
         </Text>
         {isSeleted && <IcArrowDown color="#fff" />}
       </Box>
 
       {isSeleted && (
         <Box
-          className={`dropdownCustom__dropdown ${
-            isFocused && "dropdownCustom__dropdown-show"
-          }`}
+          className={`dropdownCustom__dropdown ${isFocused && "dropdownCustom__dropdown-show"
+            }`}
           bg="#1a1a1a"
           maxH={maxH}
           border="1px solid #333"
@@ -95,6 +99,27 @@ const DropDownCustom = ({
           />
 
           <Box height={"1rem"} />
+          <Stack
+            direction={"row"}
+            gap={"1.2rem"}
+            alignItems={"center"}
+            _hover={{ background: "rgba(255,255,255,0.08)" }}
+            height={"4rem"}
+            p={"1rem"}
+            my={"0"}
+            onClick={() => handleClick("")}
+
+          >
+            <Text
+              fontWeight={400}
+              lineHeight="1.6rem"
+              fontSize="1.6rem"
+              color="gray.100"
+              textTransform={"capitalize"}
+            >
+              Delete selection
+            </Text>
+          </Stack>
           {listDropdown
             .filter((item) => item.includes(search))
             .map((item, index) => (
@@ -106,6 +131,7 @@ const DropDownCustom = ({
                 height={"4rem"}
                 p={type === "color" ? "0" : "1rem"}
                 my={type === "color" ? ".4rem" : "0"}
+                onClick={() => handleClick(item)}
                 key={index}
               >
                 {type === "color" && (
@@ -121,7 +147,6 @@ const DropDownCustom = ({
                 )}
                 <Text
                   key={index}
-                  onClick={() => handleClick(item)}
                   fontWeight={400}
                   lineHeight="1.6rem"
                   fontSize="1.6rem"

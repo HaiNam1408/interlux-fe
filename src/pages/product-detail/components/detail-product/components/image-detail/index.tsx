@@ -2,6 +2,8 @@ import { Box, Stack } from "@chakra-ui/react";
 import { useState } from "react";
 import ListImage from "./components/list-image";
 import MainImage from "./components/main-image";
+import { useSelector } from "react-redux";
+import { RootState } from "@redux/store";
 
 const listImg = [
   "https://handdn.com/wp-content/uploads/2024/02/SHARK-050224007.jpg",
@@ -10,8 +12,10 @@ const listImg = [
 ];
 
 const ImageDetail = () => {
-  const [selectedImg, setSelectedImg] = useState<string>(listImg[0]);
+  const product = useSelector((state: RootState) => state.product.product)
 
+  const [selectedImg, setSelectedImg] = useState<string>(product?.images.map(item => item.filePath)[0] || "");
+  
   return (
     <Box
       width={"58%"}
@@ -25,12 +29,12 @@ const ImageDetail = () => {
         <ListImage
           setSelectedImg={setSelectedImg}
           selectedImg={selectedImg}
-          listImg={listImg}
+          listImg={product?.images.map(item => item.filePath) || []}
         />
         <MainImage
           setSelectedImg={setSelectedImg}
           selectedImg={selectedImg}
-          listImg={listImg}
+          listImg={product?.images.map(item => item.filePath) || []}
         />
       </Stack>
     </Box>
