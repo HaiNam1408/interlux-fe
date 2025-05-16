@@ -11,7 +11,7 @@ export const getAllProducts = (
   maxPrice?: number,
   sortBy?: "createdAt" | "price" | "sold",
   sortDirection?: "asc" | "desc",
-  attributes?: { [key: string]: string },
+  attributes?: { [key: string]: string }
 ) => {
   const params = {
     page,
@@ -23,7 +23,7 @@ export const getAllProducts = (
     ...(minPrice !== undefined && { minPrice }),
     ...(maxPrice !== undefined && { maxPrice }),
     ...(attributes &&
-      Object.values(attributes).some(v => v) && {
+      Object.values(attributes).some((v) => v) && {
         attributes: JSON.stringify(attributes),
       }),
   };
@@ -32,22 +32,58 @@ export const getAllProducts = (
 };
 
 //Lấy danh sách sản phẩm bán chạy
-export const getBestsellingProduct = () => http.get<any>("/api/v1/client/product/bestsellers")
+export const getBestsellingProduct = () =>
+  http.get<any>("/api/v1/client/product/bestsellers");
 
 //Lấy danh sách sản phẩm...
-export const getFeaturedProduct = () => http.get<any>("/api/v1/client/product/featured")
+export const getFeaturedProduct = () =>
+  http.get<any>("/api/v1/client/product/featured");
 
 //Lấy danh sách sản phẩm theo biến thể
-export const getNewArrivalProduct = () => http.get<any>("/api/v1/client/product/new-arrivals")
+export const getNewArrivalProduct = () =>
+  http.get<any>("/api/v1/client/product/new-arrivals");
 
 //Lấy danh sách sản phẩm liên quan
-export const getRelatedProduct = (idProduct: string) => http.get<any>(`/api/v1/client/product/related/${idProduct}`)
+export const getRelatedProduct = (idProduct: string) =>
+  http.get<any>(`/api/v1/client/product/related/${idProduct}`);
 
 //Lấy sản phẩm chi tiết
-export const getProduct = (idProduct:string) => http.get<any>(`/api/v1/client/product/detail/${idProduct}`)
+export const getProduct = (idProduct: string) =>
+  http.get<any>(`/api/v1/client/product/detail/${idProduct}`);
 
 //Lấy danh sách biến thế của sản phẩm
-export const getProductVariations = (idProduct: number) => http.get<any>(`/api/v1/client/product/variations/${idProduct}`)
+export const getProductVariations = (idProduct: number) =>
+  http.get<any>(`/api/v1/client/product/variations/${idProduct}`);
 
 //Lấy danh sách biến thế của sản phẩm theo mã biến thế
-export const getProductVariationsBySku = (sku: string) => http.get<any>(`/api/v1/client/product/variation/${sku}`)
+export const getProductVariationsBySku = (sku: string) =>
+  http.get<any>(`/api/v1/client/product/variation/${sku}`);
+
+//Lấy danh sách sản phẩm theo category
+export const getAllProductsByCategory = (
+  slug: string,
+  page: number,
+  limit?: number,
+  search?: string,
+  minPrice?: number,
+  maxPrice?: number,
+  sortBy?: "createdAt" | "price" | "sold",
+  sortDirection?: "asc" | "desc",
+  attributes?: { [key: string]: string }
+) => {
+  const params = {
+    page,
+    ...(limit !== undefined && { limit }),
+    ...(search && { search }),
+    ...(sortBy && { sortBy }),
+    ...(sortDirection && { sortDirection }),
+    ...(minPrice !== undefined && { minPrice }),
+    ...(maxPrice !== undefined && { maxPrice }),
+    ...(attributes &&
+      Object.values(attributes).some((v) => v) && {
+        attributes: JSON.stringify(attributes),
+      }),
+  };
+
+  return http.get<any>(`/api/v1/client/product/category/${slug}`, { params });
+};

@@ -55,8 +55,9 @@ const Variations = () => {
             }}
             modules={[Pagination]}
             className="mySwiper"
+            width={"100%"}
           >
-            {relatedProduct.map((item, index) => <SwiperSlide key={index} onClick={() => navigator(`product-detail/${item.id}`)}><CardProduct data={item} /></SwiperSlide>)}
+            {relatedProduct.map((item, index) => <SwiperSlide key={index} onClick={() => window.open(`/shop/product-detail/${item.id}`)}><CardProduct data={item} /></SwiperSlide>)}
           </Swiper>
         </Stack>
       ) : null}

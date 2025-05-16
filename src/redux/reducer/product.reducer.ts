@@ -1,3 +1,4 @@
+import { IMenuChild } from "@interfaces/IMenu.interface";
 import { IProduct } from "@interfaces/IProduct.interface";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -6,10 +7,12 @@ export interface IProductState {
   listProduct?: IProduct[];
   valueSearch: string;
   idCategory: number;
+  categorySelected: string;
   rangPrice: [number, number];
   sortBy: "createdAt" | "price" | "sold";
   sortDirection: "desc" | "asc";
   colorProduct: string;
+  tagCategory: IMenuChild[];
 }
 
 const initialState: IProductState = {
@@ -19,7 +22,9 @@ const initialState: IProductState = {
   rangPrice: [0, 10000],
   sortBy: "createdAt",
   sortDirection: "desc",
-  colorProduct: ""
+  colorProduct: "",
+  tagCategory: [],
+  categorySelected: "",
 };
 
 const productSlice = createSlice({
@@ -36,37 +41,61 @@ const productSlice = createSlice({
 
     //Search Filter
     setValueSearch: (state, action: PayloadAction<string>) => {
-      state.valueSearch = action.payload
+      state.valueSearch = action.payload;
     },
 
     //ID Category
     setIdCategory: (state, action: PayloadAction<number>) => {
-      state.idCategory = action.payload
+      state.idCategory = action.payload;
+    },
+
+    // Category Selected
+    setCategorySelected: (state, action: PayloadAction<string>) => {
+      state.categorySelected = action.payload;
     },
 
     //Rang Price
     setRangPrice: (state, action: PayloadAction<[number, number]>) => {
-      state.rangPrice = action.payload
+      state.rangPrice = action.payload;
     },
 
     //sortBy
-    setSortBy: (state, action: PayloadAction<"createdAt" | "price" | "sold">) => {
-      state.sortBy = action.payload
+    setSortBy: (
+      state,
+      action: PayloadAction<"createdAt" | "price" | "sold">
+    ) => {
+      state.sortBy = action.payload;
     },
 
     //sortDirection
     setSortDirection: (state, action: PayloadAction<"desc" | "asc">) => {
-      state.sortDirection = action.payload
+      state.sortDirection = action.payload;
     },
 
     //Color
     setColorProduct: (state, action: PayloadAction<string>) => {
-      state.colorProduct = action.payload
+      state.colorProduct = action.payload;
+    },
+
+    //Tag Check Menu
+    setTagCategory: (state, action: PayloadAction<IMenuChild[]>) => {
+      state.tagCategory = action.payload;
     },
   },
 });
 
-export const { setProduct, setListProduct, setValueSearch, setIdCategory, setRangPrice, setSortBy, setSortDirection, setColorProduct } = productSlice.actions;
+export const {
+  setProduct,
+  setListProduct,
+  setValueSearch,
+  setIdCategory,
+  setRangPrice,
+  setSortBy,
+  setSortDirection,
+  setColorProduct,
+  setTagCategory,
+  setCategorySelected,
+} = productSlice.actions;
 const productReducer = productSlice.reducer;
 
 export default productReducer;

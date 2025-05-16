@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { register } from "@apis/auth.api";
 import { Box, Button, Grid, GridItem, Stack, Text } from "@chakra-ui/react";
 import InputCustom from "@components/input-custom";
@@ -5,14 +6,12 @@ import { setNotification } from "@redux/reducer/auth.reducer";
 import { Dispatch, SetStateAction, useState } from "react";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
 interface IFormRegister {
   setIsLoading: Dispatch<SetStateAction<boolean>>;
 }
 
 const FormRegister = ({ setIsLoading }: IFormRegister) => {
-  const navigator = useNavigate();
   const dispatch = useDispatch();
   const [userName, setUserName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -92,12 +91,12 @@ const FormRegister = ({ setIsLoading }: IFormRegister) => {
             "Đăng ký thành công! Bạn hãy xác nhận email để tiếp tục đăng nhập.",
         })
       );
-      navigator("/my-account");
-    } catch (error) {
+      window.open("/my-account");
+    } catch (error:any) {
       dispatch(
         setNotification({
           status: "error",
-          title: `Đăng ký thất bại: ${error}`,
+          title: `Đăng ký thất bại: ${error.response.data.message}`,
         })
       );
     } finally {

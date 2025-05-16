@@ -18,6 +18,7 @@ const SubHeader = ({ selectedChild, seletectedMenu }: ISubHeader) => {
   return (
     <Stack
       width={"35rem"}
+      minW="25rem"
       height={"100%"}
       style={{
         background: "#181818",

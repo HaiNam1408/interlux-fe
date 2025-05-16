@@ -22,12 +22,11 @@ export const layoutRouters: RouteProps[] = [
   },
   {
 
-    path: "/shop/product-detail/:id-product",
+    path: "/shop/:slug-category/:id-product",
     element: <ProductDetail />
   }, 
   {
-    path: "/shop",
+    path: "/shop/:slug-category",
     element: <Products />,
-
   },
 ];

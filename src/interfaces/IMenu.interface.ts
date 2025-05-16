@@ -1,11 +1,12 @@
 export interface IMenu {
   title: string;
-  listMenu: IMenuChild[];
+  listMenu?: IMenuChild[];
+  slug?:string;
 }
 
 export interface IMenuChild {
   title: string;
-  linkTitle?: string;
+  slug?: string;
   listChild?: IMenuChild[];
   linkImg?: string;
 }

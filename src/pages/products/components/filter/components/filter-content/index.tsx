@@ -4,33 +4,49 @@ import DropDownCustom from "@components/dropdow-custom";
 import InputCustom from "@components/input-custom";
 import SlideCustom from "@components/slide-custom";
 import { ICategory } from "@interfaces/ICategory.interface";
-import { setColorProduct, setIdCategory, setRangPrice, setValueSearch } from "@redux/reducer/product.reducer";
+import {
+  setCategorySelected,
+  setColorProduct,
+  setIdCategory,
+  setRangPrice,
+  setValueSearch,
+} from "@redux/reducer/product.reducer";
 import { RootState } from "@redux/store";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 const FilterContent = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [category, setCategory] = useState<string>("");
   const [listCategory, setListCategory] = useState<ICategory[]>([]);
-  const idCategoryMain = 1
-
-  const valueSearch = useSelector((state: RootState) => state.product.valueSearch)
-  const rangPrice = useSelector((state: RootState) => state.product.rangPrice)
-  const colorProduct = useSelector((state: RootState) => state.product.colorProduct)
+  const { "slug-category": slugCategory } =
+    useParams();
+  const valueSearch = useSelector(
+    (state: RootState) => state.product.valueSearch
+  );
+  const rangPrice = useSelector((state: RootState) => state.product.rangPrice);
+  const colorProduct = useSelector(
+    (state: RootState) => state.product.colorProduct
+  );
 
   useEffect(() => {
     getAllCategory().then((res) => {
-      const data: ICategory = res.data.data.find((item: ICategory) => item.id === idCategoryMain)
-      setListCategory(data.children)
-    })
-  }, [])
+      const data: ICategory = res.data.data.find(
+        (item: ICategory) => item.slug === slugCategory || slugCategory?.includes("all")
+      );
+      setListCategory(data.children);
+    });
+  }, [slugCategory]);
+
 
   useEffect(() => {
-    const idCategory = listCategory.find((item) => item.name === category)?.id
+    const dataCategory = listCategory.find((item) => item.name === category);
 
-    dispatch(setIdCategory(idCategory || 0))
-  }, [category])
+    dispatch(setIdCategory(dataCategory?.id || 0));
+    dispatch(setCategorySelected(dataCategory?.name || ""));
+
+  }, [category]);
 
   return (
     <Grid templateColumns="repeat(4, 1fr)" gap={"2rem"} width={"100%"}>
@@ -78,7 +94,13 @@ const FilterContent = () => {
             "white",
             "yellow",
           ]}
-          setSelectedItem={(e) => { if (e.includes("All")) { dispatch(setColorProduct("")) } else { dispatch(setColorProduct(e)) } }}
+          setSelectedItem={(e) => {
+            if (e.includes("All")) {
+              dispatch(setColorProduct(""));
+            } else {
+              dispatch(setColorProduct(e));
+            }
+          }}
           type="color"
           seletedItem={colorProduct}
         />

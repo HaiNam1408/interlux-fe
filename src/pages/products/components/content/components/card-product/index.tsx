@@ -11,6 +11,7 @@ interface ICardProduct {
 const CardProduct = ({ data }: ICardProduct) => {
   const [hover, setHover] = useState<boolean>(false);
 
+
   return (
     <Stack
       width={"100%"}
@@ -50,7 +51,7 @@ const CardProduct = ({ data }: ICardProduct) => {
           Giảm ${data.percentOff}%
         </Box>}
         <Image
-          src={data.images[0].filePath}
+          src={data.images.length > 0 ? data.images[0].filePath : ""}
           width={"100%"}
           height={"100%"}
           objectFit={"cover"}
@@ -58,7 +59,7 @@ const CardProduct = ({ data }: ICardProduct) => {
           inset={0}
         ></Image>
         <Image
-          src={data.images[1].filePath}
+          src={data.images.length > 0 ? data.images[1].filePath : ""}
           width={"100%"}
           height={"100%"}
           objectFit={"cover"}

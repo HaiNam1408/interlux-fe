@@ -1,9 +1,10 @@
 import { Stack, Text } from "@chakra-ui/react";
 import MenuCustom from "@components/menu-custom";
 import { setSortBy, setSortDirection } from "@redux/reducer/product.reducer";
+import { RootState } from "@redux/store";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 
 interface SortOption {
   label: string;
@@ -31,18 +32,23 @@ const Header = () => {
   const navigator = useNavigate();
   const dispatch = useDispatch();
   const [selectedSort, setSelectedSort] = useState<string>("Default sorting");
-
+  const { "slug-category": slugCategory } = useParams();
+  const tagCategory = useSelector(
+    (state: RootState) => state.product.tagCategory
+  );
+  const nameCategory = useSelector(
+    (state: RootState) => state.product.categorySelected
+  );
   useEffect(() => {
-    const child = typeSort.find((item) => item.label === selectedSort)
+    const child = typeSort.find((item) => item.label === selectedSort);
     if (child) {
-      dispatch(setSortBy(child.field))
-      dispatch(setSortDirection(child.direction))
+      dispatch(setSortBy(child.field));
+      dispatch(setSortDirection(child.direction));
     } else {
-      dispatch(setSortBy("createdAt"))
-      dispatch(setSortDirection("desc"))
+      dispatch(setSortBy("createdAt"));
+      dispatch(setSortDirection("desc"));
     }
-
-  }, [selectedSort])
+  }, [selectedSort]);
 
   return (
     <Stack
@@ -64,7 +70,8 @@ const Header = () => {
           fontFamily={"tinos"}
           fontWeight={400}
         >
-          All Watch Straps
+          {tagCategory.find((item) => item.slug === slugCategory)?.title ||
+            "All Furniture"}
         </Text>
         <Stack width={"fit-content"} gap={".8rem"} direction={"row"}>
           <Text
@@ -83,8 +90,21 @@ const Header = () => {
             fontWeight={400}
             textTransform={"uppercase"}
           >
-            <strong>product</strong>
+            <strong>
+              {tagCategory.find((item) => item.slug === slugCategory)?.title ||
+                "All Furniture"}
+            </strong>
           </Text>
+          {nameCategory && (
+            <Text
+              fontSize={{ xl: "1.6rem", base: "1.2rem" }}
+              color={"#FFF"}
+              fontWeight={400}
+              textTransform={"uppercase"}
+            >
+              <strong>/ {nameCategory}</strong>
+            </Text>
+          )}
         </Stack>
       </Stack>
       <MenuCustom

@@ -47,6 +47,7 @@ const HeaderHover = ({ seletectedMenu, setSeletecedMenu }: IHeaderHover) => {
         seletectedMenu={seletectedMenu}
         setSelectedChild={setSelectedChild}
         selectedChild={selectedChild}
+        setSeletecedMenu={setSeletecedMenu}
       />
       <SubHeader
         seletectedMenu={seletectedMenu}

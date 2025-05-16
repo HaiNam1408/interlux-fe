@@ -1,37 +1,10 @@
 import { IcMadeOrder, IcReturns, IcSecure, IcShipping } from "@assets/svgs";
 
-export const listColor = [
-  {
-    image:
-      "https://handdn.com/wp-content/uploads/2024/02/SHARK-050224022-100x100.jpg",
-    colorTitle: "Blue",
-  },
-  {
-    image:
-      "https://handdn.com/wp-content/uploads/2024/02/SHARK-050224037-100x100.jpg",
-    colorTitle: "Dark Blue",
-  },
-  {
-    image:
-      "https://handdn.com/wp-content/uploads/2024/02/SHARK-050224052-100x100.jpg",
-    colorTitle: "Brown",
-  },
-  {
-    image:
-      "https://handdn.com/wp-content/uploads/2024/02/SHARK-050224007-100x100.jpg",
-    colorTitle: "Black",
-  },
-];
-
 export const listAddOns = [
   "Removable Covers",
   "Matching Ottoman",
   "Extra Cushions",
 ];
-{
-  /* <strong></strong>
-<br/> */
-}
 
 export const listFeature = [
   {
@@ -55,8 +28,8 @@ export const listFeature = [
     title: "Secure Checkout",
     sub: "verified by PayPal.",
     tolip: "Secure checkout | Verified by PayPal.",
-   },
-   {
+  },
+  {
     ic: <IcMadeOrder />,
     title: "Made to Order",
     sub: "100% Hand-crafted.",

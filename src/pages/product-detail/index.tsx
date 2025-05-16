@@ -29,9 +29,9 @@ const ProductDetail = () => {
   return (
     <Stack width={"100%"} height={"fit-content"} minH={"100dvh"} position={"relative"}>
       <LoadingScreen isLoading={loading} />
-      <ModelProduct />
       <DetailProduct />
       <InfoProduct />
+      <ModelProduct />
       <Variations />
       <FooterLogin />
     </Stack>
