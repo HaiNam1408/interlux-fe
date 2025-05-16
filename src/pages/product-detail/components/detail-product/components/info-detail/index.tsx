@@ -3,30 +3,38 @@ import { useNavigate } from "react-router-dom";
 import OrderDetail from "./components/order-detail";
 import ColorDetail from "./components/color-detail";
 import SelectedCustom from "@components/selected-custom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddOns from "./components/add-ons";
 import HandleDetail from "./components/handle-detail";
 import ProductDetail from "./components/product-detail";
-import { listColor } from "@constants/listFakeData";
+import { useSelector } from "react-redux";
+import { RootState } from "@redux/store";
 
-const listConfiguration = ["3-seater", "2-seater", "Sectional", "L-shapeF"];
-const listCushionFirmness = ["Soft ", "Medium", "Firm"];
+
 
 const InfoDetail = () => {
   const navigator = useNavigate();
-  const [configuration, setConfiguration] = useState<string>(
-    listConfiguration[0]
-  );
-  const [cushionFirmness, setCushionFirmness] = useState<string>(
-    listCushionFirmness[0]
-  );
+  const product = useSelector((state: RootState) => state.product.product)
+
+
+  const [material, setMaterial] = useState<string>("");
+  const [size, setSize] = useState<string>("");
   const [value, setValue] = useState("");
   const [itemSelected, setItemSelected] = useState<{
-    image: string;
+    value: string;
     colorTitle: string;
-  }>(listColor[0]);
+  }>({ colorTitle: "", value: "string" });
 
   const [selected, setSelected] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    setMaterial(product?.productAttributes.find(item => item.name.toLowerCase().includes("material"))?.values[0].name || "")
+    setSize(product?.productAttributes.find(item => item.name.toLowerCase().includes("size"))?.values[0].name || "")
+    setItemSelected({
+      colorTitle: product?.productAttributes.find(item => item.name.toLowerCase().includes("color"))?.values[0].name || "",
+      value: product?.productAttributes.find(item => item.name.toLowerCase().includes("color"))?.values[0].value || ""
+    })
+  }, [product])
 
   return (
     <Stack direction={"column"} width={"42%"} height={"fit-content"}>
@@ -41,9 +49,9 @@ const InfoDetail = () => {
             color: "#fff",
             fontWeight: 700,
           }}
-          onClick={() => navigator("/")}
+          onClick={() => navigator("/shop")}
         >
-          HOME
+          SHOP
         </Text>
         <Text fontSize={"1.2rem"} color={"#cecece"} textTransform={"uppercase"}>
           /
@@ -59,7 +67,23 @@ const InfoDetail = () => {
             fontWeight: 700,
           }}
         >
-          Classic Watch Straps
+          {product?.category.name}
+        </Text>
+        <Text fontSize={"1.2rem"} color={"#cecece"} textTransform={"uppercase"}>
+          /
+        </Text>
+        <Text
+          fontSize={"1.2rem"}
+          color={"#cecece"}
+          textTransform={"uppercase"}
+          transition={"all .3s ease"}
+          cursor={"pointer"}
+          _hover={{
+            color: "#fff",
+            fontWeight: 700,
+          }}
+        >
+          {product?.category.parent?.name}
         </Text>
       </Stack>
       <OrderDetail />
@@ -68,17 +92,17 @@ const InfoDetail = () => {
         setItemSelected={setItemSelected}
       />
       <SelectedCustom
-        listValue={listConfiguration}
-        title="Configuration"
-        setValue={setConfiguration}
-        value={configuration}
+        listValue={product?.productAttributes.find(item => item.name.toLowerCase().includes("material"))?.values.map(item => item.name) || []}
+        title="Material"
+        setValue={setMaterial}
+        value={material}
       />
       <Box height="2rem" />
       <SelectedCustom
-        listValue={listCushionFirmness}
-        title="Cushion Firmness"
-        setValue={setCushionFirmness}
-        value={cushionFirmness}
+        listValue={product?.productAttributes.find(item => item.name.toLowerCase().includes("size"))?.values.map(item => item.name) || []}
+        title="Size"
+        setValue={setSize}
+        value={size}
       />
       <AddOns setSelected={setSelected} selected={selected} />
       <Stack direction={"column"} gap={"1rem"} my={"2rem"}>
@@ -103,8 +127,8 @@ const InfoDetail = () => {
         data={{
           color: itemSelected.colorTitle,
           description: value,
-          configuration: configuration,
-          cushionFirmness: cushionFirmness,
+          material: material,
+          size: size,
           addOns: Object.keys(selected).filter((key) => selected[key]),
         }}
       />

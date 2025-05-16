@@ -5,8 +5,8 @@ import ContentSub from './components/content-sub';
 interface IProductDetail {
   data: {
     color: string;
-    configuration: string;
-    cushionFirmness: string;
+    material: string;
+    size: string;
     addOns: string[];
     description: string;
   };

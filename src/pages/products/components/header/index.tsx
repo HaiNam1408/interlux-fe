@@ -1,6 +1,8 @@
 import { Stack, Text } from "@chakra-ui/react";
 import MenuCustom from "@components/menu-custom";
-import { useState } from "react";
+import { setSortBy, setSortDirection } from "@redux/reducer/product.reducer";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 interface SortOption {
@@ -27,7 +29,20 @@ const typeSort: SortOption[] = [
 ];
 const Header = () => {
   const navigator = useNavigate();
+  const dispatch = useDispatch();
   const [selectedSort, setSelectedSort] = useState<string>("Default sorting");
+
+  useEffect(() => {
+    const child = typeSort.find((item) => item.label === selectedSort)
+    if (child) {
+      dispatch(setSortBy(child.field))
+      dispatch(setSortDirection(child.direction))
+    } else {
+      dispatch(setSortBy("createdAt"))
+      dispatch(setSortDirection("desc"))
+    }
+
+  }, [selectedSort])
 
   return (
     <Stack
