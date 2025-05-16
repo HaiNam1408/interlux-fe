@@ -10,9 +10,7 @@ import {
   useBoolean,
 } from "@chakra-ui/react";
 import {
-  Dispatch,
   ReactNode,
-  SetStateAction,
   useEffect,
   useState,
 } from "react";
@@ -25,7 +23,7 @@ interface IInputCustom {
   isRequest?: boolean;
   helperText?: string;
   value?: string | number;
-  setValue?: Dispatch<SetStateAction<string>>;
+  setValue?: ((value: string) => void) ;
 
   label?: ReactNode;
   require?: boolean;

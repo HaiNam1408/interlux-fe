@@ -5,26 +5,19 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import authReducer from "@redux/reducer/auth.reducer";
 import productReducer from "@redux/reducer/product.reducer";
 
+// Chỉ persist auth
 const persistConfigAuth = {
   key: "auth",
   storage: storageSession,
 };
 
-const persistConfigProduct = {
-  key: "product",
-  storage: storageSession,
-};
-
 const persistedAuthReducer = persistReducer(persistConfigAuth, authReducer);
-const persistedProductReducer = persistReducer(
-  persistConfigProduct,
-  productReducer
-);
 
+// Không persist product reducer
 export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
-    product: persistedProductReducer,
+    product: productReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

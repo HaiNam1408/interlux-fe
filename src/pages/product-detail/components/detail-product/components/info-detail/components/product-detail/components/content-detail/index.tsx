@@ -14,8 +14,8 @@ import { FaCheck } from "react-icons/fa6";
 interface IContentDetail {
   data: {
     color: string;
-    configuration: string;
-    cushionFirmness: string;
+    material: string;
+    size: string;
     addOns: string[];
     description: string;
   };
@@ -74,20 +74,20 @@ const ContentDetail = ({ data }: IContentDetail) => {
                   <GridItem colSpan={2}>{data.color}</GridItem>
                 </>
               )}
-              {data.configuration && (
+              {data.material && (
                 <>
                   <GridItem colSpan={1}>
-                    <strong>Configuration:</strong>
+                    <strong>Material:</strong>
                   </GridItem>
-                  <GridItem colSpan={2}>{data.configuration}</GridItem>
+                  <GridItem colSpan={2}>{data.material}</GridItem>
                 </>
               )}
-              {data.cushionFirmness && (
+              {data.size && (
                 <>
                   <GridItem colSpan={1}>
-                    <strong>Cushion Firmness:</strong>
+                    <strong>Size:</strong>
                   </GridItem>
-                  <GridItem colSpan={2}>{data.cushionFirmness}</GridItem>
+                  <GridItem colSpan={2}>{data.size}</GridItem>
                 </>
               )}
               {data.addOns.length > 0 && (

@@ -1,11 +1,11 @@
 import { Box, SystemStyleObject, Text } from "@chakra-ui/react";
 import "./styles.scss";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IcArrowDown } from "@assets/svgs";
 
 interface IMenuCustom {
   seletedItem?: string;
-  setSelectedItem: Dispatch<SetStateAction<string>>;
+  setSelectedItem: (e: string) => void;
   listMenu: string[];
   isSeleted?: boolean;
   valueDefaul?: string;
@@ -48,9 +48,8 @@ const MenuCustom = ({
   return (
     <Box ref={menuRef} className="menuCustom" sx={sx}>
       <Box
-        className={`menuCustom__input ${
-          isFocused ? "border-[#3182ce]" : "#fff"
-        }`}
+        className={`menuCustom__input ${isFocused ? "border-[#3182ce]" : "#fff"
+          }`}
         onClick={() => setIsFocused(!isFocused)}
         bg="#1a1a1a"
         border="1px solid #333"

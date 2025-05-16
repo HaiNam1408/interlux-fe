@@ -1,21 +1,44 @@
+import { getAllCategory } from "@apis/category.api";
 import { Grid, GridItem } from "@chakra-ui/react";
 import DropDownCustom from "@components/dropdow-custom";
 import InputCustom from "@components/input-custom";
 import SlideCustom from "@components/slide-custom";
-import { useState } from "react";
+import { ICategory } from "@interfaces/ICategory.interface";
+import { setColorProduct, setIdCategory, setRangPrice, setValueSearch } from "@redux/reducer/product.reducer";
+import { RootState } from "@redux/store";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const FilterContent = () => {
-  const [search, setSearch] = useState<string>("");
+  const dispatch = useDispatch()
   const [category, setCategory] = useState<string>("");
-  const [value, setValue] = useState<[number, number]>([0, 400]);
+  const [listCategory, setListCategory] = useState<ICategory[]>([]);
+  const idCategoryMain = 1
+
+  const valueSearch = useSelector((state: RootState) => state.product.valueSearch)
+  const rangPrice = useSelector((state: RootState) => state.product.rangPrice)
+  const colorProduct = useSelector((state: RootState) => state.product.colorProduct)
+
+  useEffect(() => {
+    getAllCategory().then((res) => {
+      const data: ICategory = res.data.data.find((item: ICategory) => item.id === idCategoryMain)
+      setListCategory(data.children)
+    })
+  }, [])
+
+  useEffect(() => {
+    const idCategory = listCategory.find((item) => item.name === category)?.id
+
+    dispatch(setIdCategory(idCategory || 0))
+  }, [category])
 
   return (
     <Grid templateColumns="repeat(4, 1fr)" gap={"2rem"} width={"100%"}>
       <GridItem colSpan={1}>
         <InputCustom
           colorLabel="#fff"
-          setValue={setSearch}
-          value={search}
+          setValue={(e) => dispatch(setValueSearch(e))}
+          value={valueSearch}
           placeholder="Search"
         />
       </GridItem>
@@ -23,7 +46,7 @@ const FilterContent = () => {
         <DropDownCustom
           label="Category"
           labelSearch="Filter category"
-          listDropdown={["1", "2", "3"]}
+          listDropdown={listCategory.map((item) => item.name)}
           setSelectedItem={setCategory}
         />
       </GridItem>
@@ -55,17 +78,18 @@ const FilterContent = () => {
             "white",
             "yellow",
           ]}
-          setSelectedItem={setCategory}
+          setSelectedItem={(e) => { if (e.includes("All")) { dispatch(setColorProduct("")) } else { dispatch(setColorProduct(e)) } }}
           type="color"
+          seletedItem={colorProduct}
         />
       </GridItem>
       <GridItem colSpan={1}>
         <SlideCustom
           label="Price Range"
-          max={400}
+          max={10000}
           min={0}
-          setValue={setValue}
-          value={value}
+          setValue={(e) => dispatch(setRangPrice(e))}
+          value={rangPrice}
         />
       </GridItem>
     </Grid>
