@@ -20,8 +20,7 @@ const FilterContent = () => {
   const dispatch = useDispatch();
   const [category, setCategory] = useState<string>("");
   const [listCategory, setListCategory] = useState<ICategory[]>([]);
-  const { "slug-category": slugCategory } =
-    useParams();
+  const { "slug-category": slugCategory } = useParams();
   const valueSearch = useSelector(
     (state: RootState) => state.product.valueSearch
   );
@@ -32,20 +31,27 @@ const FilterContent = () => {
 
   useEffect(() => {
     getAllCategory().then((res) => {
-      const data: ICategory = res.data.data.find(
-        (item: ICategory) => item.slug === slugCategory || slugCategory?.includes("all")
-      );
-      setListCategory(data.children);
+      if (slugCategory?.includes("all")) {
+        const data = res.data.data.flatMap((item: ICategory) =>
+          item.children.map((i) => (i))
+        );
+        setListCategory(data);
+      } else {
+        const data: ICategory = res.data.data.find(
+          (item: ICategory) =>
+            item.slug === slugCategory || slugCategory?.includes("all")
+        );
+        setListCategory(data.children);
+      }
     });
+    setCategory("")
   }, [slugCategory]);
-
 
   useEffect(() => {
     const dataCategory = listCategory.find((item) => item.name === category);
 
     dispatch(setIdCategory(dataCategory?.id || 0));
     dispatch(setCategorySelected(dataCategory?.name || ""));
-
   }, [category]);
 
   return (
