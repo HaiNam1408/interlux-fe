@@ -1,5 +1,6 @@
 import { Stack, Text } from "@chakra-ui/react";
 import { IMenu, IMenuChild } from "@interfaces/IMenu.interface";
+import { setCategorySelected } from "@redux/reducer/product.reducer";
 import { setRememberSlug } from "@redux/reducer/productStoge.reducer";
 import { Dispatch, SetStateAction, useRef } from "react";
 import { useDispatch } from "react-redux";
@@ -35,6 +36,7 @@ const ChildSub = ({
         setSeletecedMenu({ listMenu: [], title: "" });
         navigator(`shop/${item.slug}`);
         dispatch(setRememberSlug(selectedChild));
+        dispatch(setCategorySelected(item.title));
       }}
       overflow={"hidden"}
       transition={"all .5s ease"}

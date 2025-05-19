@@ -87,7 +87,7 @@ const Header = () => {
             color={"#FFF"}
             fontWeight={400}
             textTransform={"uppercase"}
-            onClick={() => navigator(`shop/${rememberSlug.slug}`)}
+            onClick={() => navigator(`/shop/${rememberSlug.slug}`)}
           >
             <strong>{rememberSlug.title}</strong>
           </Text>

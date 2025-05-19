@@ -8,11 +8,19 @@ import { IoMdClose } from "react-icons/io";
 import HeaderCart from "./components/header";
 import UnContent from "./components/un-content";
 import FooterCart from "./components/footer";
+import { useEffect, useState } from "react";
+import { ICart } from "@interfaces/ICart.interface";
+import { getAllCart } from "@apis/cart.api";
 
 const Cart = () => {
   const dispatch = useDispatch();
+  const [listCart, setListCart] = useState<ICart[]>([]);
 
   const isShowCart = useSelector((state: RootState) => state.cart.isShowCart);
+
+  useEffect(() => {
+    getAllCart().then((res) => console.log(res.data));
+  }, []);
 
   return (
     <Box

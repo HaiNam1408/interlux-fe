@@ -33,6 +33,18 @@ const FilterContent = () => {
   const rememberSlug = useSelector(
     (state: RootState) => state.productStoge.rememberSlug
   );
+  const categorySelected = useSelector(
+    (state: RootState) => state.product.categorySelected
+  );
+
+  useEffect(() => {
+    if (categorySelected) {
+      setCategory(categorySelected);
+    } else {
+      setCategory("");
+    }
+  }, [categorySelected]);
+
 
   useEffect(() => {
     getAllCategory().then((res) => {
@@ -51,17 +63,19 @@ const FilterContent = () => {
     setCategory("");
   }, [rememberSlug]);
 
-  useEffect(() => {
-    const dataCategory = listCategory.find((item) => item.name === category);
-
-    dispatch(setCategorySelected(dataCategory?.name || ""));
+  const handleChangeCategory = (child: string) => {
+    const dataCategory = listCategory.find((item) => item.name === child);
+    dispatch(setCategorySelected(child));
 
     if (slugCategory?.toLowerCase().includes("all")) {
       dispatch(setIdCategory(dataCategory?.id || 0));
-    } else {
-      navigator(`shop/${dataCategory?.slug}`);
+    } else if (child) {
+      navigator(`/shop/${dataCategory?.slug}`);
+    } else if (!child) {
+      navigator(`/shop/${rememberSlug?.slug}`);
     }
-  }, [category]);
+  };
+
 
   return (
     <Grid templateColumns="repeat(4, 1fr)" gap={"2rem"} width={"100%"}>
@@ -79,6 +93,8 @@ const FilterContent = () => {
           labelSearch="Filter category"
           listDropdown={listCategory.map((item) => item.name)}
           setSelectedItem={setCategory}
+          onClick={(item) => handleChangeCategory(item)}
+          seletedItem={category}
         />
       </GridItem>
       <GridItem colSpan={1}>

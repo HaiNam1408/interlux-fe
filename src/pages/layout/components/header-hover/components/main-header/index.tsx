@@ -1,6 +1,7 @@
 import { IcArrowRight } from "@assets/svgs";
 import { Box, Stack, Text } from "@chakra-ui/react";
 import { IMenu, IMenuChild } from "@interfaces/IMenu.interface";
+import { setCategorySelected } from "@redux/reducer/product.reducer";
 import { setRememberSlug } from "@redux/reducer/productStoge.reducer";
 import { Dispatch, SetStateAction } from "react";
 import { useDispatch } from "react-redux";
@@ -77,6 +78,7 @@ const MainHeader = ({
           onClick={() => {
             setSeletecedMenu({ listMenu: [], title: "" });
             navigator(`shop/all`);
+            dispatch(setCategorySelected(""));
             dispatch(
               setRememberSlug({
                 title: "All Furniture",
@@ -109,6 +111,7 @@ const MainHeader = ({
               setSeletecedMenu({ listMenu: [], title: "" });
               navigator(`shop/${item.slug}`);
               dispatch(setRememberSlug(item));
+              dispatch(setCategorySelected(""));
             }}
           >
             <Text

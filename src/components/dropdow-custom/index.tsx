@@ -10,7 +10,7 @@ interface IDropDownCustom {
   listDropdown: string[];
   isSeleted?: boolean;
   sx?: SystemStyleObject;
-  onClick?: () => void;
+  onClick?: (item: string) => void;
   maxH?: string;
 
   label: string;
@@ -28,9 +28,10 @@ const DropDownCustom = ({
   label,
   labelSearch,
   type,
+  seletedItem,
 }: IDropDownCustom) => {
   const [search, setSearch] = useState<string>("");
-  const [title, setTitle] = useState<string>(label)
+  const [title, setTitle] = useState<string>(label);
 
   const [isFocused, setIsFocused] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -38,13 +39,18 @@ const DropDownCustom = ({
   const handleClick = (item: string) => {
     setSelectedItem(item);
     setIsFocused(false);
-    if (onClick) onClick();
-    if(!item) {
-      setTitle(label)
+    if (onClick) onClick(item);
+    if (!item) {
+      setTitle(label);
     } else {
-      setTitle(item)
+      setTitle(item);
     }
   };
+
+  useEffect(() => {
+    if (seletedItem) return;
+    setTitle(label);
+  }, [seletedItem]);
 
   const handleDocumentClick = (e: MouseEvent) => {
     if (
@@ -54,8 +60,6 @@ const DropDownCustom = ({
       setIsFocused(false);
     }
   };
-
-
 
   useEffect(() => {
     document.addEventListener("click", handleDocumentClick);
@@ -67,8 +71,9 @@ const DropDownCustom = ({
   return (
     <Box ref={dropdownRef} className="dropdownCustom" sx={sx}>
       <Box
-        className={`dropdownCustom__input ${isFocused ? "border-[#3182ce]" : "#fff"
-          }`}
+        className={`dropdownCustom__input ${
+          isFocused ? "border-[#3182ce]" : "#fff"
+        }`}
         onClick={() => setIsFocused(!isFocused)}
         bg="#000000"
         border="1px solid #fff"
@@ -86,8 +91,9 @@ const DropDownCustom = ({
 
       {isSeleted && (
         <Box
-          className={`dropdownCustom__dropdown ${isFocused && "dropdownCustom__dropdown-show"
-            }`}
+          className={`dropdownCustom__dropdown ${
+            isFocused && "dropdownCustom__dropdown-show"
+          }`}
           bg="#1a1a1a"
           maxH={maxH}
           border="1px solid #333"
@@ -108,7 +114,6 @@ const DropDownCustom = ({
             p={"1rem"}
             my={"0"}
             onClick={() => handleClick("")}
-
           >
             <Text
               fontWeight={400}
