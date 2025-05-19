@@ -1,7 +1,9 @@
 import { IcArrowRight } from "@assets/svgs";
 import { Box, Stack, Text } from "@chakra-ui/react";
 import { IMenu, IMenuChild } from "@interfaces/IMenu.interface";
+import { setRememberSlug } from "@redux/reducer/productStoge.reducer";
 import { Dispatch, SetStateAction } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 interface IMainHeader {
@@ -18,6 +20,7 @@ const MainHeader = ({
   setSeletecedMenu,
 }: IMainHeader) => {
   const navigator = useNavigate();
+  const dispatch = useDispatch();
   return (
     <Stack
       width={"32rem"}
@@ -74,6 +77,12 @@ const MainHeader = ({
           onClick={() => {
             setSeletecedMenu({ listMenu: [], title: "" });
             navigator(`shop/all`);
+            dispatch(
+              setRememberSlug({
+                title: "All Furniture",
+                slug: "all",
+              })
+            );
           }}
         >
           <Text
@@ -99,6 +108,7 @@ const MainHeader = ({
             onClick={() => {
               setSeletecedMenu({ listMenu: [], title: "" });
               navigator(`shop/${item.slug}`);
+              dispatch(setRememberSlug(item));
             }}
           >
             <Text

@@ -1,4 +1,3 @@
-import { IMenuChild } from "@interfaces/IMenu.interface";
 import { IProduct } from "@interfaces/IProduct.interface";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -12,7 +11,6 @@ export interface IProductState {
   sortBy: "createdAt" | "price" | "sold";
   sortDirection: "desc" | "asc";
   colorProduct: string;
-  tagCategory: IMenuChild[];
 }
 
 const initialState: IProductState = {
@@ -23,7 +21,6 @@ const initialState: IProductState = {
   sortBy: "createdAt",
   sortDirection: "desc",
   colorProduct: "",
-  tagCategory: [],
   categorySelected: "",
 };
 
@@ -76,11 +73,6 @@ const productSlice = createSlice({
     setColorProduct: (state, action: PayloadAction<string>) => {
       state.colorProduct = action.payload;
     },
-
-    //Tag Check Menu
-    setTagCategory: (state, action: PayloadAction<IMenuChild[]>) => {
-      state.tagCategory = action.payload;
-    },
   },
 });
 
@@ -93,7 +85,6 @@ export const {
   setSortBy,
   setSortDirection,
   setColorProduct,
-  setTagCategory,
   setCategorySelected,
 } = productSlice.actions;
 const productReducer = productSlice.reducer;

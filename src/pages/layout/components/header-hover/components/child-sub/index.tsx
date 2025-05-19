@@ -1,50 +1,40 @@
-import { IcArrowDown } from "@assets/svgs";
-import { Box, Stack, Text } from "@chakra-ui/react";
-import { IMenuChild } from "@interfaces/IMenu.interface";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { Stack, Text } from "@chakra-ui/react";
+import { IMenu, IMenuChild } from "@interfaces/IMenu.interface";
+import { setRememberSlug } from "@redux/reducer/productStoge.reducer";
+import { Dispatch, SetStateAction, useRef } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 interface IChildSub {
   hoverId: string;
-  selected: IMenuChild;
   setHoverId: Dispatch<SetStateAction<string>>;
-  setSeleted: Dispatch<SetStateAction<IMenuChild>>;
   item: IMenuChild;
-  index: number;
+  setSeletecedMenu: Dispatch<SetStateAction<IMenu>>;
+  selectedChild: IMenuChild;
 }
 
 const ChildSub = ({
   hoverId,
-  selected,
   setHoverId,
-  setSeleted,
   item,
-  index,
+  setSeletecedMenu,
+  selectedChild,
 }: IChildSub) => {
   const contentRef = useRef<HTMLDivElement>(null);
-  const [height, setHeight] = useState("4rem");
-  const isOpen = selected.title === item.title;
+  const dispatch = useDispatch();
+  const navigator = useNavigate();
 
-  useEffect(() => {
-    if (isOpen && contentRef.current) {
-      const scrollHeight = contentRef.current.scrollHeight;
-      setHeight(`${scrollHeight}px`);
-    } else {
-      setHeight("4rem");
-    }
-  }, [isOpen]);
   return (
     <Stack
       ref={contentRef}
       direction={"column"}
       width={"100%"}
       gap={"0"}
-      height={height}
+      height={"4rem"}
       onClick={() => {
-        if (selected.title === item.title) {
-          setSeleted({ title: "" });
-        } else {
-          setSeleted(item);
-        }
+        setSeletecedMenu({ listMenu: [], title: "" });
+        navigator(`shop/${item.slug}`);
+        dispatch(setRememberSlug(selectedChild));
       }}
       overflow={"hidden"}
       transition={"all .5s ease"}
@@ -69,50 +59,7 @@ const ChildSub = ({
         >
           {item.title}
         </Text>
-        {item.listChild && (
-          <Box
-            transition={"all .3s ease"}
-            transform={
-              selected.title === item.title ? "scaleY(-1)" : "scaleY(1)"
-            }
-          >
-            <IcArrowDown
-              color={
-                hoverId === item.title || hoverId === "" ? "#fff" : "#969696"
-              }
-            />
-          </Box>
-        )}
       </Stack>
-      {item.listChild && item.title === selected.title && (
-        <Stack
-          direction={"column"}
-          cursor={"pointer"}
-          width={"100%"}
-          key={index}
-          pl={"2.4rem"}
-          my={"1.6rem"}
-          height={"fit-content"}
-        >
-          {(selected.listChild || []).map((child, i) => (
-            <Text
-              fontSize={"1.6rem"}
-              lineHeight={"2.4rem"}
-              color={
-                hoverId === child.title || hoverId === "" ? "#fff" : "#969696"
-              }
-              fontWeight={600}
-              transition={"all .2s ease"}
-              key={i}
-              py={".8rem"}
-              onMouseEnter={() => setHoverId(child.title)}
-              onMouseLeave={() => setHoverId("")}
-            >
-              {child.title}
-            </Text>
-          ))}
-        </Stack>
-      )}
     </Stack>
   );
 };

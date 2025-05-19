@@ -5,6 +5,7 @@ import HeaderHover from "./components/header-hover";
 import { useState } from "react";
 import { IMenu } from "@interfaces/IMenu.interface";
 import Footer from "./components/footer";
+import Cart from "./components/cart";
 
 const Layout = () => {
   const [seletectedMenu, setSeletecedMenu] = useState<IMenu>({
@@ -24,6 +25,7 @@ const Layout = () => {
         setSeletecedMenu={setSeletecedMenu}
       />
       <Header setSeletecedMenu={setSeletecedMenu} />
+      <Cart />
       <Outlet />
       <Footer />
     </Box>

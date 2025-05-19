@@ -14,13 +14,15 @@ import {
 import { RootState } from "@redux/store";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const FilterContent = () => {
   const dispatch = useDispatch();
+  const navigator = useNavigate();
   const [category, setCategory] = useState<string>("");
   const [listCategory, setListCategory] = useState<ICategory[]>([]);
   const { "slug-category": slugCategory } = useParams();
+
   const valueSearch = useSelector(
     (state: RootState) => state.product.valueSearch
   );
@@ -28,30 +30,37 @@ const FilterContent = () => {
   const colorProduct = useSelector(
     (state: RootState) => state.product.colorProduct
   );
+  const rememberSlug = useSelector(
+    (state: RootState) => state.productStoge.rememberSlug
+  );
 
   useEffect(() => {
     getAllCategory().then((res) => {
-      if (slugCategory?.includes("all")) {
+      if (rememberSlug.slug?.includes("all")) {
         const data = res.data.data.flatMap((item: ICategory) =>
-          item.children.map((i) => (i))
+          item.children.map((i) => i)
         );
         setListCategory(data);
       } else {
         const data: ICategory = res.data.data.find(
-          (item: ICategory) =>
-            item.slug === slugCategory || slugCategory?.includes("all")
+          (item: ICategory) => item.slug === rememberSlug.slug
         );
         setListCategory(data.children);
       }
     });
-    setCategory("")
-  }, [slugCategory]);
+    setCategory("");
+  }, [rememberSlug]);
 
   useEffect(() => {
     const dataCategory = listCategory.find((item) => item.name === category);
 
-    dispatch(setIdCategory(dataCategory?.id || 0));
     dispatch(setCategorySelected(dataCategory?.name || ""));
+
+    if (slugCategory?.toLowerCase().includes("all")) {
+      dispatch(setIdCategory(dataCategory?.id || 0));
+    } else {
+      navigator(`shop/${dataCategory?.slug}`);
+    }
   }, [category]);
 
   return (

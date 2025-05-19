@@ -14,3 +14,4 @@ export { default as IcPay6 } from "@assets/svgs/icPay-6";
 export { default as IcPay7 } from "@assets/svgs/icPay-7";
 export { default as IcPay8 } from "@assets/svgs/icPay-8";
 export { default as IcChatBoxDou } from "@assets/svgs/icChatBoxDou";
+export { default as IcCart } from "@assets/svgs/icCart";

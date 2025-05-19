@@ -5,15 +5,16 @@ import ChildSub from "../child-sub";
 
 interface ISubHeader {
   seletectedMenu: IMenu;
-  setSelectedChild: Dispatch<SetStateAction<IMenuChild>>;
   selectedChild: IMenuChild;
+  setSeletecedMenu: Dispatch<SetStateAction<IMenu>>;
 }
 
-const SubHeader = ({ selectedChild, seletectedMenu }: ISubHeader) => {
+const SubHeader = ({
+  selectedChild,
+  seletectedMenu,
+  setSeletecedMenu,
+}: ISubHeader) => {
   const [hoverId, setHoverId] = useState<string>("");
-  const [selected, setSeleted] = useState<IMenuChild>({
-    title: "",
-  });
 
   return (
     <Stack
@@ -51,13 +52,12 @@ const SubHeader = ({ selectedChild, seletectedMenu }: ISubHeader) => {
       >
         {(selectedChild.listChild || []).map((item, index) => (
           <ChildSub
-            index={index}
             hoverId={hoverId}
             item={item}
-            selected={selected}
             setHoverId={setHoverId}
-            setSeleted={setSeleted}
             key={index}
+            selectedChild={selectedChild}
+            setSeletecedMenu={setSeletecedMenu}
           />
         ))}
       </Box>

@@ -4,7 +4,7 @@ import { setSortBy, setSortDirection } from "@redux/reducer/product.reducer";
 import { RootState } from "@redux/store";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface SortOption {
   label: string;
@@ -32,9 +32,8 @@ const Header = () => {
   const navigator = useNavigate();
   const dispatch = useDispatch();
   const [selectedSort, setSelectedSort] = useState<string>("Default sorting");
-  const { "slug-category": slugCategory } = useParams();
-  const tagCategory = useSelector(
-    (state: RootState) => state.product.tagCategory
+  const rememberSlug = useSelector(
+    (state: RootState) => state.productStoge.rememberSlug
   );
   const nameCategory = useSelector(
     (state: RootState) => state.product.categorySelected
@@ -70,8 +69,7 @@ const Header = () => {
           fontFamily={"tinos"}
           fontWeight={400}
         >
-          {tagCategory.find((item) => item.slug === slugCategory)?.title ||
-            "All Furniture"}
+          {rememberSlug.title}
         </Text>
         <Stack width={"fit-content"} gap={".8rem"} direction={"row"}>
           <Text
@@ -89,11 +87,9 @@ const Header = () => {
             color={"#FFF"}
             fontWeight={400}
             textTransform={"uppercase"}
+            onClick={() => navigator(`shop/${rememberSlug.slug}`)}
           >
-            <strong>
-              {tagCategory.find((item) => item.slug === slugCategory)?.title ||
-                "All Furniture"}
-            </strong>
+            <strong>{rememberSlug.title}</strong>
           </Text>
           {nameCategory && (
             <Text
