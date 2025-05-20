@@ -1,6 +1,10 @@
 import { Stack, Text } from "@chakra-ui/react";
 import MenuCustom from "@components/menu-custom";
-import { setSortBy, setSortDirection } from "@redux/reducer/product.reducer";
+import {
+  setCategorySelected,
+  setSortBy,
+  setSortDirection,
+} from "@redux/reducer/product.reducer";
 import { RootState } from "@redux/store";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -87,7 +91,10 @@ const Header = () => {
             color={"#FFF"}
             fontWeight={400}
             textTransform={"uppercase"}
-            onClick={() => navigator(`/shop/${rememberSlug.slug}`)}
+            onClick={() => {
+              dispatch(setCategorySelected(""));
+              navigator(`/shop/${rememberSlug.slug}`);
+            }}
           >
             <strong>{rememberSlug.title}</strong>
           </Text>

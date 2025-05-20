@@ -2,7 +2,7 @@ import { Grid, GridItem } from "@chakra-ui/react";
 import LoadingCustom from "@components/loading-custom";
 import { IProduct } from "@interfaces/IProduct.interface";
 import CardProduct from "./components/card-product";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 interface IContent {
   listProduct: IProduct[];
@@ -10,7 +10,9 @@ interface IContent {
 }
 
 const Content = ({ listProduct, loading }: IContent) => {
-  const navigator = useNavigate()
+  const navigator = useNavigate();
+  const { "slug-category": slugCategory } = useParams();
+
   return (
     <Grid
       templateColumns="repeat(4, 1fr)"
@@ -22,7 +24,11 @@ const Content = ({ listProduct, loading }: IContent) => {
     >
       <LoadingCustom isLoading={loading}></LoadingCustom>
       {listProduct.map((item, index) => (
-        <GridItem colSpan={1} key={index} onClick={() => navigator(`product-detail/${item.id}`)}>
+        <GridItem
+          colSpan={1}
+          key={index}
+          onClick={() => navigator(`/shop/${slugCategory}/${item.id}`)}
+        >
           <CardProduct data={item} />
         </GridItem>
       ))}

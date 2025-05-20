@@ -1,41 +1,37 @@
-import { Canvas } from '@react-three/fiber'
-import { OrbitControls, useGLTF } from '@react-three/drei'
-import { Center, Box } from '@chakra-ui/react'
-import { useEffect, useRef } from 'react'
-
-
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls, useGLTF } from "@react-three/drei";
+import { Center, Box } from "@chakra-ui/react";
+import { useEffect, useRef } from "react";
 
 function PlaneModel() {
-  const { scene } = useGLTF('/models/plane.glb')  // load từ public
-  return <primitive object={scene} />
+  const { scene } = useGLTF("/models/plane.glb"); // load từ public
+  return <primitive object={scene} />;
 }
 
-
 function SofaModel({ colorsMap = {} }) {
-  const { scene } = useGLTF('/models/armChair.glb')
-  const ref = useRef()
+  const { scene } = useGLTF("/models/armChair.glb");
+  const ref = useRef();
 
   useEffect(() => {
-    if (!ref.current) return
+    if (!ref.current) return;
 
     ref.current.traverse((child) => {
       if (child.isMesh) {
-        console.log('Mesh name:', child.name)
       }
-    })
+    });
 
     ref.current.traverse((child) => {
       if (child.isMesh && child.material) {
         for (const partName in colorsMap) {
           if (child.name.includes(partName)) {
-            child.material.color.set(colorsMap[partName])
+            child.material.color.set(colorsMap[partName]);
           }
         }
       }
-    })
-  }, [colorsMap])
+    });
+  }, [colorsMap]);
 
-  return <primitive ref={ref} object={scene} position={[0, 1.24, 0]} />
+  return <primitive ref={ref} object={scene} position={[0, 1.24, 0]} />;
 }
 
 const ModelProduct = () => {
@@ -87,12 +83,16 @@ const ModelProduct = () => {
           />
 
           {/* Mặt sàn phản chiếu ánh sáng */}
-          <mesh receiveShadow rotation-x={-Math.PI / 2} position={[0, -0.01, 0]}>
+          <mesh
+            receiveShadow
+            rotation-x={-Math.PI / 2}
+            position={[0, -0.01, 0]}
+          >
             <planeGeometry args={[20, 20]} />
             <shadowMaterial opacity={0.3} />
           </mesh>
 
-          <SofaModel colorsMap={{ Cube001: 'white' }} />
+          <SofaModel colorsMap={{ Cube001: "white" }} />
           <PlaneModel />
 
           <OrbitControls
@@ -105,7 +105,7 @@ const ModelProduct = () => {
         </Canvas>
       </Box>
     </Center>
-  )
-}
+  );
+};
 
-export default ModelProduct
+export default ModelProduct;

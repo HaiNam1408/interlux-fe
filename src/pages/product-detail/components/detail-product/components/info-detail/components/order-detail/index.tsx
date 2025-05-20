@@ -2,12 +2,15 @@ import { Stack, Text } from "@chakra-ui/react";
 import RatingComponent from "../rating-detail";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/store";
+import { IProductVariation } from "@interfaces/IProduct.interface";
 
+interface IOrderDetail {
+  selectedVariation: IProductVariation | null;
+}
 
-
-const OrderDetail = () => {
-  const product = useSelector((state: RootState) => state.product.product)
-
+const OrderDetail = ({ selectedVariation }: IOrderDetail) => {
+  const product = useSelector((state: RootState) => state.product.product);
+  console.log(selectedVariation);
   return (
     <Stack direction={"column"} gap={"0"} width={"100%"}>
       <Text
@@ -18,13 +21,11 @@ const OrderDetail = () => {
         overflow={"hidden"}
         textOverflow={"ellipsis"}
         whiteSpace={"nowrap"}
-      >{product?.title}
+      >
+        {product?.title}
       </Text>
-      <Text
-        fontSize={"1.6rem"}
-        color={"#fff"}
-        fontWeight={400}
-      >{product?.description}
+      <Text fontSize={"1.6rem"} color={"#fff"} fontWeight={400}>
+        {product?.description}
       </Text>
       <Stack
         width={"100%"}
@@ -35,12 +36,28 @@ const OrderDetail = () => {
         mt={"1rem"}
       >
         <Stack direction={"row"} alignItems={"flex-end"}>
-          <Text fontSize={"2.4rem"} color={"#fff"} fontWeight={600} lineHeight={"100%"}>
-            ${product?.finalPrice}
+          <Text
+            fontSize={"2.4rem"}
+            color={"#fff"}
+            fontWeight={600}
+            lineHeight={"100%"}
+          >
+            $
+            {selectedVariation
+              ? selectedVariation.finalPrice
+              : product?.finalPrice}
           </Text>
-          {product?.percentOff && <Text fontSize={"1.4rem"} color={"#fff"} fontWeight={400} lineHeight={"100%"} textDecoration="line-through">
-            ${product?.price}
-          </Text>}
+          {product?.percentOff && (
+            <Text
+              fontSize={"1.4rem"}
+              color={"#fff"}
+              fontWeight={400}
+              lineHeight={"100%"}
+              textDecoration="line-through"
+            >
+              ${selectedVariation ? selectedVariation.price : product?.price}
+            </Text>
+          )}
         </Stack>
         <RatingComponent isChangeRa={false} numRating={5} title="2 reviews" />
       </Stack>

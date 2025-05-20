@@ -6,6 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
 import { defaultTheme } from "@themes/defaut-theme";
 import RouterContainer from "@routes/router-container";
+import GlobalNotification from "@components/global-notification";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <PersistGate loading={null} persistor={persistor}>
           <ChakraProvider theme={defaultTheme}>
             <RouterContainer />
+            <GlobalNotification />
           </ChakraProvider>
         </PersistGate>
       </Provider>

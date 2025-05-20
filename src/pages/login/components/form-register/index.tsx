@@ -91,8 +91,12 @@ const FormRegister = ({ setIsLoading }: IFormRegister) => {
             "Đăng ký thành công! Bạn hãy xác nhận email để tiếp tục đăng nhập.",
         })
       );
-      window.open("/my-account");
-    } catch (error:any) {
+      setConfirmPassword("");
+      setEmail("");
+      setPassword("");
+      setPhone("");
+      setUserName("");
+    } catch (error: any) {
       dispatch(
         setNotification({
           status: "error",
