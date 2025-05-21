@@ -1,6 +1,18 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { addCart } from "@apis/cart.api";
 import { Button, HStack, Input, Stack, useNumberInput } from "@chakra-ui/react";
+import { IProductVariation } from "@interfaces/IProduct.interface";
+import { setNotification } from "@redux/reducer/auth.reducer";
+import { setIsReset } from "@redux/reducer/cart.reducer";
+import { RootState } from "@redux/store";
+import { useDispatch, useSelector } from "react-redux";
 
-const HandleDetail = () => {
+interface IHandleDetail {
+  selectedVariation: IProductVariation | null;
+}
+
+const HandleDetail = ({ selectedVariation }: IHandleDetail) => {
+  const dispatch = useDispatch();
   const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
     useNumberInput({
       step: 1,
@@ -12,6 +24,29 @@ const HandleDetail = () => {
   const inc = getIncrementButtonProps();
   const dec = getDecrementButtonProps();
   const input = getInputProps();
+  const product = useSelector((state: RootState) => state.product.product);
+
+  const handleAddToCart = async () => {
+    try {
+      const quantity = parseInt(input.value, 10);
+      await addCart(product?.id || 0, selectedVariation?.id || 0, quantity);
+
+      dispatch(
+        setNotification({
+          status: "success",
+          title: "Đã thêm thành công sản phẩm.",
+        })
+      );
+      dispatch(setIsReset());
+    } catch (error) {
+      dispatch(
+        setNotification({
+          status: "warning",
+          title: "Thiếu token trong response.",
+        })
+      );
+    }
+  };
   return (
     <Stack width={"100%"} gap={"2rem"} direction={"row"} alignItems={"center"}>
       <HStack maxW="320px">
@@ -66,6 +101,7 @@ const HandleDetail = () => {
         _hover={{
           bg: "#e2e2e2",
         }}
+        onClick={handleAddToCart}
       >
         Add to cart
       </Button>

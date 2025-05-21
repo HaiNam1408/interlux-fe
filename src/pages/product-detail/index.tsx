@@ -1,4 +1,4 @@
-import { Stack } from "@chakra-ui/react";
+import { Stack, Text } from "@chakra-ui/react";
 import ModelProduct from "./components/model-product";
 import DetailProduct from "./components/detail-product";
 import InfoProduct from "./components/infor-product";
@@ -21,6 +21,7 @@ const ProductDetail = () => {
   const [selectedVariation, setSelectedVariation] =
     useState<IProductVariation | null>(null);
   const product = useSelector((state: RootState) => state.product.product);
+  const [isModel, setIsModel] = useState<boolean>(false);
 
   const findMatchingVariation = (
     color: string,
@@ -71,8 +72,47 @@ const ProductDetail = () => {
         setSelectedVariation={setSelectedVariation}
         selectedVariation={selectedVariation}
       />
-      <InfoProduct />
-      <ModelProduct />
+      <Stack
+        width={"100%"}
+        direction={"row"}
+        gap={"2rem"}
+        justifyContent={"center"}
+      >
+        <Text
+          py={"2rem"}
+          fontSize={"4rem"}
+          fontFamily={"tinos"}
+          fontWeight={700}
+          cursor={"pointer"}
+          textDecoration={isModel ? "auto" : "underline"}
+          transition={"all .3s ease"}
+          onClick={() => setIsModel(false)}
+        >
+          Descriptions
+        </Text>
+        <Text
+          py={"2rem"}
+          fontSize={"4rem"}
+          fontFamily={"tinos"}
+          fontWeight={700}
+        >
+          /
+        </Text>
+        <Text
+          py={"2rem"}
+          fontSize={"4rem"}
+          fontFamily={"tinos"}
+          cursor={"pointer"}
+          fontWeight={700}
+          textDecoration={!isModel ? "auto" : "underline"}
+          transition={"all .3s ease"}
+          onClick={() => setIsModel(true)}
+        >
+          Model
+        </Text>
+      </Stack>
+      {isModel ? <ModelProduct /> : <InfoProduct />}
+
       <Variations />
       <FooterLogin />
     </Stack>

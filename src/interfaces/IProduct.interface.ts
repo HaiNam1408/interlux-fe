@@ -59,7 +59,7 @@ export interface IProduct {
   sold: number;
   model?: string | null;
   images: IProductImage[];
-  attributes?: { [key: string]: string }; // ví dụ: Features, Material, Warranty,...
+  attributes?: { [key: string]: string };
   category: IProductCategory;
   productAttributes: IProductAttribute[];
   variations: IProductVariation[];

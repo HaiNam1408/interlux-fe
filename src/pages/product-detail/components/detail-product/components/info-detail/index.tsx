@@ -201,7 +201,7 @@ const InfoDetail = ({
           minH={"10rem"}
         />
       </Stack>
-      <HandleDetail />
+      <HandleDetail selectedVariation={selectedVariation} />
 
       <ProductDetail
         data={{

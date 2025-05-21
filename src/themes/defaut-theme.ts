@@ -43,6 +43,10 @@ const colors = {
     main: "#ffffff",
     blue_light: "#0FD7E9",
   },
+
+  background: {
+    main: "#fff",
+  },
 };
 
 const fonts = {
@@ -60,7 +64,6 @@ const ButtonStyle = {
   overflow: "hidden",
   borderRadius: ".8rem",
 };
-
 
 const components = {
   Button: {

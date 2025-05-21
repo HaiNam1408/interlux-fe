@@ -1,29 +1,29 @@
-import { getRelatedProduct } from "@apis/product.api"
-import { Stack, Text } from "@chakra-ui/react"
-import { IProduct } from "@interfaces/IProduct.interface"
-import { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { getRelatedProduct } from "@apis/product.api";
+import { Stack, Text } from "@chakra-ui/react";
+import { IProduct } from "@interfaces/IProduct.interface";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 // Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
+import "swiper/css";
+import "swiper/css/pagination";
 
 // import required modules
-import { Pagination } from 'swiper/modules';
-import CardProduct from "@pages/products/components/content/components/card-product"
+import { Pagination } from "swiper/modules";
+import CardProduct from "@pages/products/components/content/components/card-product";
 
 const Variations = () => {
-  const navigator = useNavigate()
   const { "id-product": productId } = useParams();
-  const [relatedProduct, setReLatedProduct] = useState<IProduct[]>([])
+  const [relatedProduct, setReLatedProduct] = useState<IProduct[]>([]);
 
   useEffect(() => {
-    getRelatedProduct(productId || "").then((res) => setReLatedProduct(res.data.data))
-  }, [])
-
+    getRelatedProduct(productId || "").then((res) =>
+      setReLatedProduct(res.data.data)
+    );
+  }, []);
   return (
     <>
       {relatedProduct.length > 0 ? (
@@ -55,14 +55,26 @@ const Variations = () => {
             }}
             modules={[Pagination]}
             className="mySwiper"
-            width={"100%"}
+            style={{
+              width: "100%",
+            }}
           >
-            {relatedProduct.map((item, index) => <SwiperSlide key={index} onClick={() => window.open(`/shop/product-detail/${item.id}`)}><CardProduct data={item} /></SwiperSlide>)}
+            {relatedProduct.map((item, index) => (
+              <SwiperSlide
+                key={index}
+                onClick={() => {
+                  console.log("Clicked", item.id);
+                  window.location.href = `/shop/product-detail/${item.id}`;
+                }}
+              >
+                <CardProduct data={item} />
+              </SwiperSlide>
+            ))}
           </Swiper>
         </Stack>
       ) : null}
     </>
-  )
-}
+  );
+};
 
-export default Variations
+export default Variations;

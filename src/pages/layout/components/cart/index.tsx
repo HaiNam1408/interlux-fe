@@ -11,16 +11,22 @@ import FooterCart from "./components/footer";
 import { useEffect, useState } from "react";
 import { ICart } from "@interfaces/ICart.interface";
 import { getAllCart } from "@apis/cart.api";
+import LoadingCustom from "@components/loading-custom";
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const [listCart, setListCart] = useState<ICart[]>([]);
+  const [listCart, setListCart] = useState<ICart>();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const isShowCart = useSelector((state: RootState) => state.cart.isShowCart);
+  const isReset = useSelector((state: RootState) => state.cart.isResetCart);
 
   useEffect(() => {
-    getAllCart().then((res) => console.log(res.data));
-  }, []);
+    setLoading(true);
+    getAllCart()
+      .then((res) => setListCart(res.data.data))
+      .finally(() => setLoading(false));
+  }, [isReset]);
 
   return (
     <Box
@@ -61,6 +67,7 @@ const Cart = () => {
         zIndex={2}
         transition={"all .8s ease"}
       >
+        <LoadingCustom isLoading={loading} />
         <Box
           width={"4rem"}
           height={"4rem"}
@@ -73,12 +80,16 @@ const Cart = () => {
           <IoMdClose fontSize={"3.4rem"} color="#000" />
         </Box>
         <HeaderCart />
-        {false ? (
+        {(listCart?.items || []).length <= 0 ? (
           <UnContent />
         ) : (
           <>
-            <ContentCart />
-            <FooterCart />
+            <ContentCart
+              listCart={listCart}
+              setListCart={setListCart}
+              setLoading={setLoading}
+            />
+            <FooterCart listCart={listCart} />
           </>
         )}
       </Box>

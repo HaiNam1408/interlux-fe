@@ -1,8 +1,13 @@
 import { Box, Button, Stack, Text } from "@chakra-ui/react";
+import { ICart } from "@interfaces/ICart.interface";
 import { IoMdLock } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
-const FooterCart = () => {
+interface IFooterCart {
+  listCart?: ICart;
+}
+
+const FooterCart = ({ listCart }: IFooterCart) => {
   const navigator = useNavigate();
 
   return (
@@ -12,35 +17,6 @@ const FooterCart = () => {
       borderTop={"1px solid #f1f1f1"}
       p={"0 3rem 3rem 3rem"}
     >
-      <Stack
-        width={"100%"}
-        height={"fit-content"}
-        direction={"column"}
-        gap={"1rem"}
-        mt={"1.5rem"}
-        mb={"2rem"}
-      >
-        <Text fontSize={"1.6rem"} color={"#161735"}>
-          Add <strong>$361.00</strong> to cart and get free shipping!
-        </Text>
-        <Box
-          width={"100%"}
-          height={".8rem"}
-          position={"relative"}
-          borderRadius={".5rem"}
-          bgColor={"#ddd"}
-        >
-          <Box
-            width={"20%"}
-            height={".8rem"}
-            position={"absolute"}
-            borderRadius={".5rem"}
-            bgColor={"#161735"}
-            left={0}
-            top={0}
-          ></Box>
-        </Box>
-      </Stack>
       <Stack
         width={"100%"}
         py={"1rem"}
@@ -55,7 +31,11 @@ const FooterCart = () => {
           Subtotal:
         </Text>
         <Text fontSize={"1.6rem"} color={"#161735"} fontWeight={600}>
-          $89.00
+          $
+          {listCart?.summary.subtotal.toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}
         </Text>
       </Stack>
       <Stack width={"100%"} direction={"column"}>
