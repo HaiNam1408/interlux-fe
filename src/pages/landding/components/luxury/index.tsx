@@ -75,7 +75,12 @@ const Luxury = () => {
         bottom={"8%"}
         zIndex={1}
       >
-        <ButtonCustom title="Explore" />
+        <ButtonCustom
+          title="Explore"
+          onClick={() =>
+            window.open("https://sparkling-meringue-fd1ecd.netlify.app/")
+          }
+        />
       </Center>
     </Box>
   );
