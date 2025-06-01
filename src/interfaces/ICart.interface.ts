@@ -28,6 +28,7 @@ export interface ICartItem {
     images: IProductImage[];
     percentOff: number;
     price: number;
+    finalPrice: number;
     title: number;
   };
 }

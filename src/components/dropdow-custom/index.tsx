@@ -75,15 +75,10 @@ const DropDownCustom = ({
           isFocused ? "border-[#3182ce]" : "#fff"
         }`}
         onClick={() => setIsFocused(!isFocused)}
-        bg="#000000"
-        border="1px solid #fff"
+        bgColor="bg.main"
+        border="1px solid #cecece"
       >
-        <Text
-          fontWeight={400}
-          lineHeight="1.6rem"
-          fontSize="1.6rem"
-          color={"gray.100"}
-        >
+        <Text fontWeight={400} lineHeight="1.6rem" fontSize="1.6rem">
           {title}
         </Text>
         {isSeleted && <IcArrowDown color="#fff" />}
@@ -94,7 +89,7 @@ const DropDownCustom = ({
           className={`dropdownCustom__dropdown ${
             isFocused && "dropdownCustom__dropdown-show"
           }`}
-          bg="#1a1a1a"
+          bg="bg.main"
           maxH={maxH}
           border="1px solid #333"
         >
@@ -119,7 +114,7 @@ const DropDownCustom = ({
               fontWeight={400}
               lineHeight="1.6rem"
               fontSize="1.6rem"
-              color="gray.100"
+              color="text.sub"
               textTransform={"capitalize"}
             >
               Delete selection
@@ -145,7 +140,7 @@ const DropDownCustom = ({
                     height={"4rem"}
                     p={".4rem"}
                     border="1px solid #cecece"
-                    bgColor={"#fff"}
+                    bgColor={"bg.main"}
                   >
                     <Box width={"100%"} h={"100%"} bgColor={item}></Box>
                   </Box>
@@ -155,7 +150,6 @@ const DropDownCustom = ({
                   fontWeight={400}
                   lineHeight="1.6rem"
                   fontSize="1.6rem"
-                  color="gray.100"
                   textTransform={"capitalize"}
                 >
                   {item}

@@ -10,13 +10,12 @@ interface IOrderDetail {
 
 const OrderDetail = ({ selectedVariation }: IOrderDetail) => {
   const product = useSelector((state: RootState) => state.product.product);
-  console.log(selectedVariation);
+
   return (
     <Stack direction={"column"} gap={"0"} width={"100%"}>
       <Text
         fontFamily={"tinos"}
         fontSize={"4.2rem"}
-        color={"#fff"}
         fontWeight={500}
         overflow={"hidden"}
         textOverflow={"ellipsis"}
@@ -24,7 +23,7 @@ const OrderDetail = ({ selectedVariation }: IOrderDetail) => {
       >
         {product?.title}
       </Text>
-      <Text fontSize={"1.6rem"} color={"#fff"} fontWeight={400}>
+      <Text fontSize={"1.6rem"} fontWeight={400}>
         {product?.description}
       </Text>
       <Stack
@@ -36,12 +35,7 @@ const OrderDetail = ({ selectedVariation }: IOrderDetail) => {
         mt={"1rem"}
       >
         <Stack direction={"row"} alignItems={"flex-end"}>
-          <Text
-            fontSize={"2.4rem"}
-            color={"#fff"}
-            fontWeight={600}
-            lineHeight={"100%"}
-          >
+          <Text fontSize={"2.4rem"} fontWeight={600} lineHeight={"100%"}>
             $
             {selectedVariation
               ? selectedVariation.finalPrice
@@ -50,7 +44,6 @@ const OrderDetail = ({ selectedVariation }: IOrderDetail) => {
           {product?.percentOff && (
             <Text
               fontSize={"1.4rem"}
-              color={"#fff"}
               fontWeight={400}
               lineHeight={"100%"}
               textDecoration="line-through"

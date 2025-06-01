@@ -7,13 +7,16 @@ import { PersistGate } from "redux-persist/integration/react";
 import { defaultTheme } from "@themes/defaut-theme";
 import RouterContainer from "@routes/router-container";
 import GlobalNotification from "@components/global-notification";
+import { useDarkModeContext } from "@hooks/useDarkModeContext";
+import { darkTheme } from "@themes/dark-theme";
 
 function App() {
+  const { isDarkMode } = useDarkModeContext();
   return (
     <BrowserRouter>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <ChakraProvider theme={defaultTheme}>
+          <ChakraProvider theme={isDarkMode ? defaultTheme : darkTheme}>
             <RouterContainer />
             <GlobalNotification />
           </ChakraProvider>

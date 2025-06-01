@@ -11,8 +11,11 @@ import {
   IcPay7,
   IcPay8,
 } from "@assets/svgs";
+import { useDarkModeContext } from "@hooks/useDarkModeContext";
 
 const ContentSub = () => {
+  const { isDarkMode } = useDarkModeContext();
+
   return (
     <Stack direction={"column"} gap={"0"} width={"100%"}>
       <FeatureProduct />
@@ -30,13 +33,13 @@ const ContentSub = () => {
         width={"100%"}
         height={"fit-content"}
         p={"2rem"}
-        bgColor={"#1a1a1a"}
+        bgColor={"bg.main"}
         direction={"row"}
         alignItems={"center"}
         mt={"2rem"}
         gap={"2rem"}
       >
-        <IcChatBoxDou size="4rem" />
+        <IcChatBoxDou size="4rem" color={isDarkMode ? "#000" : "#fff"} />
         <Text fontSize="1.4rem">
           <strong>Need help with sizing?</strong>
           <br />

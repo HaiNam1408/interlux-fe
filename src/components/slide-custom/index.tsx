@@ -7,7 +7,7 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import "./styles.scss";
-import {  useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IcArrowDown } from "@assets/svgs";
 import { Slider } from "@ark-ui/react";
 
@@ -57,19 +57,14 @@ const SlideCustom = ({
     <Box ref={slideRef} className="slideCustom" sx={sx}>
       {/* Button để toggle */}
       <Box
-        className={`slideCustom__input ${isFocused ? "border-[#3182ce]" : "#fff"
-          }`}
+        className={`slideCustom__input ${
+          isFocused ? "border-[#3182ce]" : "#fff"
+        }`}
         onClick={() => setIsFocused(!isFocused)}
-        bg="#000000"
-        border="1px solid #fff"
-        
+        bg="bg.main"
+        border="1px solid #cecece"
       >
-        <Text
-          fontWeight={400}
-          lineHeight="1.6rem"
-          fontSize="1.6rem"
-          color={"gray.100"}
-        >
+        <Text fontWeight={400} lineHeight="1.6rem" fontSize="1.6rem">
           {label}
         </Text>
         {isSeleted && <IcArrowDown color="#fff" />}
@@ -78,9 +73,10 @@ const SlideCustom = ({
       {/* Slide dropdown */}
       {isSeleted && (
         <Stack
-          className={`slideCustom__slide ${isFocused ? "slideCustom__slide-show" : ""
-            }`}
-          bg="#1a1a1a"
+          className={`slideCustom__slide ${
+            isFocused ? "slideCustom__slide-show" : ""
+          }`}
+          bgColor="bg.main"
           minH={"8rem"}
           maxH={maxH}
           border="1px solid #333"
@@ -91,12 +87,8 @@ const SlideCustom = ({
         >
           {/* Min - Max values ở hai đầu */}
           <Flex justify="space-between" mb={3}>
-            <Text fontSize="1.4rem" color="gray.400">
-              {min}
-            </Text>
-            <Text fontSize="1.4rem" color="gray.400">
-              {max}
-            </Text>
+            <Text fontSize="1.4rem">{min}</Text>
+            <Text fontSize="1.4rem">{max}</Text>
           </Flex>
 
           <ChakraSlider

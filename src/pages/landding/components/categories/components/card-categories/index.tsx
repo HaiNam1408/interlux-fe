@@ -1,13 +1,21 @@
 import { IcArrowRight } from "@assets/svgs";
 import { Box, Center, Image, Stack, Text } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 interface ICardCatogorise {
   imgCard: string;
   categorie: string;
   title: string;
+  slug: string;
 }
 
-const CardCatogories = ({ categorie, imgCard, title }: ICardCatogorise) => {
+const CardCatogories = ({
+  categorie,
+  imgCard,
+  title,
+  slug,
+}: ICardCatogorise) => {
+  const navigator = useNavigate();
   return (
     <Stack
       width={"100%"}
@@ -63,6 +71,7 @@ const CardCatogories = ({ categorie, imgCard, title }: ICardCatogorise) => {
             cursor: "pointer",
             position: "relative",
           }}
+          onClick={() => navigator(slug)}
         >
           <Box
             position="absolute"

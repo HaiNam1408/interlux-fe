@@ -69,7 +69,6 @@ const Header = () => {
       >
         <Text
           fontSize={{ xl: "4.8rem", base: "3rem" }}
-          color={"#FFF"}
           fontFamily={"tinos"}
           fontWeight={400}
         >
@@ -78,7 +77,6 @@ const Header = () => {
         <Stack width={"fit-content"} gap={".8rem"} direction={"row"}>
           <Text
             fontSize={{ xl: "1.6rem", base: "1.2rem" }}
-            color={"#FFF"}
             fontWeight={400}
             textTransform={"uppercase"}
             cursor={"pointer"}
@@ -88,7 +86,6 @@ const Header = () => {
           </Text>
           <Text
             fontSize={{ xl: "1.6rem", base: "1.2rem" }}
-            color={"#FFF"}
             fontWeight={400}
             textTransform={"uppercase"}
             onClick={() => {

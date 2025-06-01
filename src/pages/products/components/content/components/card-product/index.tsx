@@ -11,7 +11,6 @@ interface ICardProduct {
 const CardProduct = ({ data }: ICardProduct) => {
   const [hover, setHover] = useState<boolean>(false);
 
-
   return (
     <Stack
       width={"100%"}
@@ -28,28 +27,30 @@ const CardProduct = ({ data }: ICardProduct) => {
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
-        {data.percentOff && <Box
-          display="inline-flex"
-          alignItems="center"
-          bg="pink.400"
-          color="white"
-          px={3}
-          py={1.5}
-          borderRadius="md"
-          fontWeight="semibold"
-          fontSize="1rem"
-          cursor="default"
-          transition="background-color 0.3s ease"
-          _hover={{ bg: "pink.600" }}
-          userSelect="none"
-          position={"absolute"}
-          right={"0"}
-          top={"2rem"}
-          zIndex={10}
-        >
-          <Icon as={MdLocalOffer} mr={2} boxSize={5} />
-          Giảm ${data.percentOff}%
-        </Box>}
+        {data.percentOff && (
+          <Box
+            display="inline-flex"
+            alignItems="center"
+            bg="pink.400"
+            color="white"
+            px={3}
+            py={1.5}
+            borderRadius="md"
+            fontWeight="semibold"
+            fontSize="1rem"
+            cursor="default"
+            transition="background-color 0.3s ease"
+            _hover={{ bg: "pink.600" }}
+            userSelect="none"
+            position={"absolute"}
+            right={"0"}
+            top={"2rem"}
+            zIndex={8}
+          >
+            <Icon as={MdLocalOffer} mr={2} boxSize={5} />
+            Giảm ${data.percentOff}%
+          </Box>
+        )}
         <Image
           src={data.images.length > 0 ? data.images[0].filePath : ""}
           width={"100%"}

@@ -36,7 +36,7 @@ const FeatureProduct = () => {
           backdropFilter="blur(8px)" // hiệu ứng blur
         />
         <ModalContent
-          bg="#1a1a1a"
+          bgColor="bg.main"
           color="white"
           borderRadius="1rem"
           p="2rem"
@@ -47,6 +47,7 @@ const FeatureProduct = () => {
             fontFamily={"tinos"}
             fontSize={"3rem"}
             borderBottom={"1px solid #ccc"}
+            color={"text.main"}
           >
             {dataSelected?.title}
           </ModalHeader>

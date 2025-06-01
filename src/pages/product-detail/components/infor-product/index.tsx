@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 const InfoProduct = () => {
   const product = useSelector((state: RootState) => state.product.product);
 
-  console.log(product);
   return (
     <Box
       dangerouslySetInnerHTML={{ __html: product?.description || "" }}

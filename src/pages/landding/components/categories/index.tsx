@@ -1,5 +1,11 @@
 import { Grid, GridItem } from "@chakra-ui/react";
 import CardCatogories from "./components/card-categories";
+import HomeOffice from "@assets/images/Home Office.jpg";
+import Bathroom from "@assets/images/Bathroom.jpg";
+import OutdoorSpace from "@assets/images/Outdoor Space.jpg";
+import Bedroom from "@assets/images/Bedroom.jpg";
+import DiningRoom from "@assets/images/Dining Room.jpg";
+import LivingRoom from "@assets/images/Living Room.jpg";
 
 const Categories = () => {
   return (
@@ -16,8 +22,9 @@ const Categories = () => {
       >
         <CardCatogories
           categorie="Collections"
-          title="New Arrivals"
-          imgCard="https://cdn.ferrari.com/cms/network/media/img/resize/67f9265420aa800020b49a25-ferrari-style-bags-2025-gtw1?width=960&height=650"
+          title="Home Office"
+          imgCard={HomeOffice}
+          slug="/shop/home-office"
         />
       </GridItem>
       <GridItem
@@ -27,8 +34,9 @@ const Categories = () => {
       >
         <CardCatogories
           categorie="Magazine"
-          title="Ferrari Collectibles"
-          imgCard="https://cdn.ferrari.com/cms/network/media/img/resize/6812189f4297d0002122f975-ferrari-collectibles-gtw-box-desk?width=960&height=650"
+          title="Bathroom"
+          imgCard={Bathroom}
+          slug="/shop/bathroom"
         />
       </GridItem>
       <GridItem
@@ -38,8 +46,9 @@ const Categories = () => {
       >
         <CardCatogories
           categorie="Endurance"
-          title="6 Hours of spa - francorchamps"
-          imgCard="https://cdn.ferrari.com/cms/network/media/img/resize/68147f29543eb60020e38b3b-fia-wec-ferrari-hypercar-gtw-1?width=960&height=650"
+          title="Outdoor Space"
+          imgCard={OutdoorSpace}
+          slug="/shop/outdoor-space"
         />
       </GridItem>
       <GridItem
@@ -48,9 +57,34 @@ const Categories = () => {
         colSpan={1}
       >
         <CardCatogories
-          categorie="Farrari Museums"
-          title="Supercars"
-          imgCard="https://cdn.ferrari.com/cms/network/media/img/resize/67b479ea8e935a0056834fe4-2025-ferrari-museum-supercars-gtw1-last?width=960&height=650"
+          categorie="Bedroom"
+          title="Bedroom"
+          imgCard={Bedroom}
+          slug="/shop/bedroom"
+        />
+      </GridItem>
+      <GridItem
+        width={"100%"}
+        height={{ xl: "65rem", base: "46rem" }}
+        colSpan={1}
+      >
+        <CardCatogories
+          categorie="Dining Room"
+          title="Dining Room"
+          imgCard={DiningRoom}
+          slug="/shop/dining-room"
+        />
+      </GridItem>
+      <GridItem
+        width={"100%"}
+        height={{ xl: "65rem", base: "46rem" }}
+        colSpan={1}
+      >
+        <CardCatogories
+          categorie="Bedroom"
+          title="Living Room"
+          imgCard={LivingRoom}
+          slug="/shop/living-room"
         />
       </GridItem>
     </Grid>

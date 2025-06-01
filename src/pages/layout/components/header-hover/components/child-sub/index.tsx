@@ -54,7 +54,9 @@ const ChildSub = ({
         <Text
           fontSize={"1.6rem"}
           lineHeight={"2.4rem"}
-          color={hoverId === item.title || hoverId === "" ? "#fff" : "#969696"}
+          color={
+            hoverId === item.title || hoverId === "" ? "text.main" : "text.sub"
+          }
           fontWeight={600}
           transition={"all .2s ease"}
           whiteSpace={"nowrap"}

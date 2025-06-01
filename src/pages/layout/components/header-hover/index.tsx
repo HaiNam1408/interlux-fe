@@ -33,6 +33,7 @@ const HeaderHover = ({ seletectedMenu, setSeletecedMenu }: IHeaderHover) => {
       height={"100dvh"}
       zIndex={200}
       position={"fixed"}
+      bgColor={"bg.main"}
       inset={0}
       style={{
         transition: "all .3s ease",

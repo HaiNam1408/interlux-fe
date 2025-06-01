@@ -11,7 +11,7 @@ interface ISelectedCustom {
 const SelectedCustom = ({ ...props }: ISelectedCustom) => {
   return (
     <Stack gap={"1.2rem"} direction={"column"}>
-      <Text fontSize={"1.6rem"} color={"#fff"}>
+      <Text fontSize={"1.6rem"}>
         <strong>{props.title}:</strong> {props.value}
       </Text>
       <Stack direction={"row"} gap={"1rem"} width={"100%"} flexWrap={"wrap"}>
@@ -32,7 +32,11 @@ const SelectedCustom = ({ ...props }: ISelectedCustom) => {
               border: "1px solid #666",
             }}
           >
-            <Text fontSize={"1.4rem"} lineHeight={"100%"} color={item === props.value ? "#000" : "#fff"}>
+            <Text
+              fontSize={"1.4rem"}
+              lineHeight={"100%"}
+              color={item === props.value ? "#000" : "#fff"}
+            >
               {item}
             </Text>
           </Center>

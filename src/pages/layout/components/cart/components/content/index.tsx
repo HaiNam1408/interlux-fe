@@ -6,10 +6,9 @@ import { Dispatch, SetStateAction } from "react";
 interface IContentCart {
   listCart?: ICart;
   setListCart: Dispatch<SetStateAction<ICart | undefined>>;
-  setLoading: Dispatch<SetStateAction<boolean>>;
 }
 
-const ContentCart = ({ listCart, setListCart, setLoading }: IContentCart) => {
+const ContentCart = ({ listCart, setListCart }: IContentCart) => {
   return (
     <Stack
       width={"100%"}
@@ -20,12 +19,7 @@ const ContentCart = ({ listCart, setListCart, setLoading }: IContentCart) => {
       gap={"2rem"}
     >
       {listCart?.items.map((item, index) => (
-        <ItemCart
-          data={item}
-          key={index}
-          setListCart={setListCart}
-          setLoading={setLoading}
-        />
+        <ItemCart data={item} key={index} setListCart={setListCart} />
       ))}
     </Stack>
   );

@@ -9,12 +9,14 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setNotification } from "@redux/reducer/auth.reducer";
+import { useDarkModeContext } from "@hooks/useDarkModeContext";
 
 interface IFormLogin {
   setIsLoading: Dispatch<SetStateAction<boolean>>;
 }
 
 const FormLogin = ({ setIsLoading }: IFormLogin) => {
+  const { isDarkMode } = useDarkModeContext();
   const navigator = useNavigate();
   const dispatch = useDispatch();
   const [userName, setUserName] = useState<string>("");
@@ -54,7 +56,6 @@ const FormLogin = ({ setIsLoading }: IFormLogin) => {
     }
   };
 
-
   return (
     <Stack
       width={"100%"}
@@ -74,14 +75,12 @@ const FormLogin = ({ setIsLoading }: IFormLogin) => {
       </Text>
       <InputCustom
         label="Username or email address *"
-        colorLabel="#fff"
         setValue={setUserName}
         value={userName}
       />
       <Box height={"4rem"} />
       <InputCustom
         label="Password *"
-        colorLabel="#fff"
         isPassword={!isShow}
         setValue={setPassword}
         value={password}
@@ -100,14 +99,15 @@ const FormLogin = ({ setIsLoading }: IFormLogin) => {
         checked={isRemember}
         label="Remember me"
         onChange={setIsRemember}
+        bgColor={isDarkMode ? "#000" : "#fff"}
       />
       <Box height={"4rem"} />
       <Button
         variant={"solid"}
-        colorScheme="#fff"
+        colorScheme={isDarkMode ? "#000" : "#fff"}
         maxW={"9rem"}
         fontWeight={"600"}
-        color={"#000"}
+        color={!isDarkMode ? "#000" : "#fff"}
         height={"4rem"}
         onClick={handleLogin}
       >

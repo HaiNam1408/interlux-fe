@@ -1,14 +1,14 @@
 import { Box, Button, Stack, Text } from "@chakra-ui/react";
-import { ICart } from "@interfaces/ICart.interface";
+import { setIsShowCart } from "@redux/reducer/cart.reducer";
+import { RootState } from "@redux/store";
 import { IoMdLock } from "react-icons/io";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-interface IFooterCart {
-  listCart?: ICart;
-}
-
-const FooterCart = ({ listCart }: IFooterCart) => {
+const FooterCart = () => {
+  const dispatch = useDispatch();
   const navigator = useNavigate();
+  const subTotal = useSelector((state: RootState) => state.cart.subTotal);
 
   return (
     <Stack
@@ -32,7 +32,7 @@ const FooterCart = ({ listCart }: IFooterCart) => {
         </Text>
         <Text fontSize={"1.6rem"} color={"#161735"} fontWeight={600}>
           $
-          {listCart?.summary.subtotal.toLocaleString("en-US", {
+          {subTotal.toLocaleString("en-US", {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
           })}
@@ -45,7 +45,10 @@ const FooterCart = ({ listCart }: IFooterCart) => {
           maxW={"12rem"}
           h={"4rem"}
           fontWeight={700}
-          onClick={() => navigator("/cart")}
+          onClick={() => {
+            dispatch(setIsShowCart(false));
+            navigator("/checkout/cart");
+          }}
         >
           View Cart
         </Button>
@@ -60,7 +63,10 @@ const FooterCart = ({ listCart }: IFooterCart) => {
             </Box>
           }
           alignItems={"center"}
-          onClick={() => navigator("/checkout")}
+          onClick={() => {
+            dispatch(setIsShowCart(false));
+            navigator("/checkout/cart");
+          }}
         >
           Checkout Now
         </Button>

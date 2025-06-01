@@ -9,11 +9,7 @@ import {
   Text,
   useBoolean,
 } from "@chakra-ui/react";
-import {
-  ReactNode,
-  useEffect,
-  useState,
-} from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 interface IInputCustom {
   placeholder?: string;
@@ -23,7 +19,7 @@ interface IInputCustom {
   isRequest?: boolean;
   helperText?: string;
   value?: string | number;
-  setValue?: ((value: string) => void) ;
+  setValue?: (value: string) => void;
 
   label?: ReactNode;
   require?: boolean;
@@ -65,7 +61,7 @@ const InputCustom = ({
       <FormControl className=" w-full h-full">
         {label && (
           <FormLabel
-            sx={{ color: colorLabel }}
+            sx={{ color: colorLabel ?? "text.main" }}
             fontWeight={500}
             fontSize="1.6rem"
             mb={".6rem"}
@@ -88,7 +84,7 @@ const InputCustom = ({
             height="100%"
             fontSize="15px"
             fontFamily="body"
-            color="#fff"
+            color="text.main"
             rounded=".8rem"
             disabled={isDisabled}
             type={isPassword ? "password" : type ? type : "text"}
@@ -122,7 +118,7 @@ const InputCustom = ({
               <Text
                 className="w-fit"
                 fontSize="1.6rem"
-                color="#fff"
+                color="text.sub"
                 fontFamily="body"
               >
                 {placeholder}

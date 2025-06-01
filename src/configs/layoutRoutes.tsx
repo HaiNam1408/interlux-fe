@@ -1,5 +1,6 @@
 import LanddingPage from "@pages/landding";
 import Login from "@pages/login";
+import Order from "@pages/order";
 import ProductDetail from "@pages/product-detail";
 import Products from "@pages/products";
 import TestCharkra from "@pages/test-charkra";
@@ -21,12 +22,15 @@ export const layoutRouters: RouteProps[] = [
     element: <Login />,
   },
   {
-
     path: "/shop/:slug-category/:id-product",
-    element: <ProductDetail />
-  }, 
+    element: <ProductDetail />,
+  },
   {
     path: "/shop/:slug-category",
     element: <Products />,
+  },
+  {
+    path: "/checkout/:step",
+    element: <Order />,
   },
 ];

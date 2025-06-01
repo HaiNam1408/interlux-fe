@@ -8,6 +8,10 @@ import { Autoplay, EffectCoverflow } from "swiper/modules";
 import SplitText from "@components/split-text";
 import { Center, Image } from "@chakra-ui/react";
 import { Dispatch, SetStateAction, useEffect, useRef } from "react";
+import landing1 from "@assets/images/landing-1.jpg";
+import landing2 from "@assets/images/landing-2.jpg";
+import landing3 from "@assets/images/landing-3.jpg";
+import landing4 from "@assets/images/landing-4.jpg";
 
 interface IContentDis {
   setCurrentIndex: Dispatch<SetStateAction<number>>;
@@ -47,12 +51,7 @@ const ContentDis = ({ setCurrentIndex, currentIndex }: IContentDis) => {
       }}
       onSlideChange={(swiper) => setCurrentIndex(swiper.realIndex)}
     >
-      {[
-        "https://cdn.ferrari.com/cms/network/media/img/resize/680f72b045c5af002153fd67-ferrari-296-speciale-2025-cover-gtw-desk?width=1920&height=1080",
-        "https://cdn.ferrari.com/cms/network/media/img/resize/67cecfe5dc45cc0020bf6801-2025-ferrari-sfda-header-desk?width=1920&height=1080",
-        "https://cdn.ferrari.com/cms/network/media/img/resize/649c429dff73dc0024751960-ferrari-esports-team-header-menu-port?width=1920&height=1080",
-        "https://cdn.ferrari.com/cms/network/media/img/resize/67b311de596e810010250526-ferrari-499-p-header-menu-2025?width=1920&height=1080",
-      ].map((item, index) => (
+      {[landing1, landing2, landing3, landing4].map((item, index) => (
         <SwiperSlide key={index} style={{ position: "relative" }}>
           <Image
             width={"100%"}

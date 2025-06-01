@@ -12,23 +12,40 @@ import {
 } from "@chakra-ui/react";
 import { ICart, ICartItem } from "@interfaces/ICart.interface";
 import { setNotification } from "@redux/reducer/auth.reducer";
-import { setIsReset } from "@redux/reducer/cart.reducer";
-import { Dispatch, SetStateAction } from "react";
+import { setIsReset, updateSubTotal } from "@redux/reducer/cart.reducer";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { IoCloseSharp } from "react-icons/io5";
 import { useDispatch } from "react-redux";
 
 interface ItemCart {
   data: ICartItem;
   setListCart: Dispatch<SetStateAction<ICart | undefined>>;
-  setLoading: Dispatch<SetStateAction<boolean>>;
 }
 
-const ItemCart = ({ data, setListCart, setLoading }: ItemCart) => {
+const ItemCart = ({ data, setListCart }: ItemCart) => {
   const dispatch = useDispatch();
+  const [quantity, setQuantity] = useState(data.quantity);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    setQuantity(data.quantity);
+  }, [data.quantity]);
+
+  useEffect(() => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
+    timeoutRef.current = setTimeout(() => {
+      if (quantity !== data.quantity) {
+        handleUpdate();
+      }
+    }, 500);
+  }, [quantity]);
+
   const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
     useNumberInput({
       step: 1,
-      defaultValue: data.quantity,
+      value: quantity,
+      onChange: (_, valueAsNumber) => setQuantity(valueAsNumber),
       min: 1,
       max: 200,
     });
@@ -38,7 +55,9 @@ const ItemCart = ({ data, setListCart, setLoading }: ItemCart) => {
   const input = getInputProps();
 
   const handleDelete = async () => {
-    setLoading(true);
+    const diff = -data.quantity * data.product.price;
+
+    dispatch(updateSubTotal(diff));
     try {
       const result = await deleteItemCart(data.id);
       setListCart(result.data.data);
@@ -49,23 +68,23 @@ const ItemCart = ({ data, setListCart, setLoading }: ItemCart) => {
         })
       );
     } catch (error: any) {
+      dispatch(updateSubTotal(-diff));
       dispatch(
         setNotification({
           status: "warning",
           title: error.data.response.message,
         })
       );
-    } finally {
-      setLoading(false);
     }
   };
 
   const handleUpdate = async () => {
-    setLoading(true);
+    const oldQuantity = data.quantity;
+    const pricePerItem = data.product.price;
+    const diff = (quantity - oldQuantity) * pricePerItem;
 
+    dispatch(updateSubTotal(diff));
     try {
-      const quantity = parseInt(input.value, 10);
-
       await updateItemCart(data.id, quantity);
       dispatch(setIsReset());
       dispatch(
@@ -75,14 +94,13 @@ const ItemCart = ({ data, setListCart, setLoading }: ItemCart) => {
         })
       );
     } catch (error: any) {
+      dispatch(updateSubTotal(-diff));
       dispatch(
         setNotification({
           status: "warning",
           title: error.data.response.message,
         })
       );
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -124,7 +142,7 @@ const ItemCart = ({ data, setListCart, setLoading }: ItemCart) => {
           gap={"2rem"}
           justifyContent={"space-between"}
         >
-          <HStack maxW="100px">
+          <HStack maxW="110px">
             <Button
               {...dec}
               bg="#333"
@@ -137,7 +155,6 @@ const ItemCart = ({ data, setListCart, setLoading }: ItemCart) => {
                 maxW: "3rem",
               }}
               height={"3rem"}
-              onClick={handleUpdate}
             >
               -
             </Button>
@@ -163,14 +180,13 @@ const ItemCart = ({ data, setListCart, setLoading }: ItemCart) => {
                 maxW: "3rem",
               }}
               height={"3rem"}
-              onClick={handleUpdate}
             >
               +
             </Button>
           </HStack>
           <Text fontSize={"1.6rem"} color={"#161735"} fontWeight={600}>
             $
-            {data.product.price.toLocaleString("en-US", {
+            {data.product.finalPrice.toLocaleString("en-US", {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
             })}

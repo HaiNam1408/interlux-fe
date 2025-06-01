@@ -18,7 +18,7 @@ const Layout = () => {
       width={"100dvw"}
       height={"100%"}
       position={"relative"}
-      bgColor={"black"}
+      bgColor={"bg.main"}
     >
       <HeaderHover
         seletectedMenu={seletectedMenu}

@@ -16,15 +16,14 @@ const ImgHeader = ({ selectedChild, seletectedMenu }: IImgHeader) => {
           objectFit={"cover"}
           loading="lazy"
           src={selectedChild.linkImg}
-        
           style={{
             transition: seletectedMenu.title ? "all .4s ease 0.5s" : "none",
             opacity: seletectedMenu.title ? 1 : 0,
-            objectPosition: "center"
+            objectPosition: "center",
           }}
         />
       ) : (
-        <Box width={"100%"} height={"100%"} bgColor={"#000"}></Box>
+        <Box width={"100%"} height={"100%"}></Box>
       )}
     </>
   );

@@ -2,6 +2,7 @@ import { Box, Stack, Text } from "@chakra-ui/react";
 import { IMenu, IMenuChild } from "@interfaces/IMenu.interface";
 import { Dispatch, SetStateAction, useState } from "react";
 import ChildSub from "../child-sub";
+import { useDarkModeContext } from "@hooks/useDarkModeContext";
 
 interface ISubHeader {
   seletectedMenu: IMenu;
@@ -15,6 +16,7 @@ const SubHeader = ({
   setSeletecedMenu,
 }: ISubHeader) => {
   const [hoverId, setHoverId] = useState<string>("");
+  const { isDarkMode } = useDarkModeContext();
 
   return (
     <Stack
@@ -22,7 +24,7 @@ const SubHeader = ({
       minW="25rem"
       height={"100%"}
       style={{
-        background: "#181818",
+        background: !isDarkMode ? "#181818" : "#f5f5f5",
         padding: "96px 32px 48px",
         overflow: "hidden",
         transition: seletectedMenu.title ? "all .4s ease 0.5s" : "none",
@@ -31,7 +33,7 @@ const SubHeader = ({
     >
       <Text
         fontSize={"1.2rem"}
-        color={"#969696"}
+        color={"text.sub"}
         textTransform={"uppercase"}
         mb={"2.4rem"}
         fontWeight={600}

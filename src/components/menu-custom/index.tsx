@@ -48,17 +48,18 @@ const MenuCustom = ({
   return (
     <Box ref={menuRef} className="menuCustom" sx={sx}>
       <Box
-        className={`menuCustom__input ${isFocused ? "border-[#3182ce]" : "#fff"
-          }`}
+        className={`menuCustom__input ${
+          isFocused ? "border-[#3182ce]" : "#fff"
+        }`}
         onClick={() => setIsFocused(!isFocused)}
-        bg="#1a1a1a"
-        border="1px solid #333"
+        bg="bg.main"
+        border="1px solid #cecece"
       >
         <Text
           fontWeight={400}
           lineHeight="1.6rem"
           fontSize="1.6rem"
-          color={valueDefaul === seletedItem ? "gray.400" : "gray.100"}
+          color={valueDefaul === seletedItem ? "gray.400" : "text.main"}
         >
           {seletedItem ? seletedItem : valueDefaul}
         </Text>
@@ -69,7 +70,7 @@ const MenuCustom = ({
         <Box
           className={`menuCustom__menu ${isFocused && "menuCustom__menu-show"}`}
           onClick={() => setIsFocused(false)}
-          bg="#1a1a1a"
+          bgColor="bg.main"
           maxH={maxH}
           border="1px solid #333"
         >
@@ -91,7 +92,6 @@ const MenuCustom = ({
               fontWeight={400}
               lineHeight="1.6rem"
               fontSize="1.6rem"
-              color="gray.100"
               className={`menuCustom__menuItem`}
               _hover={{ background: "rgba(255,255,255,0.08)" }}
             >

@@ -121,45 +121,53 @@ const InfoDetail = ({
       <Stack direction={"row"} gap={"1rem"}>
         <Text
           fontSize={"1.2rem"}
-          color={"#cecece"}
+          color={"text.sub"}
           textTransform={"uppercase"}
           transition={"all .3s ease"}
           cursor={"pointer"}
           _hover={{
-            color: "#fff",
+            color: "text.main",
             fontWeight: 700,
           }}
           onClick={() => navigator("/shop")}
         >
           SHOP
         </Text>
-        <Text fontSize={"1.2rem"} color={"#cecece"} textTransform={"uppercase"}>
+        <Text
+          fontSize={"1.2rem"}
+          color={"text.sub"}
+          textTransform={"uppercase"}
+        >
           /
         </Text>
         <Text
           fontSize={"1.2rem"}
-          color={"#cecece"}
+          color={"text.sub"}
           textTransform={"uppercase"}
           transition={"all .3s ease"}
           cursor={"pointer"}
           _hover={{
-            color: "#fff",
+            color: "text.main",
             fontWeight: 700,
           }}
         >
           {product?.category.name}
         </Text>
-        <Text fontSize={"1.2rem"} color={"#cecece"} textTransform={"uppercase"}>
+        <Text
+          fontSize={"1.2rem"}
+          color={"text.sub"}
+          textTransform={"uppercase"}
+        >
           /
         </Text>
         <Text
           fontSize={"1.2rem"}
-          color={"#cecece"}
+          color={"text.sub"}
           textTransform={"uppercase"}
           transition={"all .3s ease"}
           cursor={"pointer"}
           _hover={{
-            color: "#fff",
+            color: "text.main",
             fontWeight: 700,
           }}
         >
@@ -186,14 +194,14 @@ const InfoDetail = ({
       />
       <AddOns setSelected={setSelected} selected={selected} />
       <Stack direction={"column"} gap={"1rem"} my={"2rem"}>
-        <Text fontSize={"1.6rem"} color={"#fff"}>
+        <Text fontSize={"1.6rem"}>
           <strong>Description:</strong>
         </Text>
         <Textarea
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder="Add more details..."
-          bg="#1a1a1a"
+          bg="bg.main"
           border="1px solid #333"
           color="white"
           _placeholder={{ color: "#777" }}

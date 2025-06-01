@@ -1,6 +1,6 @@
 /* eslint-disable no-constant-condition */
 import { Box } from "@chakra-ui/react";
-import { setIsShowCart } from "@redux/reducer/cart.reducer";
+import { setIsShowCart, setSubTotal } from "@redux/reducer/cart.reducer";
 import { RootState } from "@redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import ContentCart from "./components/content";
@@ -11,22 +11,20 @@ import FooterCart from "./components/footer";
 import { useEffect, useState } from "react";
 import { ICart } from "@interfaces/ICart.interface";
 import { getAllCart } from "@apis/cart.api";
-import LoadingCustom from "@components/loading-custom";
 
 const Cart = () => {
   const dispatch = useDispatch();
   const [listCart, setListCart] = useState<ICart>();
-  const [loading, setLoading] = useState<boolean>(false);
 
   const isShowCart = useSelector((state: RootState) => state.cart.isShowCart);
   const isReset = useSelector((state: RootState) => state.cart.isResetCart);
 
   useEffect(() => {
-    setLoading(true);
-    getAllCart()
-      .then((res) => setListCart(res.data.data))
-      .finally(() => setLoading(false));
-  }, [isReset]);
+    getAllCart().then((res) => {
+      setListCart(res.data.data);
+      dispatch(setSubTotal(res.data.data.summary.subtotal));
+    });
+  }, [isReset, isShowCart]);
 
   return (
     <Box
@@ -34,7 +32,7 @@ const Cart = () => {
       height={"100dvh"}
       position={"fixed"}
       inset={0}
-      zIndex={9999}
+      zIndex={10}
       style={{
         transition: "all .3s ease",
         opacity: isShowCart ? 1 : 0,
@@ -67,7 +65,6 @@ const Cart = () => {
         zIndex={2}
         transition={"all .8s ease"}
       >
-        <LoadingCustom isLoading={loading} />
         <Box
           width={"4rem"}
           height={"4rem"}
@@ -84,12 +81,8 @@ const Cart = () => {
           <UnContent />
         ) : (
           <>
-            <ContentCart
-              listCart={listCart}
-              setListCart={setListCart}
-              setLoading={setLoading}
-            />
-            <FooterCart listCart={listCart} />
+            <ContentCart listCart={listCart} setListCart={setListCart} />
+            <FooterCart />
           </>
         )}
       </Box>

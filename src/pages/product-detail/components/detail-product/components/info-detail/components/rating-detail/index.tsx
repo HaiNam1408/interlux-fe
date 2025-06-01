@@ -30,9 +30,7 @@ const RatingComponent = ({
         starDimension="20px"
         starSpacing="1px"
       />
-      <Text color={"#fff"} fontSize={"1.4rem"}>
-        {title}
-      </Text>
+      <Text fontSize={"1.4rem"}>{title}</Text>
     </Stack>
   );
 };

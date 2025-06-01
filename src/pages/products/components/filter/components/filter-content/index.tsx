@@ -45,7 +45,6 @@ const FilterContent = () => {
     }
   }, [categorySelected]);
 
-
   useEffect(() => {
     getAllCategory().then((res) => {
       if (rememberSlug.slug?.includes("all")) {
@@ -76,12 +75,10 @@ const FilterContent = () => {
     }
   };
 
-
   return (
     <Grid templateColumns="repeat(4, 1fr)" gap={"2rem"} width={"100%"}>
       <GridItem colSpan={1}>
         <InputCustom
-          colorLabel="#fff"
           setValue={(e) => dispatch(setValueSearch(e))}
           value={valueSearch}
           placeholder="Search"

@@ -12,7 +12,7 @@ const LoadingScreen = ({ isLoading }: ILoadingScreen) => {
       position={"fixed"}
       width={"100dvw"}
       h={"100dvh"}
-      bgColor={"#000"}
+      bgColor={"bg.main"}
       zIndex={1000000000000}
       bottom={0}
       flexDir={"column"}

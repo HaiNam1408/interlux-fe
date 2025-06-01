@@ -137,24 +137,21 @@ const Footer = () => {
   return (
     <Stack
       width={"100%"}
-      bgColor={"#000"}
       direction={"column"}
       gap={"2rem"}
       padding={"4rem"}
       alignItems={"center"}
       position={"relative"}
       height={"fit-content"}
-      maxW={"140rem"}
       margin={"0 auto"}
       px={"2rem"}
     >
-      <Grid templateColumns="repeat(5, 1fr)" width={"100%"}>
+      <Grid templateColumns="repeat(5, 1fr)" width={"100%"} maxW={"140rem"}>
         {listFooter.map((item, index) => (
           <GridItem colSpan={1} width={"100%"} key={index}>
             <Text
               width={"100%"}
               fontSize={"1.6rem"}
-              color={"#fff"}
               textTransform={"uppercase"}
               fontWeight={700}
             >
@@ -166,7 +163,7 @@ const Footer = () => {
                 <Text
                   key={i}
                   fontSize={"1.2rem"}
-                  color={"#969696"}
+                  color={"text.sub"}
                   fontWeight={500}
                   cursor={"pointer"}
                   position={"relative"}

@@ -1,5 +1,8 @@
+import { useDarkModeContext } from "@hooks/useDarkModeContext";
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const IcLogo = (props: any) => {
+  const { isDarkMode } = useDarkModeContext();
   return (
     <svg
       version="1.0"
@@ -11,7 +14,7 @@ const IcLogo = (props: any) => {
     >
       <g
         transform="translate(0.000000,1000.000000) scale(0.100000,-0.100000)"
-        fill={props.color || "#fff"}
+        fill={!isDarkMode ? "#fff" : "#000"}
         stroke="none"
       >
         <path

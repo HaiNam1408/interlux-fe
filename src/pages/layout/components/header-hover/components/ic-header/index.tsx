@@ -3,6 +3,7 @@ import { Box, Center, Stack } from "@chakra-ui/react";
 import { IoMdClose } from "react-icons/io";
 import { Dispatch, SetStateAction } from "react";
 import { IMenu } from "@interfaces/IMenu.interface";
+import { useDarkModeContext } from "@hooks/useDarkModeContext";
 
 interface IIcHeader {
   setSeletecedMenu: Dispatch<SetStateAction<IMenu>>;
@@ -10,13 +11,15 @@ interface IIcHeader {
 }
 
 const IcHeader = ({ setSeletecedMenu, seletectedMenu }: IIcHeader) => {
+  const { isDarkMode } = useDarkModeContext();
+
   return (
     <Stack
       direction={"column"}
       gap={"2.4rem"}
       width={"fit-content"}
       padding={"1.6rem"}
-      bgColor={"#181818"}
+      bgColor={!isDarkMode ? "#181818" : "#f5f5f5"}
       height={"100%"}
       style={{
         transition: seletectedMenu.title ? "all .6s ease" : "none",
@@ -54,7 +57,7 @@ const IcHeader = ({ setSeletecedMenu, seletectedMenu }: IIcHeader) => {
             />
           </svg>
         </Box>
-        <IoMdClose color="#fff" fontSize={"2rem"} />
+        <IoMdClose color={!isDarkMode ? "#fff" : "#000"} fontSize={"2rem"} />
       </Center>
     </Stack>
   );

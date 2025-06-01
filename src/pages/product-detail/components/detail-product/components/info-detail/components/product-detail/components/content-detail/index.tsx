@@ -34,7 +34,7 @@ const ContentDetail = ({ data }: IContentDetail) => {
         <AccordionItem>
           <h2>
             <AccordionButton>
-              <AccordionIcon fontSize={"3rem"} color={"#fff"} />
+              <AccordionIcon fontSize={"3rem"} color={"text.main"} />
               <Text
                 fontSize={"2rem"}
                 fontWeight={600}
@@ -48,7 +48,7 @@ const ContentDetail = ({ data }: IContentDetail) => {
           <AccordionPanel
             pb={4}
             fontSize={"1.4rem"}
-            color={"#fff"}
+            color={"text.main"}
             px={"4rem"}
             fontStyle={"italic"}
           >

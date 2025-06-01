@@ -2,6 +2,7 @@
 import { register } from "@apis/auth.api";
 import { Box, Button, Grid, GridItem, Stack, Text } from "@chakra-ui/react";
 import InputCustom from "@components/input-custom";
+import { useDarkModeContext } from "@hooks/useDarkModeContext";
 import { setNotification } from "@redux/reducer/auth.reducer";
 import { Dispatch, SetStateAction, useState } from "react";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
@@ -12,6 +13,8 @@ interface IFormRegister {
 }
 
 const FormRegister = ({ setIsLoading }: IFormRegister) => {
+  const { isDarkMode } = useDarkModeContext();
+
   const dispatch = useDispatch();
   const [userName, setUserName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -132,7 +135,6 @@ const FormRegister = ({ setIsLoading }: IFormRegister) => {
         <GridItem colSpan={12}>
           <InputCustom
             label="Email address *"
-            colorLabel="#fff"
             setValue={setEmail}
             value={email}
             helperText={helperText.errEmail}
@@ -141,7 +143,6 @@ const FormRegister = ({ setIsLoading }: IFormRegister) => {
         <GridItem colSpan={7}>
           <InputCustom
             label="Username *"
-            colorLabel="#fff"
             setValue={setUserName}
             value={userName}
             helperText={helperText.errUsername}
@@ -150,7 +151,6 @@ const FormRegister = ({ setIsLoading }: IFormRegister) => {
         <GridItem colSpan={5}>
           <InputCustom
             label="Phone *"
-            colorLabel="#fff"
             setValue={setPhone}
             value={phone}
             helperText={helperText.errPhone}
@@ -159,7 +159,6 @@ const FormRegister = ({ setIsLoading }: IFormRegister) => {
         <GridItem colSpan={12}>
           <InputCustom
             label="Password *"
-            colorLabel="#fff"
             setValue={setPassword}
             value={password}
             isPassword={!isShowPas}
@@ -181,7 +180,6 @@ const FormRegister = ({ setIsLoading }: IFormRegister) => {
         <GridItem colSpan={12}>
           <InputCustom
             label="Confirm Password *"
-            colorLabel="#fff"
             setValue={setConfirmPassword}
             value={confirmPassword}
             isPassword={!isShow}
@@ -211,10 +209,10 @@ const FormRegister = ({ setIsLoading }: IFormRegister) => {
       <Box height={"4rem"} />
       <Button
         variant={"solid"}
-        colorScheme="#fff"
+        colorScheme={isDarkMode ? "#000" : "#fff"}
         maxW={"9rem"}
         fontWeight={"600"}
-        color={"#000"}
+        color={!isDarkMode ? "#000" : "#fff"}
         height={"4rem"}
         onClick={handleRegister}
       >

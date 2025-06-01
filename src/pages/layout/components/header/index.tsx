@@ -21,11 +21,12 @@ const Header = ({ setSeletecedMenu }: IHeader) => {
       height={"9rem"}
       direction={"row"}
       justifyContent={"space-between"}
-      bg={!isAtTop ? "black" : "transparent"}
+      bg={"bg.main"}
       px={{ xl: "4rem", lg: "2rem", base: "1rem" }}
       transition="transform 0.5s ease"
       transform={direction === "down" ? "translateY(-100%)" : "translateY(0)"}
-      zIndex={100}
+      zIndex={9}
+      boxShadow={!isAtTop ? "rgba(0, 0, 0, 0.24) 0px 3px 8px" : "none"}
     >
       <LeftHeader setSeletecedMenu={setSeletecedMenu} />
       <RightHeader />
