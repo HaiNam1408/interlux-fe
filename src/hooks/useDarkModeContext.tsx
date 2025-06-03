@@ -1,4 +1,3 @@
-// DarkModeContext.tsx
 import {
   createContext,
   Dispatch,
@@ -25,7 +24,8 @@ export const DarkModeContextProvider = ({
 }) => {
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const stored = sessionStorage.getItem("isDarkMode");
-    return stored === "true";
+    if (stored === "true") return true;
+    return false; // default light mode
   });
 
   useEffect(() => {

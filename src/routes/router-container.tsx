@@ -4,12 +4,14 @@ import Layout from "@pages/layout";
 import NotFound from "@components/404-custom";
 import useAutoLogin from "@hooks/useRemember";
 import ChatBotWrapper from "@components/chat-bot-wrapper";
+import NavigateHandler from "@utils/NavigateHandler";
 
 const RouterContainer = () => {
   useAutoLogin();
 
   return (
     <>
+      <NavigateHandler />
       <Routes>
         {routers.map((route) => (
           <Route key={route.path} {...route}></Route>
