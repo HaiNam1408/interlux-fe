@@ -4,10 +4,12 @@ import { setIsShowCart } from "@redux/reducer/cart.reducer";
 import { setRememberSlug } from "@redux/reducer/productStoge.reducer";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const UnContent = () => {
   const navigator = useNavigate();
   const dispatch = useDispatch();
+  const token = Cookies.get("token");
 
   return (
     <Center
@@ -20,24 +22,30 @@ const UnContent = () => {
     >
       <IcCart />
       <Text fontSize={"1.6rem"} color={"#161375"}>
-        No products in the cart.
+        {token
+          ? "No products in the cart."
+          : "Please log in to view your cart."}
       </Text>
       <Button
         colorScheme="#161375"
         maxW={"20rem"}
         fontWeight={700}
         onClick={() => {
-          navigator(`shop/all`);
-          dispatch(
-            setRememberSlug({
-              title: "All Furniture",
-              slug: "all",
-            })
-          );
+          if (token) {
+            navigator(`shop/all`);
+            dispatch(
+              setRememberSlug({
+                title: "All Furniture",
+                slug: "all",
+              })
+            );
+          } else {
+            navigator(`/my-account`);
+          }
           dispatch(setIsShowCart(false));
         }}
       >
-        Return to shop
+        {token ? "Return to shop" : "Log in to continue."}
       </Button>
     </Center>
   );

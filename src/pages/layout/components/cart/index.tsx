@@ -11,6 +11,7 @@ import FooterCart from "./components/footer";
 import { useEffect, useState } from "react";
 import { ICart } from "@interfaces/ICart.interface";
 import { getAllCart } from "@apis/cart.api";
+import Cookies from "js-cookie";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -18,12 +19,14 @@ const Cart = () => {
 
   const isShowCart = useSelector((state: RootState) => state.cart.isShowCart);
   const isReset = useSelector((state: RootState) => state.cart.isResetCart);
+  const token = Cookies.get("token");
 
   useEffect(() => {
-    getAllCart().then((res) => {
-      setListCart(res.data.data);
-      dispatch(setSubTotal(res.data.data.summary.subtotal));
-    });
+    if (token)
+      getAllCart().then((res) => {
+        setListCart(res.data.data);
+        dispatch(setSubTotal(res.data.data.summary.subtotal));
+      });
   }, [isReset, isShowCart]);
 
   return (

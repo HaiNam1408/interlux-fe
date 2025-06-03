@@ -1,3 +1,4 @@
+// src/lib/Http.ts
 import { OptionDeployBe } from "@type/urlBe.type";
 import axios, {
   AxiosError,
@@ -5,6 +6,7 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 import Cookies from "js-cookie";
+import { redirectToLoginIfNeeded } from "./navigateService";
 
 class Http {
   instance: AxiosInstance;
@@ -46,16 +48,7 @@ class Http {
             Cookies.remove("token");
             Cookies.remove("refreshToken");
 
-            // Tránh redirect liên tục
-            if (
-              typeof window !== "undefined" &&
-              window.location.pathname !== "/my-account" &&
-              !localStorage.getItem("redirected")
-            ) {
-              localStorage.setItem("redirected", "true");
-              window.location.href = "/my-account";
-            }
-
+            redirectToLoginIfNeeded();
             return Promise.reject(error);
           }
 
@@ -71,15 +64,7 @@ class Http {
             Cookies.remove("token");
             Cookies.remove("refreshToken");
 
-            if (
-              typeof window !== "undefined" &&
-              window.location.pathname !== "/my-account" &&
-              !localStorage.getItem("redirected")
-            ) {
-              localStorage.setItem("redirected", "true");
-              window.location.href = "/my-account";
-            }
-
+            redirectToLoginIfNeeded();
             return Promise.reject(refreshError);
           }
         }
