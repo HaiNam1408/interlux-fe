@@ -115,12 +115,7 @@ const InputCustom = ({
           </InputRightElement>
           {placeholder && !focused && !text && (
             <Box className="w-fit h-full absolute top-0 left-[1rem] flex items-center z-0 pointer-events-none overflow-hidden">
-              <Text
-                className="w-fit"
-                fontSize="1.6rem"
-                color="text.sub"
-                fontFamily="body"
-              >
+              <Text className="w-fit" fontSize="1.4rem" color="#777">
                 {placeholder}
               </Text>
 

@@ -1,4 +1,5 @@
 import { Center, Stack, Text } from "@chakra-ui/react";
+import { useDarkModeContext } from "@hooks/useDarkModeContext";
 import { FaCheck } from "react-icons/fa";
 
 interface ICheckBox {
@@ -13,11 +14,12 @@ interface ICheckBox {
 const CheckBox = ({
   checked,
   label,
-  bgColor = "#fff",
   size = "2rem",
   sizeIc = "1.2rem",
   onChange,
 }: ICheckBox) => {
+  const { isDarkMode } = useDarkModeContext();
+
   return (
     <Stack
       direction="row"
@@ -29,11 +31,13 @@ const CheckBox = ({
       <Center
         width={size}
         height={size}
-        bgColor={checked ? bgColor : "transparent"}
+        bgColor={checked ? (isDarkMode ? "#000" : "#fff") : "transparent"}
         borderRadius=".4rem"
-        border={`2px solid ${bgColor}`}
+        border={`2px solid ${isDarkMode ? "#000" : "#fff"}`}
       >
-        {checked && <FaCheck fontSize={sizeIc} color="#000" />}
+        {checked && (
+          <FaCheck fontSize={sizeIc} color={!isDarkMode ? "#000" : "#fff"} />
+        )}
       </Center>
       <Text fontSize="1.4rem" fontWeight={500}>
         {label}

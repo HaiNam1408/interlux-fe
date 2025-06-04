@@ -1,4 +1,4 @@
-import { checkValidateCoupon } from "@apis/payment.api";
+import { checkValidateCoupon } from "@apis/coupon.api";
 import { Box, Button, Stack, Text } from "@chakra-ui/react";
 import InputCustom from "@components/input-custom";
 import LoadingCustom from "@components/loading-custom";

@@ -3,8 +3,21 @@ import { useDarkModeContext } from "@hooks/useDarkModeContext";
 import { FaCartShopping } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import NoteBill from "../note-bill";
+import FormInfo from "../form-info";
+import { IAddress, IOrder } from "@interfaces/IOrder.interface";
+import { IOrderHelper } from "@hooks/useFormOrder";
 
-const BillDetails = () => {
+interface IBillDetails {
+  form: IOrder;
+  helper: IOrderHelper;
+  setAddressValue: (
+    section: "shippingAddress",
+    key: keyof IAddress,
+    value: string
+  ) => void;
+}
+
+const BillDetails = ({ form, helper, setAddressValue }: IBillDetails) => {
   const { isDarkMode } = useDarkModeContext();
   const navigator = useNavigate();
 
@@ -51,6 +64,7 @@ const BillDetails = () => {
         />
       </Stack>
       <NoteBill />
+      <FormInfo form={form} helper={helper} setAddressValue={setAddressValue} />
     </Stack>
   );
 };

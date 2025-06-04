@@ -56,7 +56,7 @@ const FilterContent = () => {
         const data: ICategory = res.data.data.find(
           (item: ICategory) => item.slug === rememberSlug.slug
         );
-        setListCategory(data.children);
+        setListCategory(data.children ?? []);
       }
     });
     setCategory("");

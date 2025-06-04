@@ -34,7 +34,10 @@ const StepOrder = () => {
           gap={"0"}
           key={index}
           alignItems={"center"}
-          onClick={() => navigator(step.slug)}
+          onClick={() => {
+            // if (index === 2) return;
+            navigator(step.slug);
+          }}
         >
           <Center
             width={"3.2rem"}

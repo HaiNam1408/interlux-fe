@@ -52,7 +52,7 @@ const Order = () => {
       {location.pathname.includes("/checkout/cart") && (
         <ShoppintCart listCart={listCart} />
       )}
-      {location.pathname.includes("/checkout/details") && <CheckoutDetail />}
+      {location.pathname.includes("/checkout/details") && <CheckoutDetail listCart={listCart}/>}
       {location.pathname.includes("/checkout/complete") && <OrderComplete />}
       <FooterLogin />
     </Stack>
