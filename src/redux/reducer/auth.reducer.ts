@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IAuth } from "@interfaces/IAuth.interface";
 import { ICategory } from "@interfaces/ICategory.interface";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface INoticafition {
+  [x: string]: any;
   title: string;
   status: "info" | "warning" | "success" | "error" | "loading" | undefined;
 }

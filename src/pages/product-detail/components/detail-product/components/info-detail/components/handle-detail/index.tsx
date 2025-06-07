@@ -5,14 +5,18 @@ import { IProductVariation } from "@interfaces/IProduct.interface";
 import { setNotification } from "@redux/reducer/auth.reducer";
 import { setIsReset } from "@redux/reducer/cart.reducer";
 import { RootState } from "@redux/store";
+import { Dispatch, SetStateAction } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 interface IHandleDetail {
   selectedVariation: IProductVariation | null;
+  setLoading: Dispatch<SetStateAction<boolean>>;
 }
 
-const HandleDetail = ({ selectedVariation }: IHandleDetail) => {
+const HandleDetail = ({ selectedVariation, setLoading }: IHandleDetail) => {
   const dispatch = useDispatch();
+  const navigator = useNavigate();
   const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
     useNumberInput({
       step: 1,
@@ -26,8 +30,9 @@ const HandleDetail = ({ selectedVariation }: IHandleDetail) => {
   const input = getInputProps();
   const product = useSelector((state: RootState) => state.product.product);
 
-  const handleAddToCart = async () => {
+  const handleAddToCart = async (isBuyNow: boolean) => {
     try {
+      setLoading(true);
       const quantity = parseInt(input.value, 10);
       await addCart(product?.id || 0, selectedVariation?.id || 0, quantity);
 
@@ -38,13 +43,19 @@ const HandleDetail = ({ selectedVariation }: IHandleDetail) => {
         })
       );
       dispatch(setIsReset());
+
+      if (isBuyNow) {
+        navigator("/checkout/cart");
+      }
     } catch (error) {
       dispatch(
         setNotification({
           status: "warning",
-          title: "Missing token in response.",
+          title: "Please login before purchasing!.",
         })
       );
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -101,7 +112,7 @@ const HandleDetail = ({ selectedVariation }: IHandleDetail) => {
         _hover={{
           bg: "#e2e2e2",
         }}
-        onClick={handleAddToCart}
+        onClick={() => handleAddToCart(false)}
       >
         Add to cart
       </Button>
@@ -115,6 +126,7 @@ const HandleDetail = ({ selectedVariation }: IHandleDetail) => {
         _hover={{
           bg: "#e2e2e2",
         }}
+        onClick={() => handleAddToCart(true)}
       >
         Buy Now
       </Button>

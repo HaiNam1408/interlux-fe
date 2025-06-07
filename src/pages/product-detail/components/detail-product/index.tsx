@@ -12,12 +12,13 @@ interface IDetailProduct {
   ) => IProductVariation | null;
   setSelectedVariation: Dispatch<SetStateAction<IProductVariation | null>>;
   selectedVariation: IProductVariation | null;
+  setLoading: Dispatch<SetStateAction<boolean>>;
 }
 
 const DetailProduct = ({
   findMatchingVariation,
   setSelectedVariation,
-  selectedVariation,
+  selectedVariation,setLoading
 }: IDetailProduct) => {
   return (
     <Stack
@@ -34,6 +35,7 @@ const DetailProduct = ({
         findMatchingVariation={findMatchingVariation}
         setSelectedVariation={setSelectedVariation}
         selectedVariation={selectedVariation}
+        setLoading={setLoading}
       />
     </Stack>
   );

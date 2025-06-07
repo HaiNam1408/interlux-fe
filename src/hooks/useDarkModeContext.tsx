@@ -23,13 +23,13 @@ export const DarkModeContextProvider = ({
   children: ReactNode;
 }) => {
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    const stored = sessionStorage.getItem("isDarkMode");
+    const stored = localStorage.getItem("isDarkMode");
     if (stored === "true") return true;
-    return false; // default light mode
+    return true; // default light mode
   });
 
   useEffect(() => {
-    sessionStorage.setItem("isDarkMode", String(isDarkMode));
+    localStorage.setItem("isDarkMode", String(isDarkMode));
   }, [isDarkMode]);
 
   return (

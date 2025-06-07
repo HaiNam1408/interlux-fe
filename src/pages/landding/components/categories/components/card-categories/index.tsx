@@ -1,5 +1,6 @@
 import { IcArrowRight } from "@assets/svgs";
 import { Box, Center, Image, Stack, Text } from "@chakra-ui/react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface ICardCatogorise {
@@ -16,6 +17,8 @@ const CardCatogories = ({
   slug,
 }: ICardCatogorise) => {
   const navigator = useNavigate();
+  const [isHover, setIsHover] = useState<boolean>(false);
+
   return (
     <Stack
       width={"100%"}
@@ -27,6 +30,9 @@ const CardCatogories = ({
       justifyContent={"flex-end"}
       padding={{ xl: "4.8rem", base: "3.2rem" }}
       cursor={"pointer"}
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
+      overflow={"hidden"}
     >
       <Image
         position={"absolute"}
@@ -37,6 +43,8 @@ const CardCatogories = ({
         src={imgCard}
         loading="lazy"
         zIndex={0}
+        transition={"all 1s ease-out"}
+        transform={isHover ? "scale(1.1)" : "scale(1)"}
       ></Image>
       <Text fontSize={"1.6rem"} color={"#fff"} fontWeight={500} zIndex={1}>
         {categorie}

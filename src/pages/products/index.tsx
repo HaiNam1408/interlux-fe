@@ -51,6 +51,9 @@ const Products = () => {
           setTotlaPage(res.data.data.meta.totalPages);
           setPage(res.data.data.meta.page);
         })
+        .catch(() => {
+          setListProduct([]);
+        })
         .finally(() => setLoading(false));
     } else {
       getAllProductsByCategory(
@@ -68,6 +71,9 @@ const Products = () => {
           setListProduct(res.data.data.data);
           setTotlaPage(res.data.data.meta.totalPages);
           setPage(res.data.data.meta.page);
+        })
+        .catch(() => {
+          setListProduct([]);
         })
         .finally(() => setLoading(false));
     }

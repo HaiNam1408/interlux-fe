@@ -146,12 +146,12 @@ const Footer = () => {
       margin={"0 auto"}
       px={"2rem"}
     >
-      <Grid templateColumns="repeat(5, 1fr)" width={"100%"} maxW={"140rem"}>
+      <Grid templateColumns="repeat(5, 1fr)" width={"100%"} gap={"2rem"} maxW={"140rem"}>
         {listFooter.map((item, index) => (
           <GridItem colSpan={1} width={"100%"} key={index}>
             <Text
               width={"100%"}
-              fontSize={"1.6rem"}
+              fontSize={"2.4rem"}
               textTransform={"uppercase"}
               fontWeight={700}
             >
@@ -162,7 +162,7 @@ const Footer = () => {
               {item.listSub.map((child, i) => (
                 <Text
                   key={i}
-                  fontSize={"1.2rem"}
+                  fontSize={"1.6rem"}
                   color={"text.sub"}
                   fontWeight={500}
                   cursor={"pointer"}
@@ -193,12 +193,12 @@ const Footer = () => {
           </GridItem>
         ))}
       </Grid>
-      <Stack direction={"row"} gap={"1.6rem"}>
-        <FiFacebook fontSize={"2.4rem"} color={"#969696"} />
-        <CiInstagram fontSize={"2.4rem"} color={"#969696"} />
-        <CiTwitter fontSize={"2.4rem"} color={"#969696"} />
-        <FiLinkedin fontSize={"2.4rem"} color={"#969696"} />
-        <CiYoutube fontSize={"2.4rem"} color={"#969696"} />
+      <Stack direction={"row"} gap={"1.6rem"} mt={"2rem"}>
+        <FiFacebook fontSize={"3.2rem"} color={"#969696"} />
+        <CiInstagram fontSize={"3.2rem"} color={"#969696"} />
+        <CiTwitter fontSize={"3.2rem"} color={"#969696"} />
+        <FiLinkedin fontSize={"3.2rem"} color={"#969696"} />
+        <CiYoutube fontSize={"3.2rem"} color={"#969696"} />
       </Stack>
     </Stack>
   );

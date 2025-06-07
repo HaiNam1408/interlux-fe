@@ -71,6 +71,7 @@ const ProductDetail = () => {
         findMatchingVariation={findMatchingVariation}
         setSelectedVariation={setSelectedVariation}
         selectedVariation={selectedVariation}
+        setLoading={setLoading}
       />
       <Stack
         width={"100%"}

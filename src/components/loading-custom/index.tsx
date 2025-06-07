@@ -9,7 +9,7 @@ const LoadingCustom = ({ isLoading }: ILoadingCustom) => {
     isLoading && (
       <Center
         className="w-full h-full absolute top-0 left-0 z-20"
-        bg={"background.main"}
+        bgColor={"bg.main"}
       >
         <CircularProgress value={80} isIndeterminate />
       </Center>

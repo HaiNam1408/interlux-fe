@@ -20,12 +20,13 @@ interface IInfoDetail {
   ) => IProductVariation | null;
   setSelectedVariation: Dispatch<SetStateAction<IProductVariation | null>>;
   selectedVariation: IProductVariation | null;
+  setLoading: Dispatch<SetStateAction<boolean>>;
 }
 
 const InfoDetail = ({
   findMatchingVariation,
   setSelectedVariation,
-  selectedVariation,
+  selectedVariation,setLoading
 }: IInfoDetail) => {
   const navigator = useNavigate();
   const product = useSelector((state: RootState) => state.product.product);
@@ -209,7 +210,7 @@ const InfoDetail = ({
           minH={"10rem"}
         />
       </Stack>
-      <HandleDetail selectedVariation={selectedVariation} />
+      <HandleDetail selectedVariation={selectedVariation} setLoading={setLoading}/>
 
       <ProductDetail
         data={{

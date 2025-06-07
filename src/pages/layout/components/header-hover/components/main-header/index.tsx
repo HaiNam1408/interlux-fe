@@ -35,10 +35,12 @@ const MainHeader = ({
           ? "linear-gradient(90deg, rgba(14, 14, 14, 0.5525) 30.71%, rgba(18, 18, 18, 0.3185) 100%), linear-gradient(0deg, #181818, #181818)"
           : "linear-gradient(90deg, rgba(240, 240, 240, 0.55) 30.71%, rgba(255, 255, 255, 0.32) 100%),linear-gradient(0deg, #f5f5f5, #f5f5f5)",
         padding: "96px 32px 48px",
-        overflow: "hidden",
+        overflowY: "auto",
+        overflowX: "hidden",
         transition: seletectedMenu.title ? "all .4s ease 0.3s" : "none",
         opacity: seletectedMenu.title ? 1 : 0,
       }}
+    
     >
       <Text
         fontSize={"1.2rem"}
@@ -66,6 +68,7 @@ const MainHeader = ({
             ? "translateY(0)"
             : "translateY(2rem)",
         }}
+
       >
         <Stack
           direction={"row"}
@@ -123,11 +126,15 @@ const MainHeader = ({
             <Text
               fontSize={"1.6rem"}
               lineHeight={"2.4rem"}
+              maxW={"20rem"}
               color={
                 item.title === selectedChild.title ? "text.main" : "text.sub"
               }
               fontWeight={600}
               transition={"all .2s ease"}
+              textOverflow={"ellipsis"}
+              whiteSpace={"nowrap"}
+              overflow={"hidden"}
             >
               {item.title}
             </Text>
