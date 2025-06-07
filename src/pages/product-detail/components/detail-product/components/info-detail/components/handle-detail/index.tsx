@@ -34,7 +34,7 @@ const HandleDetail = ({ selectedVariation }: IHandleDetail) => {
       dispatch(
         setNotification({
           status: "success",
-          title: "Đã thêm thành công sản phẩm.",
+          title: "Product added successfully.",
         })
       );
       dispatch(setIsReset());
@@ -42,7 +42,7 @@ const HandleDetail = ({ selectedVariation }: IHandleDetail) => {
       dispatch(
         setNotification({
           status: "warning",
-          title: "Thiếu token trong response.",
+          title: "Missing token in response.",
         })
       );
     }

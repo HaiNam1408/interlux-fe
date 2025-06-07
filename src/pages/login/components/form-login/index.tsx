@@ -40,7 +40,7 @@ const FormLogin = ({ setIsLoading }: IFormLogin) => {
         dispatch(
           setNotification({
             status: "warning",
-            title: "Thiếu token trong response.",
+            title: "Missing token in response.",
           })
         );
       }
@@ -48,7 +48,7 @@ const FormLogin = ({ setIsLoading }: IFormLogin) => {
       dispatch(
         setNotification({
           status: "error",
-          title: `Đăng nhập thất bại: ${error}`,
+          title: `Login failed: ${error}`,
         })
       );
     } finally {

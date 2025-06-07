@@ -8,5 +8,9 @@ export interface IMenuChild {
   title: string;
   slug?: string;
   listChild?: IMenuChild[];
-  linkImg?: string;
+   image?: {
+    type: string;
+    fileName: string;
+    filePath: string;
+  };
 }

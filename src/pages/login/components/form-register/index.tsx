@@ -56,24 +56,24 @@ const FormRegister = ({ setIsLoading }: IFormRegister) => {
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/;
     if (!passwordRegex.test(password)) {
       newErrors.errPassword =
-        "Mật khẩu phải chứa ít nhất một chữ thường, một chữ hoa và một chữ số.";
+        "Password must contain at least one lowercase letter, one uppercase letter, and one number.";
       isValid = false;
     }
 
     if (password !== confirmPassword) {
-      newErrors.errConfirm = "Mật khẩu và xác nhận mật khẩu không khớp.";
+      newErrors.errConfirm = "Password and confirm password do not match.";
       isValid = false;
     }
 
     if (!phone) {
-      newErrors.errPhone = "Số điện thoại là bắt buộc.";
+      newErrors.errPhone = "Phone number is required.";
       isValid = false;
     }
 
     const usernameRegex = /^[a-zA-Z0-9_]+$/;
     if (!usernameRegex.test(userName)) {
       newErrors.errUsername =
-        "Tên đăng nhập chỉ được chứa chữ cái, số và dấu gạch dưới (_).";
+        "Login name can only contain letters, numbers and underscores (_).";
       isValid = false;
     }
 
@@ -91,7 +91,7 @@ const FormRegister = ({ setIsLoading }: IFormRegister) => {
         setNotification({
           status: "success",
           title:
-            "Đăng ký thành công! Bạn hãy xác nhận email để tiếp tục đăng nhập.",
+            "Registration successful! Please confirm your email to continue logging in.",
         })
       );
       setConfirmPassword("");
@@ -103,7 +103,7 @@ const FormRegister = ({ setIsLoading }: IFormRegister) => {
       dispatch(
         setNotification({
           status: "error",
-          title: `Đăng ký thất bại: ${error.response.data.message}`,
+          title: `Registration failed: ${error.response.data.message}`,
         })
       );
     } finally {

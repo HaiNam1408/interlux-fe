@@ -1,25 +1,38 @@
-// @hooks/useScrollDirection.ts
 import { useEffect, useRef, useState } from "react";
 
 const useScrollDirection = () => {
   const [direction, setDirection] = useState<"up" | "down" | null>(null);
   const [isAtTop, setIsAtTop] = useState(true);
   const lastScrollY = useRef(0);
+  const ticking = useRef(false);
+
+  const getScrollY = () =>
+    window.pageYOffset ||
+    document.documentElement.scrollTop ||
+    document.body.scrollTop ||
+    0;
 
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      setIsAtTop(currentScrollY <= 10); // bạn có thể tăng/giảm ngưỡng nếu cần
+      if (!ticking.current) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = getScrollY();
 
-      if (Math.abs(currentScrollY - lastScrollY.current) < 10) return;
+          // Check if at top first
+          const atTop = currentScrollY <= 2;
+          setIsAtTop(atTop);
 
-      if (currentScrollY > lastScrollY.current) {
-        setDirection("down");
-      } else {
-        setDirection("up");
+          // Only set direction if not at top
+          if (!atTop && Math.abs(currentScrollY - lastScrollY.current) > 4) {
+            setDirection(currentScrollY > lastScrollY.current ? "down" : "up");
+            lastScrollY.current = currentScrollY;
+          }
+
+          ticking.current = false;
+        });
+
+        ticking.current = true;
       }
-
-      lastScrollY.current = currentScrollY;
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });

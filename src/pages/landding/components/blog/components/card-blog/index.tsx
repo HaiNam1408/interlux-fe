@@ -14,6 +14,7 @@ const CardBlog = ({ imgCard, sub, title }: ICardBlog) => {
       width={"100%"}
       bgColor={"#22191A"}
       position={"relative"}
+      height={"100%"}
     >
       <Image
         width={"100%"}
@@ -23,7 +24,19 @@ const CardBlog = ({ imgCard, sub, title }: ICardBlog) => {
         src={imgCard}
       ></Image>
       <Stack direction={"column"} gap={".8rem"} p={"2rem"}>
-        <Text fontSize={"1.8rem"} color={"#fff"} fontWeight={600}>
+        <Text
+          fontSize="1.8rem"
+          color="#fff"
+          fontWeight={600}
+          sx={{
+            display: "-webkit-box",
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            height: "5.04rem",
+          }}
+        >
           {title}
         </Text>
         <Text fontSize={"1.2rem"} color={"#fff"} fontWeight={500}>

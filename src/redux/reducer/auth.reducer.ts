@@ -1,4 +1,5 @@
 import { IAuth } from "@interfaces/IAuth.interface";
+import { ICategory } from "@interfaces/ICategory.interface";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface INoticafition {
@@ -9,6 +10,7 @@ export interface INoticafition {
 export interface IAuthState {
   auth: IAuth["data"];
   notification?: INoticafition;
+  categorys: ICategory[];
 }
 
 const initialState: IAuthState = {
@@ -16,6 +18,7 @@ const initialState: IAuthState = {
     accessToken: "",
     refreshToken: "",
   },
+  categorys: [],
 };
 
 const authSlice = createSlice({
@@ -38,6 +41,9 @@ const authSlice = createSlice({
     removeNotification: (state) => {
       state.notification = undefined;
     },
+    setCategory: (state, action: PayloadAction<ICategory[]>) => {
+      state.categorys = action.payload;
+    },
     clearStateAuth: () => initialState,
   },
 });
@@ -48,6 +54,7 @@ export const {
   removeNotification,
   setNotification,
   clearStateAuth,
+  setCategory,
 } = authSlice.actions;
 const authReducer = authSlice.reducer;
 

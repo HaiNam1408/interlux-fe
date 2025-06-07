@@ -63,7 +63,7 @@ const ChildCart = ({ data }: IChildCart) => {
       dispatch(
         setNotification({
           status: "success",
-          title: "Xoá sản phẩm thành công.",
+          title: "Product deleted successfully.",
         })
       );
     } catch (error: any) {
@@ -83,7 +83,7 @@ const ChildCart = ({ data }: IChildCart) => {
       dispatch(
         setNotification({
           status: "success",
-          title: "Cập nhật sản phẩm thành công.",
+          title: "Product update successful.",
         })
       );
     } catch (error: any) {

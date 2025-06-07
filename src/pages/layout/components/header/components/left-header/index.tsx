@@ -4,7 +4,9 @@ import { Box, Stack, Text } from "@chakra-ui/react";
 import { ListMenu } from "@constants/listMenu.contants";
 import { ICategory } from "@interfaces/ICategory.interface";
 import { IMenu, IMenuChild } from "@interfaces/IMenu.interface";
+import { setCategory } from "@redux/reducer/auth.reducer";
 import { SetStateAction, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 interface ILeftHeader {
@@ -13,6 +15,7 @@ interface ILeftHeader {
 
 const LeftHeader = ({ setSeletecedMenu }: ILeftHeader) => {
   const navigator = useNavigate();
+  const dispatch = useDispatch();
   const [listMenuApi, setListMenuApi] = useState<IMenu[]>([]);
 
   useEffect(() => {
@@ -22,12 +25,14 @@ const LeftHeader = ({ setSeletecedMenu }: ILeftHeader) => {
           (item: ICategory) => ({
             title: item.name,
             slug: item.slug,
+            image: item.image,
             listChild: item.children.map((i) => ({
               title: i.name,
               slug: i.slug,
             })),
           })
         );
+        dispatch(setCategory(res.data.data));
         const updatedMenu = ListMenu.map((menuItem) => {
           if (menuItem.title === "Category") {
             return {
