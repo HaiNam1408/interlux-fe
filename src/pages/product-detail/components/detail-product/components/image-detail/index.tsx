@@ -16,7 +16,7 @@ const ImageDetail = ({ selectedVariation }: IImageDetail) => {
   const [selectedImg, setSelectedImg] = useState<string>(
     product?.images.map((item) => item.filePath)[0] || ""
   );
-
+  console.log(product);
   return (
     <Box
       width={"58%"}

@@ -38,7 +38,7 @@ const ProductDetail = () => {
           );
           return acc;
         }, {});
-
+        console.log(attrMap)
         return (
           attrMap["color"]?.includes(color.toLowerCase()) &&
           attrMap["material"]?.includes(material.toLowerCase()) &&

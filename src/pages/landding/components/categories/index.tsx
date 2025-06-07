@@ -6,7 +6,7 @@ import { RootState } from "@redux/store";
 
 const Categories = () => {
   const category = useSelector((state: RootState) => state.auth.categorys);
-  console.log(category);
+  
   return (
     <Grid
       templateColumns="repeat(2, 1fr)"
