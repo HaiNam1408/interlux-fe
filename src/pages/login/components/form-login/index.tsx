@@ -1,4 +1,5 @@
-import { login } from "@apis/auth.api";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { forgotPassword, login } from "@apis/auth.api";
 import { Box, Button, Stack, Text } from "@chakra-ui/react";
 import CheckBox from "@components/check-box";
 import InputCustom from "@components/input-custom";
@@ -23,6 +24,48 @@ const FormLogin = ({ setIsLoading }: IFormLogin) => {
   const [password, setPassword] = useState<string>("");
   const [isShow, setIsShow] = useState<boolean>(false);
   const [isRemember, setIsRemember] = useState<boolean>(false);
+  const [isForgot, setIsForgot] = useState<boolean>(false);
+
+  const handleForgot = async () => {
+    if (!userName) {
+      dispatch(
+        setNotification({
+          status: "warning",
+          title: "Missing username or email",
+          description: "Please enter your username or email address.",
+        })
+      );
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      await forgotPassword(userName);
+      dispatch(
+        setNotification({
+          status: "success",
+          title: "Reset link sent!",
+          description:
+            "Please check your email for instructions to reset your password.",
+        })
+      );
+      setIsForgot(false)
+    } catch (error: any) {
+      const message =
+        error?.response?.data?.message ||
+        "We couldn't send the reset link. Please try again later.";
+
+      dispatch(
+        setNotification({
+          status: "error",
+          title: "Reset failed",
+          description: message,
+        })
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleLogin = async () => {
     setIsLoading(true);
@@ -40,15 +83,15 @@ const FormLogin = ({ setIsLoading }: IFormLogin) => {
         dispatch(
           setNotification({
             status: "warning",
-            title: "Missing token in response.",
+            title: "Please try logging in again or contact support.",
           })
         );
       }
-    } catch (error) {
+    } catch {
       dispatch(
         setNotification({
           status: "error",
-          title: `Login failed: ${error}`,
+          title: "Invalid username or password. Please try again.",
         })
       );
     } finally {
@@ -71,7 +114,7 @@ const FormLogin = ({ setIsLoading }: IFormLogin) => {
         fontWeight={600}
         mb={"1rem"}
       >
-        LOGIN
+        {isForgot ? "FORGOT PASSWORD" : "LOGIN"}
       </Text>
       <InputCustom
         label="Username or email address *"
@@ -79,47 +122,61 @@ const FormLogin = ({ setIsLoading }: IFormLogin) => {
         value={userName}
       />
       <Box height={"4rem"} />
-      <InputCustom
-        label="Password *"
-        isPassword={!isShow}
-        setValue={setPassword}
-        value={password}
-        icon={
-          <Box className="cursor-pointer" onClick={() => setIsShow(!isShow)}>
-            {isShow ? (
-              <LuEye fontSize={"2.4rem"} color="#fff" />
-            ) : (
-              <LuEyeClosed fontSize={"2.4rem"} color="#fff" />
-            )}
-          </Box>
-        }
-      />
-      <Box height={"2rem"} />
-      <CheckBox
-        checked={isRemember}
-        label="Remember me"
-        onChange={setIsRemember}
-        bgColor={isDarkMode ? "#000" : "#fff"}
-      />
-      <Box height={"4rem"} />
+      {!isForgot && (
+        <>
+          <InputCustom
+            label="Password *"
+            isPassword={!isShow}
+            setValue={setPassword}
+            value={password}
+            icon={
+              <Box
+                className="cursor-pointer"
+                onClick={() => setIsShow(!isShow)}
+              >
+                {isShow ? (
+                  <LuEye fontSize={"2.4rem"} color="#fff" />
+                ) : (
+                  <LuEyeClosed fontSize={"2.4rem"} color="#fff" />
+                )}
+              </Box>
+            }
+          />
+          <Box height={"2rem"} />
+          <CheckBox
+            checked={isRemember}
+            label="Remember me"
+            onChange={setIsRemember}
+            bgColor={isDarkMode ? "#000" : "#fff"}
+          />
+          <Box height={"4rem"} />
+        </>
+      )}
+      {isForgot && (
+        <Text fontSize={"1.4rem"} mb={"2rem"}>
+          Enter your username or email address. We’ll send you a link to reset
+          your password.
+        </Text>
+      )}
       <Button
         variant={"solid"}
         colorScheme={isDarkMode ? "#000" : "#fff"}
-        maxW={"9rem"}
+        maxW={isForgot ? "14rem" : "9rem"}
         fontWeight={"600"}
         color={!isDarkMode ? "#000" : "#fff"}
         height={"4rem"}
-        onClick={handleLogin}
+        onClick={isForgot ? handleForgot : handleLogin}
       >
-        Log in
+        {isForgot ? "Send gmail" : "Log in"}
       </Button>
       <Text
         textDecoration={"underline"}
         fontSize={"1.4rem"}
         cursor={"pointer"}
         mt={"1.4rem"}
+        onClick={() => setIsForgot(!isForgot)}
       >
-        Lost your password?
+        {isForgot ? "Back to Login" : "Lost your password?"}
       </Text>
     </Stack>
   );
