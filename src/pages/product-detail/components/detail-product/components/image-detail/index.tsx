@@ -16,7 +16,6 @@ const ImageDetail = ({ selectedVariation }: IImageDetail) => {
   const [selectedImg, setSelectedImg] = useState<string>(
     product?.images.map((item) => item.filePath)[0] || ""
   );
-  console.log(product);
   return (
     <Box
       width={"58%"}
@@ -30,20 +29,18 @@ const ImageDetail = ({ selectedVariation }: IImageDetail) => {
         <ListImage
           setSelectedImg={setSelectedImg}
           selectedImg={selectedImg}
-          listImg={
-            selectedVariation
-              ? selectedVariation.images.map((item) => item.filePath) || []
-              : product?.images.map((item) => item.filePath) || []
-          }
+          listImg={[
+            ...(product?.images?.map((item) => item.filePath) || []),
+            ...(selectedVariation?.images?.map((item) => item.filePath) || []),
+          ]}
         />
         <MainImage
           setSelectedImg={setSelectedImg}
           selectedImg={selectedImg}
-          listImg={
-            selectedVariation
-              ? selectedVariation.images.map((item) => item.filePath) || []
-              : product?.images.map((item) => item.filePath) || []
-          }
+          listImg={[
+            ...(product?.images?.map((item) => item.filePath) || []),
+            ...(selectedVariation?.images?.map((item) => item.filePath) || []),
+          ]}
         />
       </Stack>
     </Box>
