@@ -39,7 +39,19 @@ const CardBlog = ({ imgCard, sub, title }: ICardBlog) => {
         >
           {title}
         </Text>
-        <Text fontSize={"1.2rem"} color={"#fff"} fontWeight={500}>
+        <Text
+          fontSize={"1.2rem"}
+          color={"#fff"}
+          fontWeight={500}
+          sx={{
+            display: "-webkit-box",
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            height: "4.04rem",
+          }}
+        >
           {sub}
         </Text>
         <Text

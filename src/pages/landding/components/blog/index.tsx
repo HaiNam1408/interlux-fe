@@ -12,8 +12,10 @@ import CardBlog from "./components/card-blog";
 import { useEffect, useState } from "react";
 import { IBlogPost } from "@interfaces/IBlog.interface";
 import { getListBlog } from "@apis/blog.api";
+import { useNavigate } from "react-router-dom";
 
 const Blog = () => {
+  const navigator = useNavigate();
   const [listBlog, setListBlog] = useState<IBlogPost[]>([]);
 
   useEffect(() => {
@@ -34,7 +36,11 @@ const Blog = () => {
         className="mySwiper"
       >
         {(listBlog ?? []).map((item, index) => (
-          <SwiperSlide key={index} style={{ height: "100%" }}>
+          <SwiperSlide
+            key={index}
+            style={{ height: "100%" }}
+            onClick={() => navigator(`/blog/${item.slug}`)}
+          >
             <CardBlog
               imgCard={item.thumbnail.filePath}
               title={item.title}
