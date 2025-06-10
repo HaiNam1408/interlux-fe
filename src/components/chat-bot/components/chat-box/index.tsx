@@ -186,9 +186,9 @@ const ChatBox = ({ isOpen, onClose }: ChatBoxProps) => {
     }
   };
 
-  const handleProductClick = (slug: string) => {
-    navigate(`/product/${slug}`);
-    onClose(); // Close chat when navigating to product
+  const handleProductClick = (id: string) => {
+    navigate(`/shop/all/${id}`);
+    onClose();
   };
 
   if (!isOpen) return null;
@@ -202,7 +202,7 @@ const ChatBox = ({ isOpen, onClose }: ChatBoxProps) => {
       flexDirection={"column"}
       justifyContent={"space-between"}
       width={["90%", "46rem"]}
-      height={["80%", "70rem"]}
+      height={["80%", "68rem"]}
       bg={"#f8fafc"}
       borderRadius="1rem"
       boxShadow="0 10px 30px rgba(0, 0, 0, 0.15)"
