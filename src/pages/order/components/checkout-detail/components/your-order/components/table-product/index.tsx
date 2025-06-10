@@ -3,12 +3,14 @@ import { ICart } from "@interfaces/ICart.interface";
 import ChildProduct from "../child-product";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/store";
+import { IOrder } from "@interfaces/IOrder.interface";
 
 interface ITableProduct {
   listCart: ICart | undefined;
+  form: IOrder;
 }
 
-const TableProduct = ({ listCart }: ITableProduct) => {
+const TableProduct = ({ listCart, form }: ITableProduct) => {
   const coupon = useSelector((state: RootState) => state.cart.coupon);
 
   return (
@@ -29,7 +31,7 @@ const TableProduct = ({ listCart }: ITableProduct) => {
         </Text>
       </GridItem>
       {listCart?.items.map((item, index) => (
-        <ChildProduct data={item} key={index} />
+        <ChildProduct data={item} key={index} form={form}/>
       ))}
       <GridItem colSpan={12}>
         <Stack
@@ -45,11 +47,18 @@ const TableProduct = ({ listCart }: ITableProduct) => {
             Subtotal
           </Text>
           <Text fontSize={"1.4rem"} fontWeight={500}>
-            $
-            {listCart?.summary.subtotal.toLocaleString("en-US", {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })}
+            {form.paymentMethod === "VNPAY"
+              ? `${((listCart?.summary.subtotal ?? 0) * 26020).toLocaleString(
+                  "vi-VN",
+                  {
+                    style: "currency",
+                    currency: "VND",
+                  }
+                )}`
+              : `$${listCart?.summary.subtotal.toLocaleString("en-US", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}`}
           </Text>
         </Stack>
       </GridItem>
@@ -102,11 +111,18 @@ const TableProduct = ({ listCart }: ITableProduct) => {
               Discount
             </Text>
             <Text fontSize={"1.4rem"} fontWeight={500}>
-              $
-              {coupon.discountAmount.toLocaleString("en-US", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}
+              {form.paymentMethod === "VNPAY"
+                ? `${((coupon.discountAmount ?? 0) * 26020).toLocaleString(
+                    "vi-VN",
+                    {
+                      style: "currency",
+                      currency: "VND",
+                    }
+                  )}`
+                : `$${coupon.discountAmount.toLocaleString("en-US", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}`}
             </Text>
           </Stack>
         )}
@@ -126,15 +142,25 @@ const TableProduct = ({ listCart }: ITableProduct) => {
             Total
           </Text>
           <Text fontSize={"1.4rem"} fontWeight={500}>
-            $
-            {(
+            {form.paymentMethod === "VNPAY"
+              ? `${(
+                  (coupon?.subtotalAfterDiscount ??
+                    listCart?.summary.subtotal ??
+                    0) * 26020
+                ).toLocaleString("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                })}`
+              : ` $
+            ${(
               coupon?.subtotalAfterDiscount ??
               listCart?.summary.subtotal ??
               0
             ).toLocaleString("en-US", {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
-            })}
+            })}`}
+          
           </Text>
         </Stack>
       </GridItem>

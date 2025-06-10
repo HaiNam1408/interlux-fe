@@ -5,6 +5,7 @@ import NotFound from "@components/404-custom";
 import useAutoLogin from "@hooks/useRemember";
 import ChatBotWrapper from "@components/chat-bot-wrapper";
 import NavigateHandler from "@utils/NavigateHandler";
+import ScrollToTop from "@components/scrollToTop";
 
 const RouterContainer = () => {
   useAutoLogin();
@@ -12,6 +13,7 @@ const RouterContainer = () => {
   return (
     <>
       <NavigateHandler />
+       <ScrollToTop />
       <Routes>
         {routers.map((route) => (
           <Route key={route.path} {...route}></Route>

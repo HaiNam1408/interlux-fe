@@ -49,13 +49,11 @@ const ChatBox = ({ isOpen, onClose }: ChatBoxProps) => {
   const navigate = useNavigate();
   const toast = useToast();
 
-  // Check if user is logged in
   const isLoggedIn = () => {
     const token = Cookies.get("token");
     return !!token;
   };
 
-  // Load chat history from localStorage only if user is logged in
   const loadChatHistory = () => {
     if (!isLoggedIn()) {
       return [
@@ -112,14 +110,12 @@ const ChatBox = ({ isOpen, onClose }: ChatBoxProps) => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // Save chat history to localStorage whenever messages change (only if logged in)
-  useEffect(() => {
+ useEffect(() => {
     if (isLoggedIn()) {
       localStorage.setItem("chatbot_messages", JSON.stringify(messages));
     }
   }, [messages]);
 
-  // Save userId to localStorage whenever it changes (only if logged in)
   useEffect(() => {
     if (isLoggedIn() && userId) {
       localStorage.setItem("chatbot_userId", userId);

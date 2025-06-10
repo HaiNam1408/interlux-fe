@@ -2,14 +2,15 @@ import { Stack } from "@chakra-ui/react";
 import LeftHeader from "./components/left-header";
 import RightHeader from "./components/right-header";
 import useScrollDirection from "@hooks/useScrollDirection";
-import { SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { IMenu } from "@interfaces/IMenu.interface";
 
 interface IHeader {
-  setSeletecedMenu: React.Dispatch<SetStateAction<IMenu>>;
+  setSeletecedMenu: Dispatch<SetStateAction<IMenu>>;
+  setIsLogin: Dispatch<SetStateAction<boolean>>;
 }
 
-const Header = ({ setSeletecedMenu }: IHeader) => {
+const Header = ({ setSeletecedMenu, setIsLogin }: IHeader) => {
   const { direction, isAtTop } = useScrollDirection();
 
   return (
@@ -29,7 +30,7 @@ const Header = ({ setSeletecedMenu }: IHeader) => {
       boxShadow={!isAtTop ? "rgba(0, 0, 0, 0.24) 0px 3px 8px" : "none"}
     >
       <LeftHeader setSeletecedMenu={setSeletecedMenu} />
-      <RightHeader />
+      <RightHeader setIsLogin={setIsLogin}/>
     </Stack>
   );
 };

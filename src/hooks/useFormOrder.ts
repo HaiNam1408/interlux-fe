@@ -112,11 +112,11 @@ export const useFormOrder = (listCart?: ICart, onSuccess?: () => void) => {
         navigator("/checkout/complete");
       } else {
         const paymentRes = await createPaymentURL(
-          orderRes.data.order.id,
+          orderRes.data.data.order.id,
           form.paymentMethod
         );
         resetForm();
-        window.location.href = paymentRes.data.paymentUrl;
+        window.location.href = paymentRes.data.data.paymentUrl;
       }
 
       onSuccess?.();

@@ -13,7 +13,11 @@ import { ICart } from "@interfaces/ICart.interface";
 import { getAllCart } from "@apis/cart.api";
 import Cookies from "js-cookie";
 
-const Cart = () => {
+interface ICartProps {
+  isLogin: boolean;
+}
+
+const Cart = ({ isLogin }: ICartProps) => {
   const dispatch = useDispatch();
   const [listCart, setListCart] = useState<ICart>();
 
@@ -28,6 +32,12 @@ const Cart = () => {
         dispatch(setSubTotal(res.data.data.summary.subtotal));
       });
   }, [isReset, isShowCart]);
+
+  useEffect(() => {
+    if (!isLogin) return;
+    setListCart(undefined);
+    dispatch(setSubTotal(0));
+  }, [isLogin]);
 
   return (
     <Box

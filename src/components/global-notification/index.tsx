@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Stack, Text, useToast } from "@chakra-ui/react";
+import { CloseButton, Stack, Text, useToast } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@redux/store";
 import { removeNotification } from "@redux/reducer/auth.reducer";
@@ -19,7 +19,7 @@ const GlobalNotification = () => {
         position: "top-right",
         duration: 5000,
         isClosable: true,
-        render: () => (
+        render: ({ onClose }) => (
           <Stack
             bg={
               notification?.status === "success"
@@ -32,25 +32,37 @@ const GlobalNotification = () => {
             px="6"
             py="5"
             borderRadius="md"
-            // tăng cỡ chữ
             boxShadow="lg"
             maxW="50rem"
             direction={"row"}
             gap={"2rem"}
+            alignItems="center"
+            justifyContent="space-between"
           >
-            {notification?.status === "success" ? (
-              <FaCheckCircle fontSize={"2.4rem"}/>
-            ) : (
-              <MdError  fontSize={"2.4rem"}/>
-            )}
-            <Text fontWeight="bold" fontSize={"1.6rem"} color={"#fff"}>
-              {notification?.title || "Notification"}
-            </Text>
-            {notification.message && (
-              <Text mt={2} fontSize={"1.8rem"} color={"#fff"}>
-                {notification.message}
-              </Text>
-            )}
+            <Stack direction="row" alignItems="center" flex="1">
+              {notification?.status === "success" ? (
+                <FaCheckCircle fontSize={"2.4rem"} />
+              ) : (
+                <MdError fontSize={"2.4rem"} />
+              )}
+              <Stack spacing="0">
+                <Text fontWeight="bold" fontSize={"1.6rem"} color={"#fff"}>
+                  {notification?.title || "Notification"}
+                </Text>
+                {notification.message && (
+                  <Text mt={1} fontSize={"1.4rem"} color={"#fff"}>
+                    {notification.message}
+                  </Text>
+                )}
+              </Stack>
+            </Stack>
+
+            <CloseButton
+              size="lg"
+              onClick={onClose}
+              color="white"
+              _hover={{ bg: "whiteAlpha.300" }}
+            />
           </Stack>
         ),
       });

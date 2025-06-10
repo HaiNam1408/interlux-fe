@@ -5,12 +5,12 @@ import { ListMenu } from "@constants/listMenu.contants";
 import { ICategory } from "@interfaces/ICategory.interface";
 import { IMenu, IMenuChild } from "@interfaces/IMenu.interface";
 import { setCategory } from "@redux/reducer/auth.reducer";
-import { SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 interface ILeftHeader {
-  setSeletecedMenu: React.Dispatch<SetStateAction<IMenu>>;
+  setSeletecedMenu: Dispatch<SetStateAction<IMenu>>;
 }
 
 const LeftHeader = ({ setSeletecedMenu }: ILeftHeader) => {

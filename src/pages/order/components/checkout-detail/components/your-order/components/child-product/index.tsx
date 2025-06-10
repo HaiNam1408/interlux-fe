@@ -1,11 +1,13 @@
 import { Box, Center, GridItem, Image, Stack, Text } from "@chakra-ui/react";
 import { ICartItem } from "@interfaces/ICart.interface";
+import { IOrder } from "@interfaces/IOrder.interface";
 
 interface IChildProduct {
   data: ICartItem;
+  form: IOrder;
 }
 
-const ChildProduct = ({ data }: IChildProduct) => {
+const ChildProduct = ({ data, form }: IChildProduct) => {
   return (
     <>
       <GridItem
@@ -57,11 +59,22 @@ const ChildProduct = ({ data }: IChildProduct) => {
       <GridItem colSpan={3} borderBottom={"1px solid #ececec"}>
         <Center width={"100%"} height={"100%"}>
           <Text fontSize={"1.6rem"} color={"text.main"} fontWeight={600}>
-            $
-            {(data.product.finalPrice * data.quantity).toLocaleString("en-US", {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })}
+            {form.paymentMethod === "VNPAY"
+              ? `${(
+                  data.product.finalPrice *
+                  data.quantity *
+                  26020
+                ).toLocaleString("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                })}`
+              : `$${(data.product.finalPrice * data.quantity).toLocaleString(
+                  "en-US",
+                  {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  }
+                )}`}
           </Text>
         </Center>
       </GridItem>

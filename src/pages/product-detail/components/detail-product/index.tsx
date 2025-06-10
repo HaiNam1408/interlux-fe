@@ -18,7 +18,8 @@ interface IDetailProduct {
 const DetailProduct = ({
   findMatchingVariation,
   setSelectedVariation,
-  selectedVariation,setLoading
+  selectedVariation,
+  setLoading,
 }: IDetailProduct) => {
   return (
     <Stack
