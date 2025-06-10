@@ -6,7 +6,8 @@ import Control from "./components/control";
 import Map from "./components/map";
 import InfoContent from "./components/info-content";
 import MenuContent from "./components/menu";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { IcLogo } from "@assets/svgs";
 
 export const dataPano: IDataPano = {
   listDot: [
@@ -255,6 +256,7 @@ export const dataPano: IDataPano = {
 };
 
 const Panorama = () => {
+  const navigator = useNavigate();
   const [selectedOption, setSelectedOption] = useState<number>(0);
   const [yaw, setYaw] = useState(0);
   const [isControl, setIsControl] = useState<{
@@ -278,6 +280,18 @@ const Panorama = () => {
 
   return (
     <Box width={"100dvw"} height={"100dvh"} position={"relative"} zIndex={1}>
+      <Box
+        width={"4.6rem"}
+        height={"fit-content"}
+        position={"absolute"}
+        top={"2rem"}
+        left={"2rem"}
+        onClick={() => navigator("/")}
+        zIndex={10}
+        cursor={"pointer"}
+      >
+        <IcLogo width="5rem" height="5rem"/>
+      </Box>
       <Pano
         selectedPano={selectedPano || { listMarker: [], nameRoom: "", src: "" }}
         selectedOption={selectedOption}

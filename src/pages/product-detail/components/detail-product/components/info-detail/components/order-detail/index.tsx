@@ -1,5 +1,4 @@
 import { Stack, Text } from "@chakra-ui/react";
-import RatingComponent from "../rating-detail";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/store";
 import { IProductVariation } from "@interfaces/IProduct.interface";
@@ -23,9 +22,7 @@ const OrderDetail = ({ selectedVariation }: IOrderDetail) => {
       >
         {product?.title}
       </Text>
-      <Text fontSize={"1.6rem"} fontWeight={400}>
-        {product?.description}
-      </Text>
+
       <Stack
         width={"100%"}
         direction={"row"}
@@ -52,7 +49,7 @@ const OrderDetail = ({ selectedVariation }: IOrderDetail) => {
             </Text>
           )}
         </Stack>
-        <RatingComponent isChangeRa={false} numRating={5} title="2 reviews" />
+     
       </Stack>
     </Stack>
   );

@@ -28,10 +28,10 @@ const ColorDetail = ({ itemSelected, setItemSelected }: IColorDetail) => {
           .find((item) => item.name.toLowerCase().includes("color"))
           ?.values.map((item, index) => (
             <Center
-              width={"6.2rem"}
-              height={"6.2rem"}
-              minH={"5.4rem"}
-              minW={"5.4rem"}
+              width={"4rem"}
+              height={"4rem"}
+              minH={"4rem"}
+              minW={"4rem"}
               p={".4rem"}
               borderRadius={".4rem"}
               border={
@@ -53,8 +53,8 @@ const ColorDetail = ({ itemSelected, setItemSelected }: IColorDetail) => {
               }}
             >
               <Box
-                width={"5.2rem"}
-                height={"5.2rem"}
+                width={"100%"}
+                height={"100%"}
                 objectFit={"cover"}
                 borderRadius={".4rem"}
                 bgColor={item.value}

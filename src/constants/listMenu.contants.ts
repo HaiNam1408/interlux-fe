@@ -10,7 +10,7 @@ export const ListMenu: IMenu[] = [
   },
   {
     title: "Blog",
-    slug: "#blog",
+    slug: "/#blog",
   },
   {
     title: "About us",
