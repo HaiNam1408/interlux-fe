@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const chatbotHttp = axios.create({
-    baseURL: "https://interlux-chatbot.onrender.com",
+    // baseURL: "https://interlux-chatbot.onrender.com",
+    baseURL: "http://localhost:8502",
     timeout: 60000,
     headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -20,5 +21,17 @@ export const sendMessageToChatbot = async (message: string, userId?: string) => 
         response: string;
         user_id: string;
         history: { role: "user" | "bot"; content: string }[];
+        data?: {
+            id: number;
+            title: string;
+            description: string;
+            price: number;
+            originalPrice: number;
+            percentOff: number;
+            image: string;
+            category: string;
+            slug: string;
+            sold: number;
+        }[];
     };
 };

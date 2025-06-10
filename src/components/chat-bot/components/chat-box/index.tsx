@@ -9,17 +9,35 @@ import {
   Avatar,
   Spinner,
   useColorModeValue,
-  useToast,
+  useToast
 } from "@chakra-ui/react";
 import { FaPaperPlane, FaRobot, FaTimes } from "react-icons/fa";
 import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "../../styles.css";
 import { sendMessageToChatbot } from "@apis/chatbot.api";
+import ProductCard from "../product-card";
+import MarkdownMessage from "../markdown-message";
+import Cookies from "js-cookie";
+
+interface Product {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  originalPrice: number;
+  percentOff: number;
+  image: string;
+  category: string;
+  slug: string;
+  sold: number;
+}
 
 interface Message {
   text: string;
   isUser: boolean;
   timestamp: Date;
+  products?: Product[];
 }
 
 interface ChatBoxProps {
@@ -28,19 +46,61 @@ interface ChatBoxProps {
 }
 
 const ChatBox = ({ isOpen, onClose }: ChatBoxProps) => {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      text: "Hello! I am the assistant AI of Interlux. May I help you today?",
-      isUser: false,
-      timestamp: new Date(),
-    },
-  ]);
+  const navigate = useNavigate();
+  const toast = useToast();
+
+  // Check if user is logged in
+  const isLoggedIn = () => {
+    const token = Cookies.get("token");
+    return !!token;
+  };
+
+  // Load chat history from localStorage only if user is logged in
+  const loadChatHistory = () => {
+    if (!isLoggedIn()) {
+      return [
+        {
+          text: "Hello! I am the assistant AI of Interlux. May I help you today?",
+          isUser: false,
+          timestamp: new Date(),
+        },
+      ];
+    }
+
+    try {
+      const savedMessages = localStorage.getItem("chatbot_messages");
+
+      if (savedMessages) {
+        const parsedMessages = JSON.parse(savedMessages).map((msg: Message & { timestamp: string }) => ({
+          ...msg,
+          timestamp: new Date(msg.timestamp),
+        }));
+        return parsedMessages;
+      }
+    } catch (error) {
+      console.error("Error loading chat history:", error);
+    }
+
+    return [
+      {
+        text: "Hello! I am the assistant AI of Interlux. May I help you today?",
+        isUser: false,
+        timestamp: new Date(),
+      },
+    ];
+  };
+
+  const [messages, setMessages] = useState<Message[]>(() => {
+    const initialMessages = loadChatHistory();
+    return initialMessages;
+  });
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [userId, setUserId] = useState<string>("");
+  const [userId, setUserId] = useState<string>(() => {
+    return isLoggedIn() ? localStorage.getItem("chatbot_userId") || "" : "";
+  });
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const toast = useToast();
 
   const primaryColor = "#1a365d";
   const accentColor = "#3182ce";
@@ -51,6 +111,20 @@ const ChatBox = ({ isOpen, onClose }: ChatBoxProps) => {
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+
+  // Save chat history to localStorage whenever messages change (only if logged in)
+  useEffect(() => {
+    if (isLoggedIn()) {
+      localStorage.setItem("chatbot_messages", JSON.stringify(messages));
+    }
+  }, [messages]);
+
+  // Save userId to localStorage whenever it changes (only if logged in)
+  useEffect(() => {
+    if (isLoggedIn() && userId) {
+      localStorage.setItem("chatbot_userId", userId);
+    }
+  }, [userId]);
 
   useEffect(() => {
     scrollToBottom();
@@ -85,6 +159,7 @@ const ChatBox = ({ isOpen, onClose }: ChatBoxProps) => {
         text: response.response,
         isUser: false,
         timestamp: new Date(),
+        products: response.data || [],
       };
       setMessages((prev) => [...prev, aiResponse]);
     } catch (error) {
@@ -115,6 +190,11 @@ const ChatBox = ({ isOpen, onClose }: ChatBoxProps) => {
     }
   };
 
+  const handleProductClick = (slug: string) => {
+    navigate(`/product/${slug}`);
+    onClose(); // Close chat when navigating to product
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -125,8 +205,8 @@ const ChatBox = ({ isOpen, onClose }: ChatBoxProps) => {
       display={"flex"}
       flexDirection={"column"}
       justifyContent={"space-between"}
-      width={["90%", "40rem"]}
-      height={["80%", "60rem"]}
+      width={["90%", "46rem"]}
+      height={["80%", "70rem"]}
       bg={"#f8fafc"}
       borderRadius="1rem"
       boxShadow="0 10px 30px rgba(0, 0, 0, 0.15)"
@@ -158,11 +238,11 @@ const ChatBox = ({ isOpen, onClose }: ChatBoxProps) => {
             <FaRobot size="1.8rem" color={accentColor} />
           </Box>
           <VStack align="flex-start" spacing="0.2rem">
-            <Text fontWeight="bold" fontSize="1.8rem" letterSpacing="tight">
+            <Text fontWeight="bold" fontSize="1.8rem" letterSpacing="tight" color={"#fff"}>
               Interlux AI Assistant
             </Text>
-            <Text fontSize="1.2rem" opacity="0.8">
-              Always ready to assist you
+            <Text fontSize="1.2rem" opacity="0.9" color={isLoggedIn() ? "#90EE90" : "#FFD700"}>
+              {isLoggedIn() ? "✓ Đã đăng nhập - Lịch sử được lưu" : "⚠ Chưa đăng nhập - Lịch sử tạm thời"}
             </Text>
           </VStack>
         </HStack>
@@ -199,59 +279,106 @@ const ChatBox = ({ isOpen, onClose }: ChatBoxProps) => {
         }}
       >
         {messages.map((message, index) => (
-          <Flex
+          <VStack
             key={index}
-            alignSelf={message.isUser ? "flex-end" : "flex-start"}
-            flexDirection={message.isUser ? "row-reverse" : "row"}
-            gap="0.8rem"
+            align={message.isUser ? "flex-end" : "flex-start"}
+            spacing="1rem"
+            w="100%"
           >
-            {!message.isUser && (
-              <Avatar
-                size="md"
-                bg={accentColor}
-                icon={<FaRobot color="white" />}
-                boxShadow="0 4px 8px rgba(0, 0, 0, 0.1)"
-                border="2px solid white"
-              />
-            )}
-            <Box
-              maxWidth="80%"
-              p="1rem"
-              borderRadius={
-                message.isUser
-                  ? "2rem 0.5rem 2rem 2rem"
-                  : "0.5rem 2rem 2rem 2rem"
-              }
-              bg={message.isUser ? accentColor : cardBgColor}
-              color={textColor}
-              boxShadow="0 5px 15px rgba(0, 0, 0, 0.05)"
-              border="1px solid"
-              borderColor={message.isUser ? "transparent" : "gray.100"}
+            <Flex
+              alignSelf={message.isUser ? "flex-end" : "flex-start"}
+              flexDirection={message.isUser ? "row-reverse" : "row"}
+              gap="0.8rem"
+              w="100%"
             >
-              <Text color={message.isUser ? "white" : "black"} fontSize="1.5rem" lineHeight="1.6">
-                {message.text}
-              </Text>
-              <Text
-                fontSize="1.1rem"
-                color={message.isUser ? "whiteAlpha.700" : "gray.500"}
-                textAlign="right"
+              {!message.isUser && (
+                <Avatar
+                  size="md"
+                  bg={accentColor}
+                  icon={<FaRobot color="white" />}
+                  boxShadow="0 4px 8px rgba(0, 0, 0, 0.1)"
+                  border="2px solid white"
+                />
+              )}
+              <Box
+                maxWidth="80%"
+                p="1rem"
+                borderRadius={
+                  message.isUser
+                    ? "2rem 0.5rem 2rem 2rem"
+                    : "0.5rem 2rem 2rem 2rem"
+                }
+                bg={message.isUser ? accentColor : cardBgColor}
+                color={textColor}
+                boxShadow="0 5px 15px rgba(0, 0, 0, 0.05)"
+                border="1px solid"
+                borderColor={message.isUser ? "transparent" : "gray.100"}
               >
-                {new Intl.DateTimeFormat("vi-VN", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                }).format(message.timestamp)}
-              </Text>
-            </Box>
-            {message.isUser && (
-              <Avatar
-                size="md"
-                name="User"
-                bg="gray.500"
-                boxShadow="0 4px 8px rgba(0, 0, 0, 0.1)"
-                border="2px solid white"
-              />
-            )}
-          </Flex>
+                <MarkdownMessage
+                  content={message.text}
+                  isUser={message.isUser}
+                />
+                <Text
+                  fontSize="1.1rem"
+                  color={message.isUser ? "whiteAlpha.700" : "gray.500"}
+                  textAlign="right"
+                  borderColor={message.isUser ? "whiteAlpha.200" : "gray.100"}
+                >
+                  {new Intl.DateTimeFormat("vi-VN", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  }).format(message.timestamp)}
+                </Text>
+              </Box>
+              {message.isUser && (
+                <Avatar
+                  size="md"
+                  name="User"
+                  bg="gray.500"
+                  boxShadow="0 4px 8px rgba(0, 0, 0, 0.1)"
+                  border="2px solid white"
+                />
+              )}
+            </Flex>
+
+            {/* Product Cards */}
+            {!message.isUser &&
+              message.products &&
+              message.products.length > 0 && (
+                <Flex
+                  gap="0.8rem"
+                  overflowX="auto"
+                  w="100%"
+                  pb="0.5rem"
+                  pl="4rem"
+                  sx={{
+                    "&::-webkit-scrollbar": {
+                      height: "0.3rem",
+                    },
+                    "&::-webkit-scrollbar-track": {
+                      background: "gray.100",
+                      borderRadius: "full",
+                    },
+                    "&::-webkit-scrollbar-thumb": {
+                      background: "gray.300",
+                      borderRadius: "full",
+                      "&:hover": {
+                        background: "gray.400",
+                      },
+                    },
+                  }}
+                >
+                  {message.products.map((product) => (
+                    <Box key={product.id} flexShrink={0}>
+                      <ProductCard
+                        product={product}
+                        onProductClick={handleProductClick}
+                      />
+                    </Box>
+                  ))}
+                </Flex>
+              )}
+          </VStack>
         ))}
         {isLoading && (
           <Flex alignSelf="flex-start" gap="1.2rem">
