@@ -124,24 +124,21 @@ const TableProduct = ({ listCart, form, setFormValue }: ITableProduct) => {
               }
             }}
           >
-            <Stack spacing={5} direction="column">
+            <Grid templateColumns="repeat(2, 1fr)" gap={"1rem"}>
               {listMethod.map((item, index) => {
                 if (item.status.includes("ACTIVE")) {
                   return (
-                    <Radio
-                      colorScheme="red"
-                      value={item.name}
-                      size={"lg"}
-                      key={index}
-                    >
-                      <Text fontSize="1.4rem" fontWeight={500}>
-                        {item.name}
-                      </Text>
-                    </Radio>
+                    <GridItem key={index}>
+                      <Radio colorScheme="red" value={item.name} size={"lg"}>
+                        <Text fontSize="1.4rem" fontWeight={500}>
+                          {item.name}
+                        </Text>
+                      </Radio>
+                    </GridItem>
                   );
                 }
               })}
-            </Stack>
+            </Grid>
           </RadioGroup>
           <Stack
             direction={"row"}
