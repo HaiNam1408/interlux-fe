@@ -9,5 +9,10 @@ export const getListOrder = () => http.get<any>("/api/v1/client/order");
 export const getOrderById = (idOder: string) =>
   http.get<any>(`/api/v1/client/order/${idOder}`);
 
+// Tạo Order
 export const createOrder = (data: IOrder) =>
-  http.post<any>("/api/v1/client/order",  data );
+  http.post<any>("/api/v1/client/order", data);
+
+// Lấy các phương thức giao hàng
+export const getMethodShipping = () =>
+  http.get<any>(`/api/v1/client/order/shipping/methods`);

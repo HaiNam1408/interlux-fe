@@ -66,7 +66,7 @@ const YourOrder = ({
           YOUR ORDER
         </Text>
       </Stack>
-      <TableProduct listCart={listCart} form={form}/>
+      <TableProduct listCart={listCart} form={form} setFormValue={setFormValue}/>
       <Text
         fontSize={"1.6rem"}
         fontWeight={500}

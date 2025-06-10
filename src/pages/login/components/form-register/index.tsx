@@ -49,7 +49,7 @@ const FormRegister = ({ setIsLoading }: IFormRegister) => {
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      newErrors.errEmail = "Email không hợp lệ.";
+      newErrors.errEmail = "Invalid email.";
       isValid = false;
     }
 
