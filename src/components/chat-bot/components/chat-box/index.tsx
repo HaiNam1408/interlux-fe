@@ -98,7 +98,9 @@ const ChatBox = ({ isOpen, onClose }: ChatBoxProps) => {
     return isLoggedIn() ? localStorage.getItem("chatbot_userId") || "" : "";
   });
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const hasScrolledToBottomRef = useRef(false);
 
   const primaryColor = "#1a365d";
   const accentColor = "#3182ce";
@@ -107,7 +109,20 @@ const ChatBox = ({ isOpen, onClose }: ChatBoxProps) => {
   const textColor = useColorModeValue("#2d3748", "white");
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (messagesContainerRef.current) {
+      const container = messagesContainerRef.current;
+      container.scrollTop = container.scrollHeight;
+    }
+
+    if (messagesEndRef.current) {
+      setTimeout(() => {
+        messagesEndRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "end",
+          inline: "nearest"
+        });
+      }, 50);
+    }
   };
 
  useEffect(() => {
@@ -127,8 +142,23 @@ const ChatBox = ({ isOpen, onClose }: ChatBoxProps) => {
   }, [messages]);
 
   useEffect(() => {
-    if (isOpen && inputRef.current) {
-      inputRef.current.focus();
+    if (isOpen) {
+      if (messagesContainerRef.current) {
+        messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+      }
+
+      setTimeout(() => {
+        scrollToBottom();
+        hasScrolledToBottomRef.current = true;
+      }, 100);
+
+      setTimeout(() => {
+        if (inputRef.current) {
+          inputRef.current.focus();
+        }
+      }, 200);
+    } else {
+      hasScrolledToBottomRef.current = false;
     }
   }, [isOpen]);
 
@@ -255,6 +285,7 @@ const ChatBox = ({ isOpen, onClose }: ChatBoxProps) => {
 
       {/* Messages Container */}
       <VStack
+        ref={messagesContainerRef}
         height="calc(100% - 16rem)"
         overflowY="auto"
         p="1rem"
