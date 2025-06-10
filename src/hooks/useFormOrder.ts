@@ -96,7 +96,6 @@ export const useFormOrder = (listCart?: ICart, onSuccess?: () => void) => {
       setLoading(true);
       const orderRes = await createOrder({
         ...form,
-        shippingId: listCart.id,
         couponCode: couponCode?.coupon.code || "",
       });
 
