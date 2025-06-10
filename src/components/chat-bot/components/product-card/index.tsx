@@ -137,7 +137,7 @@ const ProductCard = ({ product, onProductClick }: ProductCardProps) => {
             h="2.6rem"
             onClick={(e) => {
               e.stopPropagation();
-              onProductClick(product.slug);
+              onProductClick(product.id.toString());
             }}
             _hover={{
               transform: "scale(1.02)",
