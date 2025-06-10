@@ -1,14 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, useGLTF } from "@react-three/drei";
-import { Center, Box, Stack } from "@chakra-ui/react";
+import { Center, Box, Grid, GridItem } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
-
-function PlaneModel() {
-  const { scene } = useGLTF("/models/plane.glb"); // load từ public
-  return <primitive object={scene} />;
-}
 
 // ✅ Khai báo rõ ràng props và truyền đúng kiểu
 interface SofaModelProps {
@@ -16,7 +11,7 @@ interface SofaModelProps {
 }
 
 function SofaModel({ colorsMap = {} }: SofaModelProps) {
-  const { scene } = useGLTF("/models/armChair.glb");
+  const { scene } = useGLTF("/models/sofa_set.glb");
   const ref = useRef<THREE.Object3D>(null);
 
   useEffect(() => {
@@ -39,22 +34,46 @@ function SofaModel({ colorsMap = {} }: SofaModelProps) {
     });
   }, [colorsMap]);
 
-  return <primitive ref={ref} object={scene} position={[0, 1.24, 0]} />;
+  return <primitive ref={ref} object={scene} position={[0, 0, 0]} />;
 }
 
-const AVAILABLE_COLORS = ["white", "red", "blue", "green", "orange", "black"];
-
+const AVAILABLE_COLORS = [
+  "#f8f6f0",
+  "#4a4a4a",
+  "#1e3a5f",
+  "#556b2f",
+  "#d8cab8",
+  "#5c3a21",
+  "#c48189",
+  "#d4a42f",
+  "#6a7ba2",
+  "#1a1a1a",
+  "#b6b6b6",
+  "#e2725b",
+];
 const ModelProduct = () => {
-  const [colorModel, setColorModel] = useState<string>("white");
+  const [colorModel, setColorModel] = useState<string>("#f8f6f0");
 
   return (
-    <Center width="100%" height="100dvh" bg="gray.900">
+    <Center width="100%" height="80dvh" bg="gray.900">
       <Box width="100%" height="100%" position={"relative"}>
         <Canvas
           shadows
-          camera={{ position: [3, 2, 5], fov: 50 }}
+          camera={{ position: [3, 3, 5], fov: 40 }}
           gl={{ toneMappingExposure: 1.5, antialias: true }}
+          style={{ background: "#e0e0e0", backgroundImage: "url(./)" }}
         >
+          <hemisphereLight
+            args={["#ffffff", "#aaaaaa", 0.8]}
+            position={[0, 5, 0]}
+          />
+          <directionalLight
+            position={[3, 10, 5]}
+            intensity={1}
+            castShadow
+            shadow-mapSize-width={1024}
+            shadow-mapSize-height={1024}
+          />
           <ambientLight intensity={0.4} />
           <spotLight
             castShadow
@@ -97,8 +116,7 @@ const ModelProduct = () => {
           </mesh>
 
           {/* ✅ Truyền màu theo phần tên mesh */}
-          <SofaModel colorsMap={{ Cube001: colorModel }} />
-          <PlaneModel />
+          <SofaModel colorsMap={{ Object_3: colorModel }} />
 
           <OrbitControls
             enablePan
@@ -108,33 +126,34 @@ const ModelProduct = () => {
             autoRotateSpeed={1.5}
           />
         </Canvas>
-        <Stack
-          direction={"column"}
-          gap={"2rem"}
+        <Grid
+          templateColumns="repeat(2, 1fr)"
+          gap={"1rem"}
           position={"absolute"}
           bottom={"50%"}
           transform={"translateY(50%)"}
           right={"2rem"}
         >
-          {AVAILABLE_COLORS.map((color) => (
-            <Box
-              key={color}
-              w="60px"
-              h="60px"
-              borderRadius="full"
-              bg={color}
-              cursor="pointer"
-              onClick={() => setColorModel(color)}
-              boxShadow="inset -5px -5px 10px rgba(255,255,255,0.3), inset 5px 5px 10px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.5)"
-              transition="all 0.2s ease"
-              _hover={{
-                transform: "scale(1.1)",
-                boxShadow:
-                  "inset -6px -6px 12px rgba(255,255,255,0.35), inset 6px 6px 12px rgba(0,0,0,0.35), 0 6px 12px rgba(0,0,0,0.6)",
-              }}
-            />
+          {AVAILABLE_COLORS.map((color, index) => (
+            <GridItem key={index}>
+              <Box
+                w="60px"
+                h="60px"
+                borderRadius="full"
+                bg={color}
+                cursor="pointer"
+                onClick={() => setColorModel(color)}
+                boxShadow="inset -5px -5px 10px rgba(255,255,255,0.3), inset 5px 5px 10px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.5)"
+                transition="all 0.2s ease"
+                _hover={{
+                  transform: "scale(1.1)",
+                  boxShadow:
+                    "inset -6px -6px 12px rgba(255,255,255,0.35), inset 6px 6px 12px rgba(0,0,0,0.35), 0 6px 12px rgba(0,0,0,0.6)",
+                }}
+              />
+            </GridItem>
           ))}
-        </Stack>
+        </Grid>
       </Box>
     </Center>
   );
