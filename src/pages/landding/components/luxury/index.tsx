@@ -78,7 +78,7 @@ const Luxury = () => {
         <ButtonCustom
           title="Explore"
           onClick={() =>
-            window.open("https://sparkling-meringue-fd1ecd.netlify.app/")
+            window.open("https://interlux-version-2.netlify.app/")
           }
         />
       </Center>
