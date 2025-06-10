@@ -2,6 +2,7 @@ import BlogDetail from "@pages/blog-detail";
 import LanddingPage from "@pages/landding";
 import Login from "@pages/login";
 import Order from "@pages/order";
+import Panorama from "@pages/panorama";
 import ProductDetail from "@pages/product-detail";
 import Products from "@pages/products";
 import TestCharkra from "@pages/test-charkra";
@@ -10,6 +11,10 @@ export const routers: RouteProps[] = [
   {
     path: "test",
     element: <TestCharkra />,
+  },
+  {
+    path: "/panorama",
+    element: <Panorama />,
   },
 ];
 

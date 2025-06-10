@@ -74,3 +74,7 @@ img {
     animation: circleDash 4s linear forwards 1s;
   }
 }
+
+.psv-markers-css3d-container {
+  overflow: visible !important;
+}

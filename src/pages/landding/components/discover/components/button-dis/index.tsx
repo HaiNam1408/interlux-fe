@@ -1,7 +1,9 @@
 import { IcArrowRight } from "@assets/svgs";
 import { Box, Center, Text } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 const ButtonDis = () => {
+  const navigator = useNavigate()
   return (
     <Center
       flexDirection={"row"}
@@ -32,7 +34,7 @@ const ButtonDis = () => {
           position: "relative",
         }}
         onClick={() =>
-          window.open("https://vista-pano.vercel.app/type-a/#Kitchen")
+          navigator("/panorama#Kitchen")
         }
       >
         <Box
