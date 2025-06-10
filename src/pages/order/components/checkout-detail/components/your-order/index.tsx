@@ -20,6 +20,7 @@ const YourOrder = ({
   handleSubmit,
   listCart,
   setFormValue,
+  form,
 }: IYourOrder) => {
   return (
     <Stack
@@ -65,7 +66,7 @@ const YourOrder = ({
           YOUR ORDER
         </Text>
       </Stack>
-      <TableProduct listCart={listCart} />
+      <TableProduct listCart={listCart} form={form}/>
       <Text
         fontSize={"1.6rem"}
         fontWeight={500}

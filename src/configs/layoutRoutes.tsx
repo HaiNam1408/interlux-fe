@@ -1,3 +1,4 @@
+import BlogDetail from "@pages/blog-detail";
 import LanddingPage from "@pages/landding";
 import Login from "@pages/login";
 import Order from "@pages/order";
@@ -32,5 +33,9 @@ export const layoutRouters: RouteProps[] = [
   {
     path: "/checkout/:step",
     element: <Order />,
+  },
+  {
+    path: "/blog/:slug",
+    element: <BlogDetail />,
   },
 ];

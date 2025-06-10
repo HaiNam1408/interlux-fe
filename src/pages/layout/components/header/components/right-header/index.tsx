@@ -7,8 +7,13 @@ import { setIsShowCart } from "@redux/reducer/cart.reducer";
 import { RootState } from "@redux/store";
 import SwitchMode from "@pages/layout/components/switch-mode";
 import { useDarkModeContext } from "@hooks/useDarkModeContext";
+import { Dispatch, SetStateAction } from "react";
 
-const RightHeader = () => {
+interface IRightHeader {
+  setIsLogin: Dispatch<SetStateAction<boolean>>;
+}
+
+const RightHeader = ({ setIsLogin }: IRightHeader) => {
   const dispatch = useDispatch();
   const navigator = useNavigate();
   const token = Cookies.get("token");
@@ -19,7 +24,7 @@ const RightHeader = () => {
     Cookies.remove("refreshToken");
 
     localStorage.clear();
-
+    setIsLogin(true);
     navigator("/");
   };
 

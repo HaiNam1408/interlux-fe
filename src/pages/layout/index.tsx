@@ -8,6 +8,8 @@ import Footer from "./components/footer";
 import Cart from "./components/cart";
 
 const Layout = () => {
+  const [isLogin, setIsLogin] = useState<boolean>(false);
+
   const [seletectedMenu, setSeletecedMenu] = useState<IMenu>({
     listMenu: [],
     title: "",
@@ -24,8 +26,8 @@ const Layout = () => {
         seletectedMenu={seletectedMenu}
         setSeletecedMenu={setSeletecedMenu}
       />
-      <Header setSeletecedMenu={setSeletecedMenu} />
-      <Cart />
+      <Header setSeletecedMenu={setSeletecedMenu} setIsLogin={setIsLogin} />
+      <Cart isLogin={isLogin} />
       <Outlet />
       <Footer />
     </Box>

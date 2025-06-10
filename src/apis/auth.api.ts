@@ -22,3 +22,6 @@ export const register = (
 
 export const resetRefreshToken = (refreshToken: string) =>
   http.post<any>("/api/v1/client/auth/reset-refresh-token", refreshToken);
+
+export const forgotPassword = (email: string) =>
+  http.post<any>("/api/v1/client/auth/forgot-password", { email });
